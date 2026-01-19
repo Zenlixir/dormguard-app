@@ -1,2 +1,2 @@
 # dormguard-app
-Mobile web app for DormGuard
+Mobile web app for DormGuard (Preview)
