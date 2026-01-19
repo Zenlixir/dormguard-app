@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" width="150" style="border-radius:24px" />
+  <img src="icon.png" width="150"/>
 </p>
 
 # dormguard-app
