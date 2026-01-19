@@ -20,8 +20,8 @@ buttons.forEach(btn => {
   });
 });
 
-activeBtn.addEventListener('click', () => { active = true; addEvent('Kerja Bagus'); });
-nonactiveBtn.addEventListener('click', () => { active = false; addEvent('Maju Maju Maju'); });
+activeBtn.addEventListener('click', () => { active = true; addEvent('Dorm Guard turned on'); });
+nonactiveBtn.addEventListener('click', () => { active = false; addEvent('Dorm Guard turned off'); });
 
 // Logs
 function addEvent(text) {
@@ -33,7 +33,7 @@ function addEvent(text) {
 setInterval(() => {
   doorStatusEl.textContent = Math.random() > 0.5 ? 'OPEN' : 'CLOSED';
   batteryLevelEl.textContent = `${Math.floor(70 + Math.random()*30)}%`;
-  if(active && Math.random() > 0.7) addEvent('Door opened while active');
+  if(active && Math.random() > 0.7) addEvent('Door opened');
 }, 5000);
 
 mdButtons.forEach(btn => {
