@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DormGuard Mobile</title>
+  <meta name="theme-color" content="#e3e3e3" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="DormGuard" />
+
+  <!-- Google Sans Flex -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body class="light">
+
+  <!-- HOME PAGE -->
+  <main class="page active" id="home">
+    <h1>DormGuard</h1>
+    <div class="card">
+      <div class="label">Door Status</div>
+      <div id="doorStatus" class="value">UNKNOWN</div>
+    </div>
+    <div class="card">
+      <div class="label">Last Opened At</div>
+      <div id="LastOpened" class="value">12.00AM</div>
+    </div>
+    <div class="card">
+      <div class="label">Battery</div>
+      <div id="batteryLevel" class="value">--%</div>
+    </div>
+    <div class="controls">
+      <button class="md-btn" id="activeBtn">Turn ON</button>
+      <button class="md-btn" id="nonactiveBtn">Turn OFF</button>
+    </div>
+  </main>
+
+  <!-- LOGS PAGE -->
+  <main class="page" id="logs">
+    <h1>Logs</h1>
+    <ul id="eventList" class="md-list"></ul>
+  </main>
+
+  <!-- SETTINGS PAGE -->
+  <main class="page" id="settings">
+    <h1>Settings</h1>
+
+    <div class="settings-list">
+
+      <div class="settings-item">
+        <span>Test</span>
+        <label class="md-switch">
+          <input type="checkbox" id="notifySwitch">
+          <span></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <span>Test</span>
+        <label class="md-switch">
+          <input type="checkbox" id="activeModeSwitch">
+          <span></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <span>Test Again</span>
+        <label class="md-switch">
+          <input type="checkbox" id="soundAlertsSwitch">
+          <span></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <span>Tesf</span>
+        <label class="md-switch">
+          <input type="checkbox" id="doorReminderSwitch">
+          <span></span>
+        </label>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="home">
+      <span class="material-symbols-outlined">home</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" data-page="logs">
+      <span class="material-symbols-outlined">list</span>
+      <span class="nav-label">Logs</span>
+    </button>
+    <button class="nav-item" data-page="settings">
+      <span class="material-symbols-outlined">settings</span>
+      <span class="nav-label">Settings</span>
+    </button>
+  </nav>
+</body>
+</html>
