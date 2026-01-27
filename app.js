@@ -221,7 +221,7 @@ function updateThemeColor() {
   if (!metaTheme) return;
 
   if (document.body.classList.contains('dark')) {
-    metaTheme.setAttribute('content', 'rgb(28 27 28)');
+    metaTheme.setAttribute('content', 'rgb(18 18 18)');
   } else if (document.body.classList.contains('contrast-light')) {
     metaTheme.setAttribute('content', 'rgb(255 255 255)'); 
   } else if (document.body.classList.contains('contrast-dark')) {
