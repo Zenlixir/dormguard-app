@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DormGuard Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DormGuard</title>
   <meta name="theme-color" content="rgb(235 231 231)" />
     <link rel="apple-touch-icon" href="icon.png" />
     <link rel="icon" type="image/png" href="icon.png" />
@@ -45,8 +45,10 @@
   </div>
 </div>
     <div class="controls">
-      <button class="md-btn" id="activeBtn">Turn ON</button>
-      <button class="md-btn" id="nonactiveBtn">Turn OFF</button>
+      <button class="md-btn telegram-btn" onclick="window.open('https://t.me/', '_blank')">
+  <span class="material-symbols-outlined">launch</span>
+  Telegram Bot
+</button>
      <div class="settings-section">
   <div class="label">
     <span class="material-symbols-outlined">alarm</span>
@@ -57,19 +59,30 @@
     </div>
   </main>
 
-  <!-- LOGS PAGE -->
-  <main class="page" id="logs">
-    <h1>Logs</h1>
+<!-- LOGS PAGE -->
+<main class="page" id="logs">
+  <h1>
+    Logs
+    <button id="viewdat" class="sheets-btn" title="View on Sheets">
+      <span class="material-symbols-outlined">table_view</span>
+    </button>
+  </h1>
+
+  <div class="logs-wrapper">
     <ul id="eventList" class="md-list"></ul>
-    <div class="database">
-  <div class="label">Download Database</div>
-  <div class="db-actions">
-    <button class="md-btn" id="fulldat">Full Records</button>
-    <button class="md-btn" id="latestdat">Latest</button>
-    <button class="md-btn" id="viewdat">View on Sheets</button>
   </div>
+
+  <div class="database">
+    <div class="label">
+  <span class="material-symbols-outlined">download</span>
+  Download Database
 </div>
-  </main>
+    <div class="db-actions">
+      <button class="md-btn" id="fulldat">Full Records</button>
+      <button class="md-btn" id="latestdat">Latest</button>
+    </div>
+  </div>
+</main>
 
 <!-- SETTINGS PAGE -->
 <main class="page" id="settings">
@@ -140,6 +153,64 @@
   </div>
 </main>
 
+<main class="page" id="about">
+  <h1>
+    About
+    <button class="dev-btn">
+      <a href="https://github.com/zenlixir" target="_blank" class="icon-link">
+  <span class="material-symbols-outlined">code</span>
+</a>
+    </button>
+  </h1>
+  <div class="info">
+  <img src="icon.png" alt="Icon" />
+  <div class="info-text">
+    <div>Dorm Guard</div>
+    <div class="creator">by Zen</div>
+  </div>
+</div>
+<div class="another-info">
+  <h2>Credits</h2>
+  <ul class="credits-list">
+    <li>
+      <span class="material-symbols-outlined">code</span>
+      <div class="credits-text">
+        Google Sheets API
+        <div class="credits-desc">by Google</div>
+      </div>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">palette</span>
+      <div class="credits-text">
+        Material Design Icons
+        <div class="credits-desc">by Google</div>
+      </div>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">font_download</span>
+      <div class="credits-text">
+        Google Fonts (Google Sans Flex)
+        <div class="credits-desc">by Google</div>
+      </div>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">cloud</span>
+      <div class="credits-text">
+        Material You
+        <div class="credits-desc">by Google</div>
+      </div>
+    </li>
+    <li>
+      <span class="material-symbols-outlined">ac_unit</span>
+      <div class="credits-text">
+        About screen inspired from Hail app <br>(and mbloader)
+        <div class="credits-desc">by aistra0528</div>
+      </div>
+    </li>
+  </ul>
+</div>
+</main>
+
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
     <button class="nav-item active" data-page="home">
@@ -154,6 +225,10 @@
       <span class="material-symbols-outlined">settings</span>
       <span class="nav-label">Settings</span>
     </button>
+    <button class="nav-item" data-page="about">
+      <span class="material-symbols-outlined">info</span>
+      <span class="nav-label">About</span>
+    </button>
   </nav>
   <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -161,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation(); 
       if (navigator.vibrate) {
-        navigator.vibrate(50);
+        navigator.vibrate(64);
       }
     });
   });
