@@ -1,5 +1,10 @@
 * {
   -webkit-tap-highlight-color: transparent;
+  user-select: none;       
+  -webkit-user-select: none; 
+  -ms-user-select: none;     
+  -moz-user-select: none;    
+  touch-action: manipulation; 
 }
 
 /* ---------- THEME ---------- */
@@ -91,7 +96,7 @@ body {
 h1 { font-size: 24px; margin-bottom: 16px; }
 
 /* ---------- CARD ---------- */
-.card {
+.card, .info, .another-info {
   border: 1px solid var(--md-sys-color-outline);
   border-radius: 16px;
   padding: 16px;
@@ -134,16 +139,46 @@ h1 { font-size: 24px; margin-bottom: 16px; }
   }
 }
 
+@keyframes cardFadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cardFadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .page .card {
   opacity: 0;
+}
+
+.sheets-btn, .another-info, .dev-btn {
+  animation: cardFadeRight 0.5s ease forwards;
+}
+
+.md-list, .info {
+  animation: cardFadeLeft 0.5s ease forwards;
 }
 
 .page.active .card, .settings-section, .database {
   animation: cardFadeUp 0.5s ease forwards;
 }
 
-.page.active .settings-item {
-  animation: cardFadeDown 0.35s ease forwards;
+.page.active .settings-item, .telegram-btn {
+  animation: cardFadeDown 0.5s ease forwards;
 }
 
 
@@ -151,6 +186,7 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 .page.active .card:nth-of-type(2) { animation-delay: 0.1s; }
 .page.active .card:nth-of-type(3) { animation-delay: 0.15s; }
 .page.active .card:nth-of-type(4) { animation-delay: 0.2s; }
+.telegram-btn { animation-delay: 0.5s; }
 
 .database, .settings-section {
   position: fixed;
@@ -181,6 +217,24 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 
 .database .md-btn {
   font-size: 12px;
+}
+
+.sheets-btn, .dev-btn {
+  position: absolute;
+  right: 16px;
+  top: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--md-sys-color-primary);
+  font-size: 24px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1 {
+  position: relative;
 }
 
 /* ---------- BUTTONS ---------- */
@@ -320,4 +374,170 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 .no-animation .card {
   opacity: 1 !important;
   transform: none !important;
+}
+
+#logs {
+  position: relative;
+}
+
+#logs::before {
+  content: "Empty :(";
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2em;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#logs:has(#eventList li)::before {
+  display: none;
+}
+
+.logs-wrapper {
+  position: relative;
+  z-index: 1;
+  max-height: calc(100vh - 200px); 
+  overflow-y: auto;
+  background: var(--md-sys-color-surface);
+  padding-right: 8px; 
+}
+
+#eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.telegram-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+}
+
+.telegram-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+#home {
+  position: relative;
+}
+
+#home::before {
+  content: "security";
+font-family: 'Material Symbols Outlined';
+line-height: 1;
+  position: fixed;
+  top: 60%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  font-size: 10em;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  animation: shield 1s ease forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+
+@keyframes shield {
+  from {
+    opacity: 0;
+    transform: translateX(0px) translateY(-50%);
+  }
+  to {
+    opacity: 0.2;
+    transform: translateX(-70px) translateY(-50%);
+  }
+}
+
+.info {
+  border: none;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  height: 200px;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+}
+
+.info img {
+  width: 100px;     
+  height: 100px;
+  border-radius: 24%;      
+  object-fit: cover;       
+  display: block;
+}
+
+.info-text div {
+  font-size: 16px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.info-text .creator {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.another-info {
+  border: 2px solid var(--md-sys-color-surface-container);
+  background: none;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.credits-list {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.credits-list li {
+  display: flex;
+  align-items: flex-start; 
+  gap: 12px;
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 8px;
+}
+
+.credits-list li .material-symbols-outlined {
+  font-size: 32px;
+  opacity: 0.7;
+}
+
+.credits-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.credits-desc {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 2px; 
+}
+
+.icon-link {
+  color: var(--md-sys-color-on-surface);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-link:hover {
+  color: var(--md-sys-color-primary);
+  transform: scale(1.1);
+  transition: transform 0.2s ease, color 0.2s ease;
 }
