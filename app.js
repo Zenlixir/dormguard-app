@@ -214,3 +214,17 @@ function updateThemeColor() {
 }
 
 updateThemeColor();
+
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
+
+document.addEventListener('pointerdown', (e) => {
+  if (e.pointerType === 'touch') {
+    e.preventDefault();
+  }
+});
+
+document.querySelectorAll('img').forEach(img => {
+  img.setAttribute('draggable', 'false');
+});
