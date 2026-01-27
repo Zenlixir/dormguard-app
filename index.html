@@ -26,11 +26,11 @@
     <h1>DormGuard</h1>
     <div class="card">
       <div class="label">Door Status</div>
-      <div id="doorStatus" class="value">UNKNOWN</div>
+      <div id="doorStatus" class="value">-</div>
     </div>
     <div class="card">
       <div class="label">Last Opened At</div>
-      <div id="LastOpened" class="value">12.00AM</div>
+      <div id="LastOpened" class="value">-</div>
     </div>
     <div class="card">
       <div class="label">Battery</div>
@@ -46,6 +46,14 @@
   <main class="page" id="logs">
     <h1>Logs</h1>
     <ul id="eventList" class="md-list"></ul>
+    <div class="database">
+  <div class="label">Download Database</div>
+  <div class="db-actions">
+    <button class="md-btn" id="fulldat">Full Records</button>
+    <button class="md-btn" id="latestdat">Latest</button>
+    <button class="md-btn" id="viewdat">View on Sheets</button>
+  </div>
+</div>
   </main>
 
   <!-- SETTINGS PAGE -->
@@ -103,5 +111,17 @@
       <span class="nav-label">Settings</span>
     </button>
   </nav>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.md-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent interfering with parent handlers
+      if (navigator.vibrate) {
+        navigator.vibrate(50); // short vibration
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
