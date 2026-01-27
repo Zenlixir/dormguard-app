@@ -15,6 +15,8 @@ const fullDatBtn = document.getElementById('fulldat');
 const latestDatBtn = document.getElementById('latestdat');
 const viewDatBtn = document.getElementById('viewdat');
 
+const alarmToggle = document.getElementById('alarmToggle'); 
+
 let active = false;
 
 // ------------------- NAVIGATION -------------------
@@ -30,6 +32,23 @@ buttons.forEach(btn => {
 // ------------------- ACTIVE / NON-ACTIVE -------------------
 activeBtn.addEventListener('click', () => { active = true; addEvent('System Activated'); });
 nonactiveBtn.addEventListener('click', () => { active = false; addEvent('System Deactivated'); });
+
+// ------------------- DISABLE ALARM BUTTON -------------------
+if (alarmToggle) {
+  alarmToggle.addEventListener('click', async () => {
+    addEvent('Alarm Disabled');
+
+    // Send HTTP request to ESP32 to stop alarm
+    try {
+      await fetch(`http://ESP32_IP_ADDRESS/alarm?state=off`); // No esp yet :(
+    } catch (err) {
+      console.error('Failed to disable alarm on ESP32:', err);
+    }
+
+    alarmToggle.disabled = true;
+    alarmToggle.textContent = 'Alarm Disabled';
+  });
+}
 
 // ------------------- ADD EVENT TO LIST -------------------
 function addEvent(text, time = null) {
@@ -61,7 +80,6 @@ async function fetchSheetData() {
 
     // Update latest door & battery
     const lastRow = data.values[data.values.length - 1];
-    const lastTime = lastRow[0] || '-';
     const lastDoor = lastRow[2] || 'UNKNOWN';
     const lastBattery = lastRow[3] || 'N/A';
 
@@ -90,7 +108,7 @@ fullDatBtn.addEventListener('click', async () => {
 latestDatBtn.addEventListener('click', async () => {
   const csv = await fetchSheetCSV();
   const rows = csv.split('\n');
-  const latestRows = rows.slice(-50).join('\n'); // adjust as needed
+  const latestRows = rows.slice(-50).join('\n'); 
   downloadCSV(latestRows, 'latest_records.csv');
 });
 
@@ -133,3 +151,67 @@ mdButtons.forEach(btn => {
     circle.addEventListener('animationend', () => circle.remove());
   });
 });
+
+const darkModeSwitch = document.getElementById('darkModeSwitch');
+const contrastSwitch = document.getElementById('contrastSwitch');
+
+/* ---------- HELPER ---------- */
+function getCurrentTheme() {
+  return document.body.classList.contains('dark') ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.body.classList.remove('light', 'dark');
+  document.body.classList.add(theme);
+}
+
+function applyContrastForCurrentTheme() {
+  document.body.classList.remove('contrast-light', 'contrast-dark');
+  if (!contrastSwitch.checked) return;
+
+  const theme = getCurrentTheme();
+  if (theme === 'dark') document.body.classList.add('contrast-dark');
+  else document.body.classList.add('contrast-light');
+}
+
+/* ---------- DARK MODE ---------- */
+darkModeSwitch.addEventListener('change', () => {
+  const theme = darkModeSwitch.checked ? 'dark' : 'light';
+  applyTheme(theme);
+  applyContrastForCurrentTheme();
+  localStorage.setItem('theme', theme);
+});
+
+/* ---------- HIGH CONTRAST ---------- */
+contrastSwitch.addEventListener('change', () => {
+  applyContrastForCurrentTheme();
+  localStorage.setItem('contrast', contrastSwitch.checked ? 'on' : 'off');
+});
+
+/* ---------- RESTORE SETTINGS ON LOAD ---------- */
+(function restoreSettings() {
+  // Theme
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(savedTheme);
+  darkModeSwitch.checked = savedTheme === 'dark';
+
+  // Contrast
+  if (localStorage.getItem('contrast') === 'on') {
+    contrastSwitch.checked = true;
+    applyContrastForCurrentTheme();
+  }
+})();
+
+const reduceMotionSwitch = document.getElementById('reduceMotionSwitch');
+
+/* ---------- DISABLE ANIMATION ---------- */
+reduceMotionSwitch.addEventListener('change', () => {
+  document.body.classList.toggle('no-animation', reduceMotionSwitch.checked);
+  localStorage.setItem('reduceMotion', reduceMotionSwitch.checked ? 'on' : 'off');
+});
+
+/* ---------- RESTORE STATE ON LOAD ---------- */
+if (localStorage.getItem('reduceMotion') === 'on') {
+  document.body.classList.add('no-animation');
+  reduceMotionSwitch.checked = true;
+}
