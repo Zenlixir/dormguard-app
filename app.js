@@ -14,6 +14,9 @@ const viewDatBtn = document.getElementById('viewdat');
 
 const alertToggle = document.getElementById('alertToggle');
 
+// Base URL for Node server
+const SERVER_BASE = 'http://127.0.0.1:3000';
+
 // ------------------- NAVIGATION -------------------
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -28,13 +31,11 @@ buttons.forEach(btn => {
 if (alertToggle) {
   alertToggle.addEventListener('click', async () => {
     addEvent('Alert Disabled');
-
     try {
-      await fetch(`http://ESP32_IP_ADDRESS/alert?state=off`);
+      await fetch(`${SERVER_BASE}/alert?state=off`);
     } catch (err) {
-      console.error('Failed to disable alert on ESP32:', err);
+      console.error('Failed to disable alert on server:', err);
     }
-
     alertToggle.disabled = true;
     alertToggle.textContent = 'Alert Disabled';
   });
@@ -47,78 +48,63 @@ function addEvent(text, time = null) {
   eventListEl.prepend(li);
 }
 
-// ------------------- GOOGLE SHEETS CONFIG -------------------
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
-const API_KEY = 'YOUR_API_KEY';
-const RANGE = 'Sheet1!A:D';
-
-// ------------------- FETCH DATA FROM SHEET -------------------
-async function fetchSheetData() {
+// ------------------- FETCH DATA FROM NODE SERVER -------------------
+async function fetchServerData() {
   try {
-    const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
-    );
-    const data = await response.json();
-    if (!data.values) return;
+    const res = await fetch(`${SERVER_BASE}/api/status`);
+    const data = await res.json();
 
+    // Update current status
+    doorStatusEl.textContent = data.current.door;
+    batteryLevelEl.textContent = data.current.battery;
+
+    // Update event list
     eventListEl.innerHTML = '';
+    data.history.forEach(item => addEvent(item.event, item.time));
 
-    data.values.slice(1).reverse().forEach(row => {
-      const [time, event] = row;
-      addEvent(event, time);
-    });
-
-    const lastRow = data.values[data.values.length - 1];
-    doorStatusEl.textContent = lastRow[2] || 'UNKNOWN';
-    batteryLevelEl.textContent = lastRow[3] || 'N/A';
-
-    const openRow = [...data.values].reverse().find(r => r[2] === 'OPEN');
-    lastOpenedEl.textContent = openRow ? openRow[0] : '-';
+    // Update last opened
+    const lastOpen = data.history.find(e => e.door === 'OPEN');
+    lastOpenedEl.textContent = lastOpen ? lastOpen.time : '-';
 
   } catch (err) {
-    console.error('Error fetching sheet data:', err);
+    console.error('Server not reachable', err);
   }
 }
 
 // ------------------- DATABASE BUTTONS -------------------
 viewDatBtn.addEventListener('click', () => {
-  window.open(`https://docs.google.com/spreadsheets/d/${SHEET_ID}`, '_blank');
+  window.open(`${SERVER_BASE}/view`, '_blank');
 });
 
 fullDatBtn.addEventListener('click', async () => {
-  const csv = await fetchSheetCSV();
-  downloadCSV(csv, 'full_records.csv');
+  try {
+    const res = await fetch(`${SERVER_BASE}/download/full`);
+    const blob = await res.blob();
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'full_records.csv';
+    link.click();
+  } catch (err) {
+    console.error('Failed to download full records:', err);
+  }
 });
 
 latestDatBtn.addEventListener('click', async () => {
-  const csv = await fetchSheetCSV();
-  const rows = csv.split('\n');
-  downloadCSV(rows.slice(-50).join('\n'), 'latest_records.csv');
+  try {
+    const res = await fetch(`${SERVER_BASE}/download/latest`);
+    const blob = await res.blob();
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'latest_records.csv';
+    link.click();
+  } catch (err) {
+    console.error('Failed to download latest records:', err);
+  }
 });
 
-async function fetchSheetCSV() {
-  try {
-    const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
-    );
-    const data = await response.json();
-    if (!data.values) return '';
-    return data.values.map(r => r.join(',')).join('\n');
-  } catch {
-    return '';
-  }
-}
-
-function downloadCSV(csv, filename) {
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
-}
-
 // ------------------- AUTO FETCH -------------------
-setInterval(fetchSheetData, 5000);
+setInterval(fetchServerData, 5000);
+fetchServerData();
 
 // ------------------- MD BUTTON RIPPLE -------------------
 mdButtons.forEach(btn => {
@@ -128,8 +114,8 @@ mdButtons.forEach(btn => {
     btn.appendChild(circle);
     const d = Math.max(btn.clientWidth, btn.clientHeight);
     circle.style.width = circle.style.height = d + 'px';
-    circle.style.left = e.clientX - btn.getBoundingClientRect().left - d / 2 + 'px';
-    circle.style.top = e.clientY - btn.getBoundingClientRect().top - d / 2 + 'px';
+    circle.style.left = e.clientX - btn.getBoundingClientRect().left - d/2 + 'px';
+    circle.style.top = e.clientY - btn.getBoundingClientRect().top - d/2 + 'px';
     circle.classList.add('ripple-animate');
     circle.addEventListener('animationend', () => circle.remove());
   });
@@ -151,9 +137,7 @@ function applyTheme(theme) {
 function applyContrastForCurrentTheme() {
   document.body.classList.remove('contrast-light', 'contrast-dark');
   if (!contrastSwitch.checked) return;
-  document.body.classList.add(
-    getCurrentTheme() === 'dark' ? 'contrast-dark' : 'contrast-light'
-  );
+  document.body.classList.add(getCurrentTheme() === 'dark' ? 'contrast-dark' : 'contrast-light');
 }
 
 darkModeSwitch.addEventListener('change', () => {
@@ -215,16 +199,7 @@ function updateThemeColor() {
 
 updateThemeColor();
 
-document.addEventListener('contextmenu', (e) => {
-  e.preventDefault();
-});
-
-document.addEventListener('pointerdown', (e) => {
-  if (e.pointerType === 'touch') {
-    e.preventDefault();
-  }
-});
-
-document.querySelectorAll('img').forEach(img => {
-  img.setAttribute('draggable', 'false');
-});
+// ------------------- PREVENT ZOOM / SELECT -------------------
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') e.preventDefault(); });
+document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
