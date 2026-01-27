@@ -22,20 +22,38 @@
   <main class="page active" id="home">
     <h1>DormGuard</h1>
     <div class="card">
-      <div class="label">Door Status</div>
-      <div id="doorStatus" class="value">-</div>
-    </div>
-    <div class="card">
-      <div class="label">Last Opened At</div>
-      <div id="LastOpened" class="value">-</div>
-    </div>
-    <div class="card">
-      <div class="label">Battery</div>
-      <div id="batteryLevel" class="value">--%</div>
-    </div>
+  <div class="label">Door Status</div>
+  <div class="value-row">
+    <div id="doorStatus" class="value">-</div>
+    <span class="material-symbols-outlined card-icon">door_front</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="label">Last Opened At</div>
+  <div class="value-row">
+    <div id="LastOpened" class="value">-</div>
+    <span class="material-symbols-outlined card-icon">history</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="label">Battery</div>
+  <div class="value-row">
+    <div id="batteryLevel" class="value">--%</div>
+    <span class="material-symbols-outlined card-icon">battery_full</span>
+  </div>
+</div>
     <div class="controls">
       <button class="md-btn" id="activeBtn">Turn ON</button>
       <button class="md-btn" id="nonactiveBtn">Turn OFF</button>
+     <div class="settings-section">
+  <div class="label">
+    <span class="material-symbols-outlined">alarm</span>
+    Alarm Control
+  </div>
+  <button id="alarmToggle" class="md-btn">Disable Alarm</button>
+</div>
     </div>
   </main>
 
@@ -53,45 +71,74 @@
 </div>
   </main>
 
-  <!-- SETTINGS PAGE -->
-  <main class="page" id="settings">
-    <h1>Settings</h1>
+<!-- SETTINGS PAGE -->
+<main class="page" id="settings">
+  <h1>Settings</h1>
 
-    <div class="settings-list">
+  <div class="settings-list">
 
-      <div class="settings-item">
-        <span>Test</span>
-        <label class="md-switch">
-          <input type="checkbox" id="notifySwitch">
-          <span></span>
-        </label>
-      </div>
+    <div class="settings-header">DormGuard Device</div>
 
-      <div class="settings-item">
-        <span>Test</span>
-        <label class="md-switch">
-          <input type="checkbox" id="activeModeSwitch">
-          <span></span>
-        </label>
-      </div>
-
-      <div class="settings-item">
-        <span>Test Again</span>
-        <label class="md-switch">
-          <input type="checkbox" id="soundAlertsSwitch">
-          <span></span>
-        </label>
-      </div>
-
-      <div class="settings-item">
-        <span>Tesf</span>
-        <label class="md-switch">
-          <input type="checkbox" id="doorReminderSwitch">
-          <span></span>
-        </label>
-      </div>
+    <div class="settings-item">
+      <span class="material-symbols-outlined">lightbulb</span>
+      <span class="setting-text">LED Blink</span>
+      <label class="md-switch">
+        <input type="checkbox" id="ledSwitch">
+        <span></span>
+      </label>
     </div>
-  </main>
+
+    <div class="settings-item">
+      <span class="material-symbols-outlined">volume_up</span>
+      <span class="setting-text">Buzzer</span>
+      <label class="md-switch">
+        <input type="checkbox" id="buzzerSwitch">
+        <span></span>
+      </label>
+    </div>
+
+    <div class="settings-item">
+      <span class="material-symbols-outlined">vibration</span>
+      <span class="setting-text">Vibration</span>
+      <label class="md-switch">
+        <input type="checkbox" id="vibrationSwitch">
+        <span></span>
+      </label>
+    </div>
+
+    <div class="settings-header">App</div>
+
+    <div class="settings-item">
+      <span class="material-symbols-outlined">dark_mode</span>
+      <span class="setting-text">Dark Mode</span>
+      <label class="md-switch">
+        <input type="checkbox" id="darkModeSwitch">
+        <span></span>
+      </label>
+    </div>
+    
+    <div class="settings-header">Accessibility</div>
+
+<div class="settings-item">
+  <span class="material-symbols-outlined">motion_photos_off</span>
+  <span class="setting-text">Disable Animation</span>
+  <label class="md-switch">
+    <input type="checkbox" id="reduceMotionSwitch">
+    <span></span>
+  </label>
+</div>
+
+<div class="settings-item">
+  <span class="material-symbols-outlined">contrast</span>
+  <span class="setting-text">High Contrast</span>
+  <label class="md-switch">
+    <input type="checkbox" id="contrastSwitch">
+    <span></span>
+  </label>
+</div>
+
+  </div>
+</main>
 
   <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
@@ -112,9 +159,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.md-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent interfering with parent handlers
+      e.stopPropagation(); 
       if (navigator.vibrate) {
-        navigator.vibrate(50); // short vibration
+        navigator.vibrate(50);
       }
     });
   });
