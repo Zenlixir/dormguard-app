@@ -48,6 +48,33 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 .label { font-size: 14px; opacity: 0.7; }
 .value { font-size: 24px; font-weight: 600; }
 
+.database {
+  position: fixed;
+  bottom: 80px;
+  left: 16px;
+  right: 16px;
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--md-sys-color-surface-container);
+  z-index: 1000;
+}
+
+.db-actions {
+  display: flex;
+  justify-content: center; /* center the 3 buttons as a group */
+  gap: 8px;
+}
+
+.database .label {
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.database .md-btn {
+  font-size: 12px;
+}
+
 /* ---------- BUTTONS ---------- */
 .md-btn {
   flex: 1;
