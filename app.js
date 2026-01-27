@@ -216,33 +216,38 @@ if (localStorage.getItem('reduceMotion') === 'on') {
   reduceMotionSwitch.checked = true;
 }
 
-function updateThemeColor() {
-  const metaTheme = document.querySelector('meta[name="theme-color"]');
-  if (!metaTheme) return;
+// ------------------- THEME COLOR META -------------------
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const defaultMetaColor = 'rgb(235, 231, 231)';
 
-  if (document.body.classList.contains('dark')) {
-    metaTheme.setAttribute('content', 'rgb(18 18 18)');
-  } else if (document.body.classList.contains('contrast-light')) {
-    metaTheme.setAttribute('content', 'rgb(255 255 255)'); 
-  } else if (document.body.classList.contains('contrast-dark')) {
-    metaTheme.setAttribute('content', 'rgb(0 0 0)'); 
+function updateThemeColor() {
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  if (isPWA) {
+    const bgColor = getComputedStyle(document.body).getPropertyValue('--md-sys-color-background').trim();
+    if (themeMeta) themeMeta.setAttribute('content', bgColor);
   } else {
-    metaTheme.setAttribute('content', 'rgb(235 231 231)'); 
+    if (!document.body.classList.contains('dark')) {
+      if (themeMeta) themeMeta.setAttribute('content', defaultMetaColor);
+    } else {
+      const bgColor = getComputedStyle(document.body).getPropertyValue('--md-sys-color-background').trim();
+      if (themeMeta) themeMeta.setAttribute('content', bgColor);
+    }
   }
 }
+
+updateThemeColor();
 
 darkModeSwitch.addEventListener('change', () => {
   const theme = darkModeSwitch.checked ? 'dark' : 'light';
   applyTheme(theme);
   applyContrastForCurrentTheme();
   localStorage.setItem('theme', theme);
-  updateThemeColor();
+  updateThemeColor(); 
 });
 
 contrastSwitch.addEventListener('change', () => {
   applyContrastForCurrentTheme();
   localStorage.setItem('contrast', contrastSwitch.checked ? 'on' : 'off');
-  updateThemeColor();
+  updateThemeColor(); 
 });
-
-updateThemeColor();
