@@ -15,7 +15,7 @@ const fullDatBtn = document.getElementById('fulldat');
 const latestDatBtn = document.getElementById('latestdat');
 const viewDatBtn = document.getElementById('viewdat');
 
-const alarmToggle = document.getElementById('alarmToggle'); 
+const alertToggle = document.getElementById('alertToggle'); 
 
 let active = false;
 
@@ -33,20 +33,20 @@ buttons.forEach(btn => {
 activeBtn.addEventListener('click', () => { active = true; addEvent('System Activated'); });
 nonactiveBtn.addEventListener('click', () => { active = false; addEvent('System Deactivated'); });
 
-// ------------------- DISABLE ALARM BUTTON -------------------
-if (alarmToggle) {
-  alarmToggle.addEventListener('click', async () => {
-    addEvent('Alarm Disabled');
+// ------------------- DISABLE ALERT BUTTON -------------------
+if (alertToggle) {
+  alertToggle.addEventListener('click', async () => {
+    addEvent('Alert Disabled');
 
-    // Send HTTP request to ESP32 to stop alarm
+    // Send HTTP request to ESP32 to stop alert
     try {
-      await fetch(`http://ESP32_IP_ADDRESS/alarm?state=off`); // No esp yet :(
+      await fetch(`http://ESP32_IP_ADDRESS/alert?state=off`); // No esp yet :(
     } catch (err) {
-      console.error('Failed to disable alarm on ESP32:', err);
+      console.error('Failed to disable alert on ESP32:', err);
     }
 
-    alarmToggle.disabled = true;
-    alarmToggle.textContent = 'Alarm Disabled';
+    alertToggle.disabled = true;
+    alertToggle.textContent = 'Alert Disabled';
   });
 }
 
