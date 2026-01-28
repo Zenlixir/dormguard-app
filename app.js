@@ -15,12 +15,12 @@ const viewDatBtn = document.getElementById('viewdat');
 const alertToggle = document.getElementById('alertToggle');
 
 // ------------------- SERVER BASE -------------------
-// Auto-detect local vs LAN
+// Auto-detect: if running on same device, use localhost; otherwise use LAN
 let SERVER_BASE;
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
   SERVER_BASE = 'http://127.0.0.1:3000';
 } else {
-  SERVER_BASE = 'http://192.168.0.2:3000'; // Replace with your actual LAN IP
+  SERVER_BASE = 'http://192.168.0.2:3000'; // Replace with your Termux / server LAN IP
 }
 console.log('Using server at:', SERVER_BASE);
 
@@ -69,7 +69,6 @@ async function fetchServerData() {
 
     const lastOpen = data.history.find(e => e.door === 'OPEN');
     lastOpenedEl.textContent = lastOpen ? lastOpen.time : '-';
-
   } catch (err) {
     console.error('Server not reachable', err);
   }
