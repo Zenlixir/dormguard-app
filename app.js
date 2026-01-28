@@ -14,23 +14,8 @@ const viewDatBtn = document.getElementById('viewdat');
 
 const alertToggle = document.getElementById('alertToggle');
 
-// ------------------- SERVER BASE -------------------
-// Auto-detect: if running on same device, use localhost; if not, use LAN
-let SERVER_BASE;
-
-// If app is on the same device as the server, use 127.0.0.1
-// If not, use LAN IP
-if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-  SERVER_BASE = 'http://127.0.0.1:3000';
-} else if (location.hostname === '192.168.0.2') {
-  // Running on same device but acess via LAN IP
-  SERVER_BASE = 'http://127.0.0.1:3000';
-} else {
-  // Default for other devices on same network
-  SERVER_BASE = 'http://192.168.0.2:3000'; 
-}
-
-console.log('Using server at:', SERVER_BASE);
+// Base URL for Node server
+const SERVER_BASE = 'http://127.0.0.1:3000';
 
 // ------------------- NAVIGATION -------------------
 buttons.forEach(btn => {
@@ -56,27 +41,31 @@ if (alertToggle) {
   });
 }
 
-// ------------------- ADD EVENT -------------------
+// ------------------- ADD EVENT TO LIST -------------------
 function addEvent(text, time = null) {
   const li = document.createElement('li');
   li.textContent = `${time || new Date().toLocaleTimeString()} — ${text}`;
   eventListEl.prepend(li);
 }
 
-// ------------------- FETCH SERVER DATA -------------------
+// ------------------- FETCH DATA FROM NODE SERVER -------------------
 async function fetchServerData() {
   try {
     const res = await fetch(`${SERVER_BASE}/api/status`);
     const data = await res.json();
 
+    // Update current status
     doorStatusEl.textContent = data.current.door;
     batteryLevelEl.textContent = data.current.battery;
 
+    // Update event list
     eventListEl.innerHTML = '';
     data.history.forEach(item => addEvent(item.event, item.time));
 
+    // Update last opened
     const lastOpen = data.history.find(e => e.door === 'OPEN');
     lastOpenedEl.textContent = lastOpen ? lastOpen.time : '-';
+
   } catch (err) {
     console.error('Server not reachable', err);
   }
