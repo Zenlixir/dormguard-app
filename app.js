@@ -15,13 +15,21 @@ const viewDatBtn = document.getElementById('viewdat');
 const alertToggle = document.getElementById('alertToggle');
 
 // ------------------- SERVER BASE -------------------
-// Auto-detect: if running on same device, use localhost; otherwise use LAN
+// Auto-detect: if running on same device, use localhost; if not, use LAN
 let SERVER_BASE;
+
+// If app is on the same device as the server, use 127.0.0.1
+// If not, use LAN IP
 if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
   SERVER_BASE = 'http://127.0.0.1:3000';
+} else if (location.hostname === '192.168.0.2') {
+  // Running on same device but acess via LAN IP
+  SERVER_BASE = 'http://127.0.0.1:3000';
 } else {
-  SERVER_BASE = 'http://192.168.0.2:3000'; // Replace with your Termux / server LAN IP
+  // Default for other devices on same network
+  SERVER_BASE = 'http://192.168.0.2:3000'; 
 }
+
 console.log('Using server at:', SERVER_BASE);
 
 // ------------------- NAVIGATION -------------------
