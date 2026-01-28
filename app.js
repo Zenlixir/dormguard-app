@@ -14,8 +14,15 @@ const viewDatBtn = document.getElementById('viewdat');
 
 const alertToggle = document.getElementById('alertToggle');
 
-// Base URL for Node server
-const SERVER_BASE = 'http://127.0.0.1:3000';
+// ------------------- SERVER BASE -------------------
+// Auto-detect local vs LAN
+let SERVER_BASE;
+if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  SERVER_BASE = 'http://127.0.0.1:3000';
+} else {
+  SERVER_BASE = 'http://192.168.0.2:3000'; // Replace with your actual LAN IP
+}
+console.log('Using server at:', SERVER_BASE);
 
 // ------------------- NAVIGATION -------------------
 buttons.forEach(btn => {
@@ -41,28 +48,25 @@ if (alertToggle) {
   });
 }
 
-// ------------------- ADD EVENT TO LIST -------------------
+// ------------------- ADD EVENT -------------------
 function addEvent(text, time = null) {
   const li = document.createElement('li');
   li.textContent = `${time || new Date().toLocaleTimeString()} — ${text}`;
   eventListEl.prepend(li);
 }
 
-// ------------------- FETCH DATA FROM NODE SERVER -------------------
+// ------------------- FETCH SERVER DATA -------------------
 async function fetchServerData() {
   try {
     const res = await fetch(`${SERVER_BASE}/api/status`);
     const data = await res.json();
 
-    // Update current status
     doorStatusEl.textContent = data.current.door;
     batteryLevelEl.textContent = data.current.battery;
 
-    // Update event list
     eventListEl.innerHTML = '';
     data.history.forEach(item => addEvent(item.event, item.time));
 
-    // Update last opened
     const lastOpen = data.history.find(e => e.door === 'OPEN');
     lastOpenedEl.textContent = lastOpen ? lastOpen.time : '-';
 
