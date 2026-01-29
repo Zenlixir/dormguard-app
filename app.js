@@ -56,19 +56,26 @@ async function fetchServerData() {
 
     // Update current status
     doorStatusEl.textContent = data.current.door;
-    batteryLevelEl.textContent = data.current.battery;
+    batteryLevelEl.textContent = data.current.battery + '%';
 
-    // Update event list
+    // Update event list: Time | Date - Door
     eventListEl.innerHTML = '';
-    data.history.forEach(item => addEvent(item.event, item.time));
+    data.history.forEach(item => addEvent(`${item.time} | ${item.date} - ${item.door}`));
 
     // Update last opened
     const lastOpen = data.history.find(e => e.door === 'OPEN');
-    lastOpenedEl.textContent = lastOpen ? lastOpen.time : '-';
+    lastOpenedEl.textContent = lastOpen ? `${lastOpen.time} | ${lastOpen.date}` : '-';
 
   } catch (err) {
     console.error('Server not reachable', err);
   }
+}
+
+// ------------------- ADD EVENT TO LIST -------------------
+function addEvent(text) {
+  const li = document.createElement('li');
+  li.textContent = text;
+  eventListEl.prepend(li);
 }
 
 // ------------------- DATABASE BUTTONS -------------------
