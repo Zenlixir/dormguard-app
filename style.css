@@ -7,6 +7,18 @@
   touch-action: manipulation; 
 }
 
+@font-face {
+    font-family: 'Monocraft';
+    src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#eventList, 
+#eventList li {
+  font-family: 'Monocraft', monospace !important;
+}
+
 /* ---------- THEME ---------- */
 .light {
   --md-sys-color-primary: rgb(88 92 96);
@@ -251,7 +263,18 @@ h1 {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: background 0.2s ease, border-radius 0.35s ease;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  transition: 
+    background 0.2s ease, 
+    border-radius 0.35s ease, 
+    transform 0.15s ease, 
+    box-shadow 0.15s ease;
+}
+
+.md-btn:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
 }
 
 .nav-item {
@@ -540,4 +563,12 @@ line-height: 1;
   color: var(--md-sys-color-primary);
   transform: scale(1.1);
   transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.app-version {
+  text-align: center;
+  margin: 16px 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--md-sys-color-on-background);
 }
