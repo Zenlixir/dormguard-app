@@ -364,6 +364,7 @@ h1 {
   position: fixed; bottom: 0; left: 0; right: 0; height: 72px;
   display: flex; justify-content: space-around; align-items: center;
   background: var(--md-sys-color-surface-container-high);
+  z-index: 999;
 }
 .nav-item span.material-symbols-outlined { font-size: 24px; }
 .nav-item .nav-label { transition: opacity 0.2s; }
