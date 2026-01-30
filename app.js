@@ -93,7 +93,6 @@ if (alertToggle) {
 
 // ----- DOOR ALERT LOGIC -----
 function handleDoorAlert() {
-
   if (!alertEnabled) {
     alertToggle.textContent = 'No Alert';
     doorStatusEl.style.color = '';
@@ -101,28 +100,39 @@ function handleDoorAlert() {
       clearInterval(doorOpenInterval);
       doorOpenInterval = null;
     }
+    if (doorOpenTimer) {
+      clearTimeout(doorOpenTimer);
+      doorOpenTimer = null;
+    }
     return;
   }
 
   if (doorStatusEl.textContent === 'OPEN') {
-    if (!doorOpenInterval && !alertDisabled) {
-      doorOpenInterval = setInterval(() => {
+    if (!doorOpenTimer && !alertDisabled && !doorOpenInterval) {
+      
+      doorOpenTimer = setTimeout(() => {
+        
         if (navigator.vibrate) {
-
           doorStatusEl.style.color = 'red';
-
           navigator.vibrate([500, 200, 500]);
-
-          setTimeout(() => {
-            doorStatusEl.style.color = '';
-          }, 1200); 
-
-          alertToggle.textContent = 'Disable Alert';
+          setTimeout(() => { doorStatusEl.style.color = ''; }, 1200);
         }
-        console.log('Door open detected (5 sec interval test)');
+        alertToggle.textContent = 'Disable Alert';
+
+        doorOpenInterval = setInterval(() => {
+          if (navigator.vibrate) {
+            doorStatusEl.style.color = 'red';
+            navigator.vibrate([500, 200, 500]);
+            setTimeout(() => { doorStatusEl.style.color = ''; }, 1200);
+          }
+          console.log('Door open detected (5 sec interval)');
+        }, 5000);
+
+        doorOpenTimer = null; 
       }, 10000); 
     }
   } else {
+    
     alertToggle.textContent = 'No Alert';
     doorStatusEl.style.color = '';
     alertDisabled = false;
@@ -130,6 +140,10 @@ function handleDoorAlert() {
     if (doorOpenInterval) {
       clearInterval(doorOpenInterval);
       doorOpenInterval = null;
+    }
+    if (doorOpenTimer) {
+      clearTimeout(doorOpenTimer);
+      doorOpenTimer = null;
     }
   }
 }
@@ -183,7 +197,7 @@ latestDatBtn.addEventListener('click', async () => {
 });
 
 // ------------------- AUTO FETCH -------------------
-setInterval(fetchServerData, 5000);
+setInterval(fetchServerData, 1000);
 fetchServerData();
 
 // ------------------- MD BUTTON RIPPLE -------------------
