@@ -1,3 +1,8 @@
+let doorOpenTimer = null;
+let doorOpenInterval = null;
+let alertDisabled = false;
+let alertEnabled = true;
+
 // ------------------- DOM Elements -------------------
 const pages = document.querySelectorAll('.page');
 const buttons = document.querySelectorAll('.nav-item');
@@ -13,6 +18,7 @@ const latestDatBtn = document.getElementById('latestdat');
 const viewDatBtn = document.getElementById('viewdat');
 
 const alertToggle = document.getElementById('alertToggle');
+const alertSwitch = document.getElementById('alertSwitch');
 
 // Base URL for Node server
 const SERVER_BASE = 'http://127.0.0.1:3000';
@@ -27,17 +33,22 @@ buttons.forEach(btn => {
   });
 });
 
-// ------------------- DISABLE ALERT BUTTON -------------------
-if (alertToggle) {
-  alertToggle.addEventListener('click', async () => {
-    addEvent('Alert Disabled');
-    try {
-      await fetch(`${SERVER_BASE}/alert?state=off`);
-    } catch (err) {
-      console.error('Failed to disable alert on server:', err);
+// ------------------- ALERT SWITCH -------------------
+if (alertSwitch) {
+  alertEnabled = localStorage.getItem('alert') === 'on';
+  alertSwitch.checked = alertEnabled;
+
+  alertSwitch.addEventListener('change', () => {
+    alertEnabled = alertSwitch.checked;
+    localStorage.setItem('alert', alertEnabled ? 'on' : 'off');
+
+    if (!alertEnabled && doorOpenInterval) {
+      clearInterval(doorOpenInterval);
+      doorOpenInterval = null;
+      alertToggle.textContent = 'No Alert';
+      doorStatusEl.style.color = '';
+      alertDisabled = false;
     }
-    alertToggle.disabled = true;
-    alertToggle.textContent = 'Alert Disabled';
   });
 }
 
@@ -58,24 +69,86 @@ async function fetchServerData() {
     doorStatusEl.textContent = data.current.door;
     batteryLevelEl.textContent = data.current.battery + '%';
 
-    // Update event list: Time | Date - Door
-    eventListEl.innerHTML = '';
-    data.history.forEach(item => addEvent(`${item.time} | ${item.date} - ${item.door}`));
+// ------------------- ALERT TOGGLE BUTTON -------------------
+if (alertToggle) {
+  alertToggle.addEventListener('click', async () => {
+    if (doorStatusEl.textContent === 'OPEN' && alertEnabled) {
+      addEvent('Alert Disabled');
+      try {
+        await fetch(`${SERVER_BASE}/alert?state=off`);
+      } catch (err) {
+        console.error('Failed to disable alert on server:', err);
+      }
 
-    // Update last opened
+      alertDisabled = true; 
+      if (doorOpenInterval) {
+        clearInterval(doorOpenInterval);
+        doorOpenInterval = null;
+      }
+
+      alertToggle.textContent = 'No Alert'; 
+    }
+  });
+}
+
+// ----- DOOR ALERT LOGIC -----
+function handleDoorAlert() {
+
+  if (!alertEnabled) {
+    alertToggle.textContent = 'No Alert';
+    doorStatusEl.style.color = '';
+    if (doorOpenInterval) {
+      clearInterval(doorOpenInterval);
+      doorOpenInterval = null;
+    }
+    return;
+  }
+
+  if (doorStatusEl.textContent === 'OPEN') {
+    if (!doorOpenInterval && !alertDisabled) {
+      doorOpenInterval = setInterval(() => {
+        if (navigator.vibrate) {
+
+          doorStatusEl.style.color = 'red';
+
+          navigator.vibrate([500, 200, 500]);
+
+          setTimeout(() => {
+            doorStatusEl.style.color = '';
+          }, 1200); 
+
+          alertToggle.textContent = 'Disable Alert';
+        }
+        console.log('Door open detected (5 sec interval test)');
+      }, 10000); 
+    }
+  } else {
+    alertToggle.textContent = 'No Alert';
+    doorStatusEl.style.color = '';
+    alertDisabled = false;
+
+    if (doorOpenInterval) {
+      clearInterval(doorOpenInterval);
+      doorOpenInterval = null;
+    }
+  }
+}
+
+handleDoorAlert();
+
+    eventListEl.innerHTML = '';
+data.history.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = `${item.time} | ${item.date} - ${item.door}`;
+  eventListEl.prepend(li);
+});
+
     const lastOpen = data.history.find(e => e.door === 'OPEN');
     lastOpenedEl.textContent = lastOpen ? `${lastOpen.time} | ${lastOpen.date}` : '-';
 
   } catch (err) {
     console.error('Server not reachable', err);
   }
-}
-
-// ------------------- ADD EVENT TO LIST -------------------
-function addEvent(text) {
-  const li = document.createElement('li');
-  li.textContent = text;
-  eventListEl.prepend(li);
 }
 
 // ------------------- DATABASE BUTTONS -------------------
