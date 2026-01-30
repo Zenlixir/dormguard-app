@@ -19,6 +19,14 @@
   font-family: 'Monocraft', monospace !important;
 }
 
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
 /* ---------- THEME ---------- */
 .light {
   --md-sys-color-primary: rgb(88 92 96);
