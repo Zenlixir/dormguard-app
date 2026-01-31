@@ -154,7 +154,7 @@ handleDoorAlert();
 data.history.forEach(item => {
   const li = document.createElement('li');
   li.textContent = `${item.time} | ${item.date} - ${item.door}`;
-  eventListEl.prepend(li);
+  eventListEl.append(li);
 });
 
     const lastOpen = data.history.find(e => e.door === 'OPEN');
