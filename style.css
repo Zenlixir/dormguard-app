@@ -17,6 +17,9 @@
 #eventList, 
 #eventList li {
   font-family: 'Monocraft', monospace !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .light {
