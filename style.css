@@ -7,6 +7,10 @@
   touch-action: manipulation; 
 }
 
+a {
+  color: inherit;
+}
+
 @font-face {
     font-family: 'Monocraft';
     src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
@@ -119,7 +123,7 @@ body {
 h1 { font-size: 24px; margin-bottom: 16px; }
 
 /* ---------- CARD ---------- */
-.card, .info, .another-info {
+.card, .info, .another-info, .user-config, .tutorial {
   border: 1px solid var(--md-sys-color-outline);
   border-radius: 16px;
   padding: 16px;
@@ -128,6 +132,10 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 }
 .label { font-size: 14px; opacity: 0.7; }
 .value { font-size: 24px; font-weight: 600; }
+
+.tutorial {
+  margin-bottom: 2px;
+}
 
 .value-row {
   display: flex;
@@ -200,16 +208,15 @@ h1 { font-size: 24px; margin-bottom: 16px; }
   animation: cardFadeUp 0.5s ease forwards;
 }
 
-.page.active .settings-item, .telegram-btn {
+.page.active .settings-item, .setup-btn {
   animation: cardFadeDown 0.5s ease forwards;
 }
-
 
 .page.active .card:nth-of-type(1) { animation-delay: 0.08s; }
 .page.active .card:nth-of-type(2) { animation-delay: 0.16s; }
 .page.active .card:nth-of-type(3) { animation-delay: 0.24s; }
 .page.active .card:nth-of-type(4) { animation-delay: 0.32s; }
-.telegram-btn { animation-delay: 0.5s; }
+.setup-btn { animation-delay: 0.5s; }
 
 .database, .settings-section {
   position: fixed;
@@ -452,7 +459,7 @@ h1 {
   margin: 0;
 }
 
-.telegram-btn {
+.setup-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -460,7 +467,7 @@ h1 {
   opacity: 0;
 }
 
-.telegram-btn .material-symbols-outlined {
+.setup-btn .material-symbols-outlined {
   font-size: 18px;
 }
 
@@ -527,10 +534,10 @@ line-height: 1;
   opacity: 0.6;
 }
 
-.another-info {
+.another-info, .user-config, .tutorial {
   border: 2px solid var(--md-sys-color-surface-container);
   background: none;
-  border-radius: 16px;
+  border-radius: 24px;
   padding: 16px;
 }
 
@@ -587,4 +594,149 @@ line-height: 1;
   font-weight: 600;
   font-size: 14px;
   color: var(--md-sys-color-on-background);
+}
+
+.user-config, {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; 
+}
+
+.user-input {
+  width: calc(100% - 16px); 
+  max-width: 400px;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; 
+}
+
+.user-input input,
+.user-input button {
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.md-input, .md-input2 {
+  flex: 1;
+  padding: 12px 16px;
+  margin: 4px 0;
+  font-weight: 600;
+  font-size: 12px;
+  border: 2px solid var(--md-sys-color-surface-container);
+  background: none;
+  border-radius: 16px;
+  color: var(--md-sys-color-on-surface);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.code-container .tools {
+  display: flex;
+  align-items: center;
+  padding: 9px;
+}
+
+.code-container .circle {
+  padding: 0 4px;
+}
+
+.code-container .box {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.code-container .red { background-color: #ff605c; }
+.code-container .yellow { background-color: #ffbd44; }
+.code-container .green { background-color: #00ca4e; }
+
+.code-container {
+  position: relative; 
+  max-width: 800px; 
+  margin: 20px auto;
+  border-radius: 8px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--md-sys-color-on-primary-container);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.2s ease;
+}
+
+.copy-btn:active {
+  transform: scale(0.9);
+}
+
+.code-container .card__content pre {
+  font-family: 'Monocraft', monospace;
+  padding: 10px;
+  font-size: 0.8rem;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.step-number {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-right: 6px;
+  font-size: 0.85em;
+}
+
+.tutorial h3, 
+.tutorial strong {
+  font-variation-settings: 
+    "slnt" 0,
+    "wdth" 70,
+    "GRAD" 0,
+    "ROND" 200; 
+}
+
+.sheets-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; 
+  margin: 16px 0;
+}
+
+.sheets-icon {
+  font-size: 150px; 
+  color: var(--md-sys-color-primary-container);
+}
+
+button {
+  position: relative; 
+}
+
+button md-circular-progress {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
 }
