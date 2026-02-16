@@ -68,7 +68,7 @@ resetConfigBtn.addEventListener('click', () => {
 // ------------------- NAVIGATION -------------------
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(64);
+    if (navigator.vibrate) navigator.vibrate(32);
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     pages.forEach(p => p.classList.remove('active'));
