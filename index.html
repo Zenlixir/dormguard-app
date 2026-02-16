@@ -16,18 +16,18 @@
       <link rel="stylesheet" href="style.css">
       <script defer src="app.js"></script>
       <script type="importmap">
-    {
-      "imports": {
-        "@material/web/": "https://esm.run/@material/web/"
-      }
-    }
-  </script>
-  <script type="module">
-    import '@material/web/all.js';
-    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-
-    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-  </script>
+         {
+           "imports": {
+             "@material/web/": "https://esm.run/@material/web/"
+           }
+         }
+      </script>
+      <script type="module">
+         import '@material/web/all.js';
+         import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+         
+         document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+      </script>
    </head>
    <body class="light">
       <!-- HOME PAGE -->
@@ -48,12 +48,12 @@
             </div>
          </div>
          <div class="card">
-  <div class="label">Time</div>
-  <div class="value-row">
-    <div id="currentTime" class="value">--:--:--</div>
-    <span class="material-symbols-outlined card-icon">schedule</span>
-  </div>
-</div>
+            <div class="label">Time</div>
+            <div class="value-row">
+               <div id="currentTime" class="value">--:--:--</div>
+               <span class="material-symbols-outlined card-icon">schedule</span>
+            </div>
+         </div>
          <div class="controls">
             <button class="md-btn setup-btn" id="openSetupBtn">
             <span class="material-symbols-outlined">dashboard_customize</span>
@@ -205,8 +205,8 @@
             <div class="tutorial">
                <h3><span class="step-number">Step 1</span> Create a new Google Sheet</h3>
                <p>Go to <a href="https://sheets.google.com" target="_blank">Google Sheets</a> and create a new blank spreadsheet. Name it "DormGuard" or anything you want, up to you.</p>
-               </div>
-               <div class="tutorial">
+            </div>
+            <div class="tutorial">
                <h3><span class="step-number">Step 2</span> Prepare the Script</h3>
                <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
                <div class="code-container" id="apiCodeContainer">
@@ -239,25 +239,25 @@ function doPost(e) {
     </pre>
                   </div>
                </div>
-              </div>
-               <script>
-                  const copyBtn = document.getElementById('copyApiCode');
-                  const codeContainer = document.getElementById('apiCodeContainer');
-                  
-                  copyBtn.addEventListener('click', () => {
-                    if (navigator.vibrate) navigator.vibrate(64);
-                  
-                    const code = codeContainer.querySelector('pre').innerText;
-                  
-                    navigator.clipboard.writeText(code).then(() => {
-                      copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
-                      setTimeout(() => {
-                        copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
-                      }, 1500);
-                    }).catch(err => console.error('Copy failed', err));
-                  });
-               </script>
-               <div class="tutorial">
+            </div>
+            <script>
+               const copyBtn = document.getElementById('copyApiCode');
+               const codeContainer = document.getElementById('apiCodeContainer');
+               
+               copyBtn.addEventListener('click', () => {
+                 if (navigator.vibrate) navigator.vibrate(64);
+               
+                 const code = codeContainer.querySelector('pre').innerText;
+               
+                 navigator.clipboard.writeText(code).then(() => {
+                   copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
+                   setTimeout(() => {
+                     copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
+                   }, 1500);
+                 }).catch(err => console.error('Copy failed', err));
+               });
+            </script>
+            <div class="tutorial">
                <h3><span class="step-number">Step 3</span> Deploy as Web App</h3>
                <ol>
                   <li>Click <strong>Deploy → New deployment</strong>.</li>
@@ -266,17 +266,16 @@ function doPost(e) {
                   <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
                   <li>Click <strong>Deploy</strong> and authorize the script.</li>
                </ol>
-               </div>
-               <div class="tutorial">
+            </div>
+            <div class="tutorial">
                <h3><span class="step-number">Step 4</span> Get the Web App URL</h3>
                <p>After deployment, copy the <strong>Web app URL</strong>. This is your API endpoint for GET and POST requests. Make sure dont lose it.</p>
-               </div>
-               <div class="tutorial">
+            </div>
+            <div class="tutorial">
                <h3><span class="step-number">Step 5</span> Test API</h3>
                <p>Yes, just test. Not working? skill issue.</p>
             </div>
             <div class="settings-item">
-              
             </div>
          </div>
       </main>
