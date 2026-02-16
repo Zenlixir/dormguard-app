@@ -1,279 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DormGuard</title>
-  <meta name="theme-color" content="rgb(235 231 231)" />
-    <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="icon" type="image/png" href="icon.png" />
-    <link rel="manifest" href="site.webmanifest" />
-    <meta name="apple-mobile-web-app-title" content="DormGuard" />
-<meta name="color-scheme" content="dark light">
-
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
-<link rel="preload" href="https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf" as="font" type="font/ttf" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
-</head>
-<body class="light">
-
-  <!-- HOME PAGE -->
-  <main class="page active" id="home">
-    <h1>DormGuard</h1>
-    <div class="card">
-  <div class="label">Door Status</div>
-  <div class="value-row">
-    <div id="doorStatus" class="value">-</div>
-    <span class="material-symbols-outlined card-icon">door_front</span>
-  </div>
-</div>
-
-<div class="card">
-  <div class="label">Last Opened At</div>
-  <div class="value-row">
-    <div id="LastOpened" class="value">-</div>
-    <span class="material-symbols-outlined card-icon">history</span>
-  </div>
-</div>
-
-<div class="card">
-  <div class="label">Battery</div>
-  <div class="value-row">
-    <div id="batteryLevel" class="value">--%</div>
-    <span class="material-symbols-outlined card-icon">battery_full</span>
-  </div>
-</div>
-    <div class="controls">
-      <button class="md-btn telegram-btn" onclick="window.open('https://t.me/', '_blank')">
-  <span class="material-symbols-outlined">launch</span>
-  Telegram Bot
-</button>
-     <div class="settings-section">
-  <div class="label">
-    <span class="material-symbols-outlined">alarm</span>
-    Alert Control
-  </div>
-  <button id="alertToggle" class="md-btn">No Alert</button>
-</div>
-    </div>
-  </main>
-
-<!-- LOGS PAGE -->
-<main class="page" id="logs">
-  <h1>
-    Logs
-    <button id="viewdat" class="sheets-btn" title="View on Sheets">
-      <span class="material-symbols-outlined">table_view</span>
-    </button>
-  </h1>
-
-  <div class="logs-wrapper">
-    <ul id="eventList" class="md-list"></ul>
-  </div>
-
-  <div class="database">
-    <div class="label">
-  <span class="material-symbols-outlined">download</span>
-  Download Database
-</div>
-    <div class="db-actions">
-      <button class="md-btn" id="fulldat">Full Records</button>
-      <button class="md-btn" id="latestdat">Latest</button>
-    </div>
-  </div>
-</main>
-
-<!-- SETTINGS PAGE -->
-<main class="page" id="settings">
-  <h1>Settings</h1>
-
-  <div class="settings-list">
-
-    <div class="settings-header">DormGuard Device</div>
-
-    <div class="settings-item">
-      <span class="material-symbols-outlined">lightbulb</span>
-      <span class="setting-text">LED Blink</span>
-      <label class="md-switch">
-        <input type="checkbox" id="ledSwitch">
-        <span></span>
-      </label>
-    </div>
-
-    <div class="settings-item">
-      <span class="material-symbols-outlined">volume_up</span>
-      <span class="setting-text">Buzzer</span>
-      <label class="md-switch">
-        <input type="checkbox" id="buzzerSwitch">
-        <span></span>
-      </label>
-    </div>
-
-    <div class="settings-item">
-      <span class="material-symbols-outlined">vibration</span>
-      <span class="setting-text">Vibration</span>
-      <label class="md-switch">
-        <input type="checkbox" id="vibrationSwitch">
-        <span></span>
-      </label>
-    </div>
-
-    <div class="settings-header">App</div>
-
-    <div class="settings-item">
-      <span class="material-symbols-outlined">dark_mode</span>
-      <span class="setting-text">Dark Mode</span>
-      <label class="md-switch">
-        <input type="checkbox" id="darkModeSwitch">
-        <span></span>
-      </label>
-    </div>
-    <div class="settings-item">
-      <span class="material-symbols-outlined">notifications</span>
-      <span class="setting-text">Notification</span>
-      <label class="md-switch">
-        <input type="checkbox" id="notificationsSwitch">
-        <span></span>
-      </label>
-    </div>
-    <div class="settings-item">
-      <span class="material-symbols-outlined">warning</span>
-      <span class="setting-text">Alert</span>
-      <label class="md-switch">
-        <input type="checkbox" id="alertSwitch">
-        <span></span>
-      </label>
-    </div>
-    
-    <div class="settings-header">Accessibility</div>
-
-<div class="settings-item">
-  <span class="material-symbols-outlined">motion_photos_off</span>
-  <span class="setting-text">Disable Animation</span>
-  <label class="md-switch">
-    <input type="checkbox" id="reduceMotionSwitch">
-    <span></span>
-  </label>
-</div>
-
-<div class="settings-item">
-  <span class="material-symbols-outlined">contrast</span>
-  <span class="setting-text">High Contrast</span>
-  <label class="md-switch">
-    <input type="checkbox" id="contrastSwitch">
-    <span></span>
-  </label>
-</div>
-
-  </div>
-</main>
-
-<main class="page" id="about">
-  <h1>
-    About
-    <button class="dev-btn">
-      <a href="https://github.com/zenlixir" target="_blank" class="icon-link">
-  <span class="material-symbols-outlined">code</span>
-</a>
-    </button>
-  </h1>
-  <div class="info">
-  <img src="icon.png" alt="Icon" />
-  <div class="info-text">
-    <div>Dorm Guard</div>
-    <div class="creator">by Zenlixir</div>
-  </div>
-</div>
-<div class="another-info">
-  <h2>Credits</h2>
-  <ul class="credits-list">
-    <li>
-      <span class="material-symbols-outlined">code</span>
-      <div class="credits-text">
-        Google Sheets API
-        <div class="credits-desc">by Google</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">palette</span>
-      <div class="credits-text">
-        Material Design Icons
-        <div class="credits-desc">by Google</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">font_download</span>
-      <div class="credits-text">
-        Google Fonts (Google Sans Flex)
-        <div class="credits-desc">by Google</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">sports_esports</span>
-      <div class="credits-text">
-        Monocraft font (based on Mojangles)
-        <div class="credits-desc">by IdreesInc | Original inspiration: Mojang Studios</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">cloud</span>
-      <div class="credits-text">
-        Material You
-        <div class="credits-desc">by Google</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">ac_unit</span>
-      <div class="credits-text">
-        About screen inspired from Hail app <br>(and mbloader)
-        <div class="credits-desc">by aistra0528</div>
-      </div>
-    </li>
-    <li>
-      <span class="material-symbols-outlined">terminal</span>
-      <div class="credits-text">
-        Node.js
-        <div class="credits-desc">by OpenJS Foundation</div>
-      </div>
-    </li>
-  </ul>
-</div>
-<div class="app-version">v1.0.0-beta.2</div>
-</main>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-page="home">
-      <span class="material-symbols-outlined">home</span>
-      <span class="nav-label">Home</span>
-    </button>
-    <button class="nav-item" data-page="logs">
-      <span class="material-symbols-outlined">list</span>
-      <span class="nav-label">Logs</span>
-    </button>
-    <button class="nav-item" data-page="settings">
-      <span class="material-symbols-outlined">settings</span>
-      <span class="nav-label">Settings</span>
-    </button>
-    <button class="nav-item" data-page="about">
-      <span class="material-symbols-outlined">info</span>
-      <span class="nav-label">About</span>
-    </button>
-  </nav>
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.md-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation(); 
-      if (navigator.vibrate) {
-        navigator.vibrate(64);
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>DormGuard</title>
+      <meta name="theme-color" content="rgb(235 231 231)" />
+      <link rel="apple-touch-icon" href="icon.png" />
+      <link rel="icon" type="image/png" href="icon.png" />
+      <link rel="manifest" href="site.webmanifest" />
+      <meta name="apple-mobile-web-app-title" content="DormGuard" />
+      <meta name="color-scheme" content="dark light">
+      <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+      <link rel="preload" href="https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf" as="font" type="font/ttf" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+      <link rel="stylesheet" href="style.css">
+      <script defer src="app.js"></script>
+      <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
       }
-    });
-  });
-});
-</script>
-</body>
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
+   </head>
+   <body class="light">
+      <!-- HOME PAGE -->
+      <main class="page active" id="home">
+         <h1>DormGuard</h1>
+         <div class="card">
+            <div class="label">Door Status</div>
+            <div class="value-row">
+               <div id="doorStatus" class="value">-</div>
+               <span class="material-symbols-outlined card-icon">door_front</span>
+            </div>
+         </div>
+         <div class="card">
+            <div class="label">Last Opened At</div>
+            <div class="value-row">
+               <div id="LastOpened" class="value">-</div>
+               <span class="material-symbols-outlined card-icon">history</span>
+            </div>
+         </div>
+         <div class="card">
+  <div class="label">Time</div>
+  <div class="value-row">
+    <div id="currentTime" class="value">--:--:--</div>
+    <span class="material-symbols-outlined card-icon">schedule</span>
+  </div>
+</div>
+         <div class="controls">
+            <button class="md-btn setup-btn" id="openSetupBtn">
+            <span class="material-symbols-outlined">dashboard_customize</span>
+            Setup DormGuard
+            </button>
+            <div class="settings-section">
+               <div class="label">
+                  <span class="material-symbols-outlined">alarm</span>
+                  Alert Control
+               </div>
+               <button id="alertToggle" class="md-btn">No Alert</button>
+            </div>
+         </div>
+      </main>
+      <script>
+         document.getElementById('openSetupBtn').addEventListener('click', () => {
+           document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+           const settingsPage = document.getElementById('settings');
+           settingsPage.classList.add('active');
+         
+           document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+           document.querySelector('.nav-item[data-page="settings"]').classList.add('active');
+         
+           const configSection = document.getElementById('configSection');
+           if (configSection) {
+             setTimeout(() => {
+               configSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+             }, 1000);
+           }
+         });
+      </script>
+      <!-- LOGS PAGE -->
+      <main class="page" id="logs">
+         <h1>
+            Logs
+            <button id="viewdat" class="sheets-btn" title="View on Sheets">
+            <span class="material-symbols-outlined">table_view</span>
+            </button>
+         </h1>
+         <div class="logs-wrapper">
+            <ul id="eventList" class="md-list"></ul>
+         </div>
+         <div class="database">
+            <div class="label">
+               <span class="material-symbols-outlined">download</span>
+               Download Database
+            </div>
+            <div class="db-actions">
+               <button class="md-btn" id="fulldat">Full Records</button>
+               <button class="md-btn" id="latestdat">Latest</button>
+            </div>
+         </div>
+      </main>
+      <!-- SETTINGS PAGE -->
+      <main class="page" id="settings">
+         <h1>Settings</h1>
+         <div class="settings-list">
+            <div class="settings-header">DormGuard Device</div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">lightbulb</span>
+               <span class="setting-text">LED Blink</span>
+               <label class="md-switch">
+               <input type="checkbox" id="ledSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">volume_up</span>
+               <span class="setting-text">Buzzer</span>
+               <label class="md-switch">
+               <input type="checkbox" id="buzzerSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">vibration</span>
+               <span class="setting-text">Vibration</span>
+               <label class="md-switch">
+               <input type="checkbox" id="vibrationSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-header">App</div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">dark_mode</span>
+               <span class="setting-text">Dark Mode</span>
+               <label class="md-switch">
+               <input type="checkbox" id="darkModeSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">notifications</span>
+               <span class="setting-text">Notification</span>
+               <label class="md-switch">
+               <input type="checkbox" id="notificationsSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">warning</span>
+               <span class="setting-text">Alert</span>
+               <label class="md-switch">
+               <input type="checkbox" id="alertSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-header">Accessibility</div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">motion_photos_off</span>
+               <span class="setting-text">Disable Animation</span>
+               <label class="md-switch">
+               <input type="checkbox" id="reduceMotionSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">contrast</span>
+               <span class="setting-text">High Contrast</span>
+               <label class="md-switch">
+               <input type="checkbox" id="contrastSwitch">
+               <span></span>
+               </label>
+            </div>
+            <div class="settings-header" id="configSection">DormGuard Config</div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">terminal</span>
+               <span class="setting-text">Google Sheet API</span>
+            </div>
+            <div class="user-config">
+               <div class="user-input">
+                  <div class="sheets-input-container">
+                     <span class="material-symbols-outlined sheets-icon">assignment</span>
+                     <span>Web app API</span>
+                     <input class="md-input" type="text" placeholder='OwO “Paste your web app URL here now”'>
+                     <span>Sheets link</span>
+                     <input class="md-input2" type="text" placeholder='And your sheets link (Optional but recomended)'>
+                  </div>
+               </div>
+               <div class="user-input">
+                  <button id="saveConfig" class="md-btn">Save</button>
+                  <button id="resetConfig" class="md-btn">Reset</button>
+               </div>
+            </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">info</span>
+               <span class="setting-text">How to get web app API?</span>
+            </div>
+            <div class="tutorial">
+               <h3><span class="step-number">Step 1</span> Create a new Google Sheet</h3>
+               <p>Go to <a href="https://sheets.google.com" target="_blank">Google Sheets</a> and create a new blank spreadsheet. Name it "DormGuard" or anything you want, up to you.</p>
+               </div>
+               <div class="tutorial">
+               <h3><span class="step-number">Step 2</span> Prepare the Script</h3>
+               <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
+               <div class="code-container" id="apiCodeContainer">
+                  <div class="tools">
+                     <div class="circle"><span class="red box"></span></div>
+                     <div class="circle"><span class="yellow box"></span></div>
+                     <div class="circle"><span class="green box"></span></div>
+                  </div>
+                  <button id="copyApiCode" class="copy-btn" title="Copy Code">
+                  <span class="material-symbols-outlined">content_copy</span>
+                  </button>
+                  <div class="card__content">
+                     <pre>
+function doGet(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+  const data = sheet.getDataRange().getValues();
+  return ContentService.createTextOutput(JSON.stringify(data))
+                       .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+  const params = JSON.parse(e.postData.contents);
+  const row = [];
+  Object.keys(params).forEach(key => row.push(params[key]));
+  sheet.appendRow(row);
+  return ContentService.createTextOutput(JSON.stringify({status: "ok"}))
+                       .setMimeType(ContentService.MimeType.JSON);
+}
+    </pre>
+                  </div>
+               </div>
+              </div>
+               <script>
+                  const copyBtn = document.getElementById('copyApiCode');
+                  const codeContainer = document.getElementById('apiCodeContainer');
+                  
+                  copyBtn.addEventListener('click', () => {
+                    if (navigator.vibrate) navigator.vibrate(64);
+                  
+                    const code = codeContainer.querySelector('pre').innerText;
+                  
+                    navigator.clipboard.writeText(code).then(() => {
+                      copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
+                      setTimeout(() => {
+                        copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
+                      }, 1500);
+                    }).catch(err => console.error('Copy failed', err));
+                  });
+               </script>
+               <div class="tutorial">
+               <h3><span class="step-number">Step 3</span> Deploy as Web App</h3>
+               <ol>
+                  <li>Click <strong>Deploy → New deployment</strong>.</li>
+                  <li>Select <strong>Web app</strong> as the type.</li>
+                  <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
+                  <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
+                  <li>Click <strong>Deploy</strong> and authorize the script.</li>
+               </ol>
+               </div>
+               <div class="tutorial">
+               <h3><span class="step-number">Step 4</span> Get the Web App URL</h3>
+               <p>After deployment, copy the <strong>Web app URL</strong>. This is your API endpoint for GET and POST requests. Make sure dont lose it.</p>
+               </div>
+               <div class="tutorial">
+               <h3><span class="step-number">Step 5</span> Test API</h3>
+               <p>Yes, just test. Not working? skill issue.</p>
+            </div>
+            <div class="settings-item">
+              
+            </div>
+         </div>
+      </main>
+      <main class="page" id="about">
+         <h1>
+            About
+            <button class="dev-btn">
+            <a href="https://github.com/zenlixir" target="_blank" class="icon-link">
+            <span class="material-symbols-outlined">code</span>
+            </a>
+            </button>
+         </h1>
+         <div class="info">
+            <img src="icon.png" alt="Icon" />
+            <div class="info-text">
+               <div>Dorm Guard</div>
+               <div class="creator">by Zenlixir</div>
+            </div>
+         </div>
+         <div class="another-info">
+            <h2>Credits</h2>
+            <ul class="credits-list">
+               <li>
+                  <span class="material-symbols-outlined">code</span>
+                  <div class="credits-text">
+                     Google Sheets API
+                     <div class="credits-desc">by Google</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">palette</span>
+                  <div class="credits-text">
+                     Material Design Icons
+                     <div class="credits-desc">by Google</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">font_download</span>
+                  <div class="credits-text">
+                     Google Fonts (Google Sans Flex)
+                     <div class="credits-desc">by Google</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">sports_esports</span>
+                  <div class="credits-text">
+                     Monocraft font (based on Mojangles)
+                     <div class="credits-desc">by IdreesInc | Original inspiration: Mojang Studios</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">cloud</span>
+                  <div class="credits-text">
+                     Material You
+                     <div class="credits-desc">by Google</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">ac_unit</span>
+                  <div class="credits-text">
+                     About screen inspired from Hail app <br>(and mbloader)
+                     <div class="credits-desc">by aistra0528</div>
+                  </div>
+               </li>
+               <li>
+                  <span class="material-symbols-outlined">terminal</span>
+                  <div class="credits-text">
+                     Node.js
+                     <div class="credits-desc">by OpenJS Foundation</div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <div class="app-version">v1.0.1-beta.1</div>
+      </main>
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+         <button class="nav-item active" data-page="home">
+         <span class="material-symbols-outlined">home</span>
+         <span class="nav-label">Home</span>
+         </button>
+         <button class="nav-item" data-page="logs">
+         <span class="material-symbols-outlined">list</span>
+         <span class="nav-label">Logs</span>
+         </button>
+         <button class="nav-item" data-page="settings">
+         <span class="material-symbols-outlined">settings</span>
+         <span class="nav-label">Settings</span>
+         </button>
+         <button class="nav-item" data-page="about">
+         <span class="material-symbols-outlined">info</span>
+         <span class="nav-label">About</span>
+         </button>
+      </nav>
+      <script>
+         document.addEventListener('DOMContentLoaded', () => {
+           document.querySelectorAll('.md-btn').forEach(btn => {
+             btn.addEventListener('click', (e) => {
+               e.stopPropagation(); 
+               if (navigator.vibrate) {
+                 navigator.vibrate(64);
+               }
+             });
+           });
+         });
+      </script>
+   </body>
 </html>
