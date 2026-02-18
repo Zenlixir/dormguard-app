@@ -417,3 +417,7 @@ document.addEventListener('pointerdown', e => {
   }          
 });          
 document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
