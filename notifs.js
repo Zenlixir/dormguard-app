@@ -75,8 +75,8 @@ function notify() {
 
     reg.showNotification("DormGuard Alert", {
       body: "Door open > 3 minutes",
-      icon: "icon.png",
-      badge: "icon.png",
+      icon: "empty.png",
+      badge: "badge.png",
       vibrate: [200, 100, 200],
       tag: "door-alert",
       renotify: true
