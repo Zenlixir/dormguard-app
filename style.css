@@ -134,7 +134,7 @@ h1 { font-size: 24px; margin-bottom: 16px; }
 .value { font-size: 24px; font-weight: 600; }
 
 .tutorial {
-  margin-bottom: 2px;
+  margin-bottom: 12px;
 }
 
 .value-row {
@@ -596,7 +596,7 @@ line-height: 1;
   color: var(--md-sys-color-on-background);
 }
 
-.user-config, {
+.user-config {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -739,4 +739,35 @@ button md-circular-progress {
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none; 
+}
+
+.collapsible-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.8s cubic-bezier(.4,0,.2,1), margin-top 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.collapsible-content.open {
+  margin-top: 10px;
+}
+
+.collapsible {
+  cursor: pointer;
+}
+
+.expand-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.collapsible.open .expand-icon {
+  transform: rotate(180deg);
+}
+
+.expand-icon span.material-symbols-outlined {
+  font-size: 30px; 
+}
+
+.settings-item.collapsible {
+  margin-bottom:-12px;
 }
