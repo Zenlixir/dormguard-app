@@ -77,12 +77,33 @@
            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
            document.querySelector('.nav-item[data-page="settings"]').classList.add('active');
          
-           const configSection = document.getElementById('configSection');
-           if (configSection) {
-             setTimeout(() => {
-               configSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-             }, 1000);
-           }
+           const collapsible = document.querySelector('.settings-item.collapsible[data-target="apiConfig"]');
+           const content = document.getElementById(collapsible.dataset.target);
+         
+           setTimeout(() => {
+             const targetSection = document.getElementById('configSection');
+             if (targetSection) {
+               targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+         
+               setTimeout(() => {
+                 if (!content.classList.contains('open')) {
+                   collapsible.classList.add('open');
+                   content.classList.add('open', 'animating');
+                   content.style.height = content.scrollHeight + 'px';
+         
+                   content.addEventListener('transitionend', () => {
+                     content.style.height = 'auto';
+                     content.classList.remove('animating');
+         
+                     content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                   }, { once: true });
+         
+                   const icon = collapsible.querySelector('.expand-icon .material-symbols-outlined');
+                   if (icon) icon.style.transform = 'rotate(180deg)';
+                 }
+               }, 350); 
+             }
+           }, 1000); 
          });
       </script>
       <!-- LOGS PAGE -->
@@ -179,47 +200,54 @@
                </label>
             </div>
             <div class="settings-header" id="configSection">DormGuard Config</div>
-            <div class="settings-item">
+            <div class="settings-item collapsible" data-target="apiConfig">
                <span class="material-symbols-outlined">terminal</span>
                <span class="setting-text">Google Sheet API</span>
+               <div class="expand-icon">
+                  <span class="material-symbols-outlined">expand_more</span>
+               </div>
             </div>
-            <div class="user-config">
-               <div class="user-input">
-                  <div class="sheets-input-container">
-                     <span class="material-symbols-outlined sheets-icon">assignment</span>
-                     <span>Web app API</span>
-                     <input class="md-input" type="text" placeholder='OwO “Paste your web app URL here now”'>
-                     <span>Sheets link</span>
-                     <input class="md-input2" type="text" placeholder='And your sheets link (Optional but recomended)'>
+            <div class="collapsible-content" id="apiConfig" data-target="userConfig">
+               <div class="user-config">
+                  <div class="user-input">
+                     <div class="sheets-input-container">
+                        <span class="material-symbols-outlined sheets-icon">assignment</span>
+                        <span>Web app API</span>
+                        <input class="md-input" type="text"
+                           placeholder="OwO “Paste your web app URL here now">
+                        <span>Sheets link</span>
+                        <input class="md-input2" type="text"
+                           placeholder="And your sheets link (Optional but recomended)">
+                     </div>
+                  </div>
+                  <div class="user-input">
+                     <button id="saveConfig" class="md-btn">Save</button>
+                     <button id="resetConfig" class="md-btn">Reset</button>
                   </div>
                </div>
-               <div class="user-input">
-                  <button id="saveConfig" class="md-btn">Save</button>
-                  <button id="resetConfig" class="md-btn">Reset</button>
-               </div>
             </div>
-            <div class="settings-item">
+            <div class="settings-item collapsible" data-target="apiTutorial">
                <span class="material-symbols-outlined">info</span>
                <span class="setting-text">How to get web app API?</span>
+               <div class="expand-icon">
+                  <span class="material-symbols-outlined">expand_more</span>
+               </div>
             </div>
-            <div class="tutorial">
-               <h3><span class="step-number">Step 1</span> Create a new Google Sheet</h3>
-               <p>Go to <a href="https://sheets.google.com" target="_blank">Google Sheets</a> and create a new blank spreadsheet. Name it "DormGuard" or anything you want, up to you.</p>
-            </div>
-            <div class="tutorial">
-               <h3><span class="step-number">Step 2</span> Prepare the Script</h3>
-               <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
-               <div class="code-container" id="apiCodeContainer">
-                  <div class="tools">
-                     <div class="circle"><span class="red box"></span></div>
-                     <div class="circle"><span class="yellow box"></span></div>
-                     <div class="circle"><span class="green box"></span></div>
-                  </div>
-                  <button id="copyApiCode" class="copy-btn" title="Copy Code">
-                  <span class="material-symbols-outlined">content_copy</span>
-                  </button>
-                  <div class="card__content">
-                     <pre>
+            <div class="collapsible-content" id="apiTutorial">
+               <div class="tutorial">
+                  <h3><span class="step-number">Step 2</span> Prepare the Script</h3>
+                  <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
+                  <div class="code-container" id="apiCodeContainer">
+                     <div class="tools">
+                        <div class="circle"><span class="red box"></span></div>
+                        <div class="circle"><span class="yellow box"></span></div>
+                        <div class="circle"><span class="green box"></span></div>
+                     </div>
+                     <button id="copyApiCode" class="copy-btn" title="Copy Code">
+                     <span class="material-symbols-outlined">content_copy</span>
+                     </button>
+                     <div class="card__content">
+                        <pre>
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
   const data = sheet.getDataRange().getValues();
@@ -237,45 +265,44 @@ function doPost(e) {
                        .setMimeType(ContentService.MimeType.JSON);
 }
     </pre>
+                     </div>
                   </div>
                </div>
-            </div>
-            <script>
-               const copyBtn = document.getElementById('copyApiCode');
-               const codeContainer = document.getElementById('apiCodeContainer');
-               
-               copyBtn.addEventListener('click', () => {
-                 if (navigator.vibrate) navigator.vibrate(64);
-               
-                 const code = codeContainer.querySelector('pre').innerText;
-               
-                 navigator.clipboard.writeText(code).then(() => {
-                   copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
-                   setTimeout(() => {
-                     copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
-                   }, 1500);
-                 }).catch(err => console.error('Copy failed', err));
-               });
-            </script>
-            <div class="tutorial">
-               <h3><span class="step-number">Step 3</span> Deploy as Web App</h3>
-               <ol>
-                  <li>Click <strong>Deploy → New deployment</strong>.</li>
-                  <li>Select <strong>Web app</strong> as the type.</li>
-                  <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
-                  <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
-                  <li>Click <strong>Deploy</strong> and authorize the script.</li>
-               </ol>
-            </div>
-            <div class="tutorial">
-               <h3><span class="step-number">Step 4</span> Get the Web App URL</h3>
-               <p>After deployment, copy the <strong>Web app URL</strong>. This is your API endpoint for GET and POST requests. Make sure dont lose it.</p>
-            </div>
-            <div class="tutorial">
-               <h3><span class="step-number">Step 5</span> Test API</h3>
-               <p>Yes, just test. Not working? skill issue.</p>
-            </div>
-            <div class="settings-item">
+               <script>
+                  const copyBtn = document.getElementById('copyApiCode');
+                  const codeContainer = document.getElementById('apiCodeContainer');
+                  
+                  copyBtn.addEventListener('click', () => {
+                    if (navigator.vibrate) navigator.vibrate(64);
+                  
+                    const code = codeContainer.querySelector('pre').innerText;
+                  
+                    navigator.clipboard.writeText(code).then(() => {
+                      copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
+                      setTimeout(() => {
+                        copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
+                      }, 1500);
+                    }).catch(err => console.error('Copy failed', err));
+                  });
+               </script>
+               <div class="tutorial">
+                  <h3><span class="step-number">Step 3</span> Deploy as Web App</h3>
+                  <ol>
+                     <li>Click <strong>Deploy → New deployment</strong>.</li>
+                     <li>Select <strong>Web app</strong> as the type.</li>
+                     <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
+                     <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
+                     <li>Click <strong>Deploy</strong> and authorize the script.</li>
+                  </ol>
+               </div>
+               <div class="tutorial">
+                  <h3><span class="step-number">Step 4</span> Get the Web App URL</h3>
+                  <p>After deployment, copy the <strong>Web app URL</strong>. This is your API endpoint for GET and POST requests. Make sure dont lose it.</p>
+               </div>
+               <div class="tutorial">
+                  <h3><span class="step-number">Step 5</span> Test API</h3>
+                  <p>Yes, just test. Not working? skill issue.</p>
+               </div>
             </div>
          </div>
       </main>
