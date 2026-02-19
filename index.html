@@ -68,41 +68,6 @@
             </div>
          </div>
       </main>
-      <script>
-         document.getElementById('openSetupBtn').addEventListener('click', () => {
-           document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-           const settingsPage = document.getElementById('settings');
-           settingsPage.classList.add('active');
-         
-           document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-           document.querySelector('.nav-item[data-page="settings"]').classList.add('active');
-         
-           const collapsible = document.querySelector('.settings-item.collapsible[data-target="apiConfig"]');
-           const content = document.getElementById(collapsible.dataset.target);
-         
-           setTimeout(() => {
-             const targetSection = document.getElementById('configSection');
-             if (targetSection) {
-               targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-         
-               setTimeout(() => {
-                 if (!content.classList.contains('open')) {
-                   collapsible.classList.add('open');
-                   content.classList.add('open', 'animating');
-                   content.style.height = content.scrollHeight + 'px';
-         
-                   content.addEventListener('transitionend', () => {
-                     content.style.height = 'auto';
-                     content.classList.remove('animating');
-         
-                     content.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                   }, { once: true });
-                 }
-               }, 350); 
-             }
-           }, 1000); 
-         });
-      </script>
       <!-- LOGS PAGE -->
       <main class="page" id="logs">
          <h1>
@@ -211,7 +176,7 @@
                         <span class="material-symbols-outlined sheets-icon">assignment</span>
                         <span>Web app API</span>
                         <input class="md-input" type="text"
-                           placeholder="OwO “Paste your web app URL here now">
+                           placeholder='OwO “Paste your web app URL here now"'>
                         <span>Sheets link</span>
                         <input class="md-input2" type="text"
                            placeholder="And your sheets link (Optional but recomended)">
