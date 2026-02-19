@@ -418,9 +418,13 @@ document.addEventListener('pointerdown', e => {
 });          
 document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
 
+// ------------------- SERVICE WORKER -------------------   
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
+
+// ------------------- SCROLL/EXPAND STUFF -------------------   
 
 document.querySelectorAll('.collapsible').forEach(header => {
   header.addEventListener('click', () => {
@@ -453,4 +457,46 @@ document.querySelectorAll('.collapsible').forEach(header => {
       }, { once: true });
     }
   });
+});
+
+document.getElementById('openSetupBtn').addEventListener('click', () => {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const settingsPage = document.getElementById('settings');
+  settingsPage.classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector('.nav-item[data-page="settings"]').classList.add('active');
+
+  const collapsible = document.querySelector('.settings-item.collapsible[data-target="apiConfig"]');
+  const content = document.getElementById(collapsible.dataset.target);
+
+  setTimeout(() => {
+    const targetSection = document.getElementById('configSection');
+    if (targetSection) {
+      targetSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      setTimeout(() => {
+        if (!content.classList.contains('open')) {
+          collapsible.classList.add('open');
+          content.classList.add('open', 'animating');
+          content.style.height = content.scrollHeight + 'px';
+
+          content.addEventListener('transitionend', () => {
+            content.style.height = 'auto';
+            content.classList.remove('animating');
+
+            content.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, {
+            once: true
+          });
+        }
+      }, 350);
+    }
+  }, 1000);
 });
