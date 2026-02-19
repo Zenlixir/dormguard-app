@@ -421,3 +421,36 @@ document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'f
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
+
+document.querySelectorAll('.collapsible').forEach(header => {
+  header.addEventListener('click', () => {
+    const content = document.getElementById(header.dataset.target);
+    const isOpen = content.classList.contains('open');
+
+    if (isOpen) {
+      content.style.height = content.scrollHeight + 'px';
+      requestAnimationFrame(() => {
+        content.style.height = '0px';
+        content.classList.remove('open');
+        header.classList.remove('open'); 
+      });
+    } else {
+      content.classList.add('open');
+      header.classList.add('open'); 
+      content.style.height = content.scrollHeight + 'px';
+
+      setTimeout(() => {
+        content.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 400);
+
+      content.addEventListener('transitionend', () => {
+        if (content.classList.contains('open')) {
+          content.style.height = 'auto';
+        }
+      }, { once: true });
+    }
+  });
+});
