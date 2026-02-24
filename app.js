@@ -1,3 +1,22 @@
+// ------------------- GLOBAL HAPTIC OVERRIDE -------------------
+const vibrationSwitch = document.getElementById('vibrationSwitch');
+
+let vibrationEnabled = true;
+const saved = localStorage.getItem('vibration');
+vibrationEnabled = saved !== 'off';
+vibrationSwitch.checked = !vibrationEnabled;
+
+const _vibrate = navigator.vibrate.bind(navigator);
+navigator.vibrate = (pattern) => {
+  if (vibrationEnabled) return _vibrate(pattern);
+  return false; 
+};
+
+vibrationSwitch.addEventListener('change', () => {
+  vibrationEnabled = !vibrationSwitch.checked;
+  localStorage.setItem('vibration', vibrationEnabled ? 'on' : 'off');
+});
+
 let doorOpenTimer = null;
 let doorOpenInterval = null;
 let alertDisabled = false;
