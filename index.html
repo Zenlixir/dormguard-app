@@ -111,14 +111,6 @@
                <span></span>
                </label>
             </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">vibration</span>
-               <span class="setting-text">Vibration</span>
-               <label class="md-switch">
-               <input type="checkbox" id="vibrationSwitch">
-               <span></span>
-               </label>
-            </div>
             <div class="settings-header">App</div>
             <div class="settings-item">
                <span class="material-symbols-outlined">dark_mode</span>
@@ -161,6 +153,14 @@
                <span></span>
                </label>
             </div>
+            <div class="settings-item">
+               <span class="material-symbols-outlined">vibration</span>
+               <span class="setting-text">Disable Haptic</span>
+               <label class="md-switch">
+               <input type="checkbox" id="vibrationSwitch">
+               <span></span>
+               </label>
+            </div>
             <div class="settings-header" id="configSection">DormGuard Config</div>
             <div class="settings-item collapsible" data-target="apiConfig">
                <span class="material-symbols-outlined">terminal</span>
@@ -180,6 +180,9 @@
                         <span>Sheets link</span>
                         <input class="md-input2" type="text"
                            placeholder="And your sheets link (Optional but recomended)">
+                        <span>Controls API</span>
+                        <input id="ctrlsApiInput" class="md-input" type="text"
+                           placeholder="Needed to enable/disable stuffs on DormGuard device">
                      </div>
                   </div>
                   <div class="user-input">
@@ -372,5 +375,6 @@ function doPost(e) {
          });
       </script>
       <script src="notifs.js"></script>
+      <script src="ctrls.js"></script>
    </body>
 </html>
