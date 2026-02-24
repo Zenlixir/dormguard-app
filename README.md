@@ -3,4 +3,4 @@
 </p>
 
 # dormguard-app
-Mobile web app for DormGuard (Preview)
+Mobile web app for DormGuard
