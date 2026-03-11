@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const vibrationSwitch = document.getElementById('vibrationSwitch');
   const lampSwitch      = document.getElementById('lampSwitch');
   const alertToggle     = document.getElementById('alertToggle');
+  const alertSwitch     = document.getElementById('alertSwitch');
+  const doorStatusEl    = document.getElementById('doorStatus');
 
   if (ledSwitch)       ledSwitch.checked       = localStorage.getItem('ledState')       === '1';
   if (buzzerSwitch)    buzzerSwitch.checked     = localStorage.getItem('buzzerState')    === '1';
@@ -73,12 +75,53 @@ document.addEventListener('DOMContentLoaded', () => {
     alertToggle.addEventListener('click', () => {
       alertToggle.textContent = 'No Alert';
       if (doorStatusEl) doorStatusEl.style.color = '';
-      if (doorOpenInterval) { clearInterval(doorOpenInterval); doorOpenInterval = null; }
-      if (doorOpenTimer) { clearTimeout(doorOpenTimer); doorOpenTimer = null; }
+      if (typeof doorOpenInterval !== 'undefined' && doorOpenInterval) {
+        clearInterval(doorOpenInterval);
+        doorOpenInterval = null;
+      }
+      if (typeof doorOpenTimer !== 'undefined' && doorOpenTimer) {
+        clearTimeout(doorOpenTimer);
+        doorOpenTimer = null;
+      }
       updateSheet(ledVal(), buzzerVal(), 1, lampVal());
       setTimeout(() => updateSheet(ledVal(), buzzerVal(), 0, lampVal()), 4000);
     });
   }
+
+  // ---------- ESP ALERT SYNC ----------
+  async function syncEspAlert() {
+    if (!sheetAPI) return;
+    try {
+      const res = await fetch(sheetAPI);
+      const data = await res.json();
+      const espAlert = data.alert;
+
+      const alertEnabled = localStorage.getItem('alert') === 'on';
+      if (!alertEnabled) return;
+
+      if (espAlert == 1) {
+        if (alertToggle) alertToggle.textContent = 'Disable Alert';
+        if (doorStatusEl) doorStatusEl.style.color = 'red';
+        if (navigator.vibrate) navigator.vibrate([500, 200, 500]);
+      } else if (espAlert == 0) {
+        if (alertToggle) alertToggle.textContent = 'No Alert';
+        if (doorStatusEl) doorStatusEl.style.color = '';
+        if (typeof doorOpenInterval !== 'undefined' && doorOpenInterval) {
+          clearInterval(doorOpenInterval);
+          doorOpenInterval = null;
+        }
+        if (typeof doorOpenTimer !== 'undefined' && doorOpenTimer) {
+          clearTimeout(doorOpenTimer);
+          doorOpenTimer = null;
+        }
+      }
+    } catch (err) {
+      console.error('ESP alert sync err:', err);
+    }
+  }
+
+  setInterval(syncEspAlert, 2000);
+  syncEspAlert();
 
   updateSheet(ledVal(), buzzerVal(), 0, lampVal());
 });
