@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const ctrlsApiInput = document.getElementById('ctrlsApiInput');
 
-  // ---------- CONFIG ----------
   let sheetAPI = localStorage.getItem('ctrls_api') || "";
   if (ctrlsApiInput) {
     ctrlsApiInput.value = sheetAPI;
@@ -12,20 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- ELEMENTS ----------
   const ledSwitch       = document.getElementById('ledSwitch');
   const buzzerSwitch    = document.getElementById('buzzerSwitch');
   const vibrationSwitch = document.getElementById('vibrationSwitch');
   const lampSwitch      = document.getElementById('lampSwitch');
   const alertToggle     = document.getElementById('alertToggle');
 
-  // ---------- INITIAL STATE FROM LOCAL STORAGE ----------
   if (ledSwitch)       ledSwitch.checked       = localStorage.getItem('ledState')       === '1';
   if (buzzerSwitch)    buzzerSwitch.checked     = localStorage.getItem('buzzerState')    === '1';
   if (vibrationSwitch) vibrationSwitch.checked  = localStorage.getItem('vibrationState') === '1';
   if (lampSwitch)      lampSwitch.checked       = localStorage.getItem('lampState')      === '1';
 
-  // ---------- HELPER ----------
   async function updateSheet(led = 0, buzzer = 0, stop = 0, lamp = 0) {
     if (!sheetAPI) {
       console.warn("Controls API not set!");
@@ -41,12 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ---------- SHORTHAND ----------
   const ledVal    = () => ledSwitch    ? (ledSwitch.checked    ? 1 : 0) : 0;
   const buzzerVal = () => buzzerSwitch ? (buzzerSwitch.checked ? 1 : 0) : 0;
   const lampVal   = () => lampSwitch   ? (lampSwitch.checked   ? 1 : 0) : 0;
 
-  // ---------- TOGGLES ----------
   if (ledSwitch) {
     ledSwitch.addEventListener('change', () => {
       localStorage.setItem('ledState', ledSwitch.checked ? '1' : '0');
@@ -75,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- STOP ALERT ----------
   if (alertToggle) {
     alertToggle.addEventListener('click', () => {
       alertToggle.textContent = 'No Alert';
@@ -83,10 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (doorOpenInterval) { clearInterval(doorOpenInterval); doorOpenInterval = null; }
       if (doorOpenTimer) { clearTimeout(doorOpenTimer); doorOpenTimer = null; }
       updateSheet(ledVal(), buzzerVal(), 1, lampVal());
-      setTimeout(() => updateSheet(ledVal(), buzzerVal(), 0, lampVal()), 1000);
+      setTimeout(() => updateSheet(ledVal(), buzzerVal(), 0, lampVal()), 4000);
     });
   }
 
-  // ---------- INIT ----------
   updateSheet(ledVal(), buzzerVal(), 0, lampVal());
 });
