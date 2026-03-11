@@ -178,48 +178,6 @@ async function fetchServerData() {
 
     doorStatusEl.textContent = data.current.door;
 
-    // ----- DOOR ALERT -----
-    function handleDoorAlert() {
-      if (!alertEnabled) {
-        alertToggle.textContent = 'No Alert';
-        doorStatusEl.style.color = '';
-        if (doorOpenInterval) { clearInterval(doorOpenInterval); doorOpenInterval = null; }
-        if (doorOpenTimer) { clearTimeout(doorOpenTimer); doorOpenTimer = null; }
-        return;
-      }
-
-      if (doorStatusEl.textContent === 'OPEN') {
-        if (!doorOpenTimer && !alertDisabled && !doorOpenInterval) {
-          doorOpenTimer = setTimeout(() => {
-            if (navigator.vibrate) {
-              doorStatusEl.style.color = 'red';
-              navigator.vibrate([500, 200, 500]);
-              setTimeout(() => { doorStatusEl.style.color = ''; }, 1200);
-            }
-            alertToggle.textContent = 'Disable Alert';
-
-            doorOpenInterval = setInterval(() => {
-              if (navigator.vibrate) {
-                doorStatusEl.style.color = 'red';
-                navigator.vibrate([500, 200, 500]);
-                setTimeout(() => { doorStatusEl.style.color = ''; }, 1200);
-              }
-            }, 5000);
-
-            doorOpenTimer = null;
-          }, 10000);
-        }
-      } else {
-        alertToggle.textContent = 'No Alert';
-        doorStatusEl.style.color = '';
-        alertDisabled = false;
-        if (doorOpenInterval) { clearInterval(doorOpenInterval); doorOpenInterval = null; }
-        if (doorOpenTimer) { clearTimeout(doorOpenTimer); doorOpenTimer = null; }
-      }
-    }
-
-    handleDoorAlert();
-
     eventListEl.innerHTML = '';
     data.history.forEach(item => {
       const li = document.createElement('li');
