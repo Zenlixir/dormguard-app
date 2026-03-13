@@ -1,28 +1,25 @@
-// ========== CONFIG ==========
 const CHECK_INTERVAL = 5000;
-const LIMIT = 3 * 60 * 1000; // 3 minutes
+const LIMIT = 3 * 60 * 1000;
 
-// ========== STATE ==========
 let notifSent = false;
 
-// ========== NOTIFICATION TOGGLE ==========
+// notif toggle
 const notifSwitch = document.getElementById('notificationsSwitch');
 let notifEnabled = localStorage.getItem('notifEnabled') === 'true';
 
 if (notifSwitch) {
   notifSwitch.checked = notifEnabled;
-
   notifSwitch.addEventListener('change', () => {
     notifEnabled = notifSwitch.checked;
     localStorage.setItem('notifEnabled', notifEnabled);
   });
 }
 
-// ========== CORE ==========
+// api
 async function checkDoorNotif() {
-  if (!notifEnabled) return; // skip wen notifications disabled
+  if (!notifEnabled) return;
 
-  const API_URL = localStorage.getItem('api_url') || "";
+  const API_URL = localStorage.getItem('api_url') || '';
   if (!API_URL) return;
 
   try {
@@ -31,9 +28,10 @@ async function checkDoorNotif() {
     const rows = raw.values || raw || [];
     if (!rows.length) return;
 
+    // find last open
     const lastOpen = [...rows].reverse().find(r => {
       const door = r.door || r[2];
-      return door === "OPEN";
+      return door === 'OPEN';
     });
     if (!lastOpen) return;
 
@@ -43,6 +41,7 @@ async function checkDoorNotif() {
     const date = new Date(rawDate);
     const time = new Date(rawTime);
 
+    // build timestamp
     const lastOpened = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -55,6 +54,7 @@ async function checkDoorNotif() {
 
     const diff = Date.now() - lastOpened;
 
+    // trigger notif
     if (diff >= LIMIT && !notifSent) {
       notify();
       notifSent = true;
@@ -62,33 +62,30 @@ async function checkDoorNotif() {
       notifSent = false;
     }
 
-  } catch {
-  }
+  } catch {}
 }
 
-// ========== NOTIFICATION ==========
+// show notif
 function notify() {
-  if (Notification.permission !== "granted") return;
+  if (Notification.permission !== 'granted') return;
 
   navigator.serviceWorker.getRegistration().then(reg => {
     if (!reg) return;
-
-    reg.showNotification("DormGuard Alert", {
-      body: "Door open > 3 minutes",
-      icon: "empty.png",
-      badge: "badge.png",
+    reg.showNotification('DormGuard Alert', {
+      body: 'Door open > 3 minutes',
+      icon: 'empty.png',
+      badge: 'badge.png',
       vibrate: [200, 100, 200],
-      tag: "door-alert",
+      tag: 'door-alert',
       renotify: true
     });
   });
 }
 
-// ========== PERMISSION ==========
-if ('Notification' in window && Notification.permission === "default") {
+// request permission
+if ('Notification' in window && Notification.permission === 'default') {
   Notification.requestPermission();
 }
 
-// ========== LOOP ==========
 setInterval(checkDoorNotif, CHECK_INTERVAL);
 checkDoorNotif();
