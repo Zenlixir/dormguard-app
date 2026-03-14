@@ -1,0 +1,24 @@
+Some notes for you (Yes you, that reading this rn.)
+===================================================
+
+1. What dormguard.cpp for?
+   - Its the code for hardware part of this project, use ESP 32 (ESP32 Dev Module on Arduino IDE)
+   - Make sure to add your own wifi stuffs and api
+
+2. Components List:
+   - ESP32 Development Board
+   - ESP32 Expansion Board
+   - Magnetic door sensor (reed switch)
+   - PIR sensor
+   - Buzzer or piezo speaker (Not a 3000W subwoofer)
+   - NeoPixel LED Sticks (2 sticks, 8 LEDS each)
+   - F to F jumper wires
+   - An Adapter (For power supply)
+
+3. Requirements:
+   - A pc or laptop (that working)
+   - Arduino IDE or any software that do the same thing
+   - Libraries on Arduino IDE: ArduinoJson, Adafruit Neopixel
+   - Some drivers (search it yourself}
+   - Skill
+   - A functional brain.
