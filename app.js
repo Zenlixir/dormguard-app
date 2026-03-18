@@ -1,25 +1,23 @@
 // DOM elements
-const vibrationSwitch = document.getElementById('vibrationSwitch');
-const pages = document.querySelectorAll('.page');
-const buttons = document.querySelectorAll('.nav-item');
-const mdButtons = document.querySelectorAll('.md-btn');
-const doorStatusEl = document.getElementById('doorStatus');
-const currentTimeEl = document.getElementById('currentTime');
-const eventListEl = document.getElementById('eventList');
-const lastOpenedEl = document.getElementById('LastOpened');
-const fullDatBtn = document.getElementById('fulldat');
-const latestDatBtn = document.getElementById('latestdat');
-const viewDatBtn = document.getElementById('viewdat');
-const alertToggle = document.getElementById('alertToggle');
-const alertSwitch = document.getElementById('alertSwitch');
-const apiInput = document.querySelector('.sheets-input-container .md-input');
-const saveConfigBtn = document.getElementById('saveConfig');
-const resetConfigBtn = document.getElementById('resetConfig');
-const sheetsInput = document.querySelector('.md-input2');
-const darkModeSwitch = document.getElementById('darkModeSwitch');
-const contrastSwitch = document.getElementById('contrastSwitch');
-const reduceMotionSwitch = document.getElementById('reduceMotionSwitch');
-const themeMeta = document.querySelector('meta[name="theme-color"]');
+const vibrationSwitch     = document.getElementById('vibrationSwitch');
+const pages               = document.querySelectorAll('.page');
+const buttons             = document.querySelectorAll('.nav-item');
+const mdButtons           = document.querySelectorAll('.md-btn');
+const doorStatusEl        = document.getElementById('doorStatus');
+const currentTimeEl       = document.getElementById('currentTime');
+const eventListEl         = document.getElementById('eventList');
+const lastOpenedEl        = document.getElementById('LastOpened');
+const fullDatBtn          = document.getElementById('fulldat');
+const latestDatBtn        = document.getElementById('latestdat');
+const viewDatBtn          = document.getElementById('viewdat');
+const alertToggle         = document.getElementById('alertToggle');
+const alertSwitch         = document.getElementById('alertSwitch');
+const darkModeSwitch      = document.getElementById('darkModeSwitch');
+const contrastSwitch      = document.getElementById('contrastSwitch');
+const reduceMotionSwitch  = document.getElementById('reduceMotionSwitch');
+const themeMeta           = document.querySelector('meta[name="theme-color"]');
+
+window.API_KEY = localStorage.getItem('api_url') || '';
 
 // vibration
 let vibrationEnabled = localStorage.getItem('vibration') !== 'off';
@@ -39,12 +37,11 @@ if (vibrationSwitch) {
 }
 
 // state
-let doorOpenTimer = null;
+let doorOpenTimer    = null;
 let doorOpenInterval = null;
-let alertDisabled = false;
-let alertEnabled = true;
-let isDownloading = false;
-let API_KEY = localStorage.getItem('api_url') || '';
+let alertDisabled    = false;
+let alertEnabled     = true;
+let isDownloading    = false;
 
 // clock
 function updateClock() {
@@ -56,39 +53,6 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
-
-// load saved url
-if (apiInput && API_KEY) apiInput.value = API_KEY;
-
-// save config
-saveConfigBtn.addEventListener('click', () => {
-  const url = apiInput.value.trim();
-  if (!url.startsWith('http')) return;
-  API_KEY = url.replace(/\/$/, '');
-  localStorage.setItem('api_url', API_KEY);
-  if (navigator.vibrate) navigator.vibrate(30);
-});
-
-// reset config
-resetConfigBtn.addEventListener('click', () => {
-  if (apiInput) apiInput.value = '';
-  localStorage.removeItem('api_url');
-  API_KEY = '';
-  if (sheetsInput) sheetsInput.value = '';
-  localStorage.removeItem('sheets_url');
-  if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
-});
-
-// navigation
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(32);
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    pages.forEach(p => p.classList.remove('active'));
-    document.getElementById(btn.dataset.page).classList.add('active');
-  });
-});
 
 // alert switch
 if (alertSwitch) {
@@ -134,12 +98,12 @@ function formatDate(date) {
 // fetch sheet
 async function fetchSheetData() {
   try {
-    const res = await fetch(API_KEY);
+    const res = await fetch(window.API_KEY);
     const raw = await res.json();
     const rows = raw.values || raw || [];
 
     const history = rows.slice(0).reverse().map(row => {
-      let door = row.door || row[2] || 'UNKNOWN';
+      let door    = row.door || row[2] || 'UNKNOWN';
       let rawTime = row.time || row[0];
       let rawDate = row.date || row[1];
 
@@ -149,7 +113,7 @@ async function fetchSheetData() {
       return { time, date, door };
     });
 
-    const lastRow = history[0] || { door: 'UNKNOWN' };
+    const lastRow    = history[0] || { door: 'UNKNOWN' };
     const lastOpened = history.find(e => e.door === 'OPEN');
     return { current: { door: lastRow.door }, history, lastOpened: lastOpened || null };
   } catch (err) {
@@ -181,18 +145,8 @@ async function fetchServerData() {
 }
 
 // sheets url
-const SAVED_SHEET = localStorage.getItem('sheets_url');
-if (SAVED_SHEET && sheetsInput) sheetsInput.value = SAVED_SHEET;
-
-sheetsInput?.addEventListener('input', () => {
-  const url = sheetsInput.value.trim();
-  if (!url) return;
-  localStorage.setItem('sheets_url', url);
-});
-
-// view sheet
 viewDatBtn?.addEventListener('click', () => {
-  const url = sheetsInput.value.trim() || localStorage.getItem('sheets_url');
+  const url = localStorage.getItem('sheets_url');
   if (!url) return;
   window.open(url, '_blank');
 });
@@ -202,12 +156,12 @@ async function downloadCSV(filename, limit = null) {
   if (isDownloading) return;
   isDownloading = true;
 
-  const btn = limit ? latestDatBtn : fullDatBtn;
+  const btn      = limit ? latestDatBtn : fullDatBtn;
   const otherBtn = limit ? fullDatBtn : latestDatBtn;
-  const originalText = btn.textContent;
+  const origText = btn.textContent;
 
-  btn.textContent = '';
-  btn.disabled = true;
+  btn.textContent   = '';
+  btn.disabled      = true;
   otherBtn.disabled = true;
 
   const spinner = document.createElement('md-circular-progress');
@@ -219,30 +173,37 @@ async function downloadCSV(filename, limit = null) {
     if (!data) return;
 
     const rows = limit ? data.history.slice(0, limit) : data.history;
-    const csv = ['Time,Date,Door']
+    const csv  = ['Time,Date,Door']
       .concat(rows.map(e => `${e.time},${e.date},${e.door}`))
       .join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    link.href     = URL.createObjectURL(blob);
     link.download = filename;
     link.click();
   } finally {
     spinner.remove();
-    btn.textContent = originalText;
-    btn.disabled = false;
+    btn.textContent   = origText;
+    btn.disabled      = false;
     otherBtn.disabled = false;
-    isDownloading = false;
+    isDownloading     = false;
   }
 }
 
-fullDatBtn.addEventListener('click', () => downloadCSV('full_records.csv'));
+fullDatBtn.addEventListener('click',   () => downloadCSV('full_records.csv'));
 latestDatBtn.addEventListener('click', () => downloadCSV('latest_records.csv', 50));
 
-// auto fetch
-setInterval(fetchServerData, 5000);
-fetchServerData();
+// navigation
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (navigator.vibrate) navigator.vibrate(32);
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById(btn.dataset.page).classList.add('active');
+  });
+});
 
 // ripple effect
 mdButtons.forEach(btn => {
@@ -251,9 +212,9 @@ mdButtons.forEach(btn => {
     circle.classList.add('ripple');
     btn.appendChild(circle);
     const d = Math.max(btn.clientWidth, btn.clientHeight);
-    circle.style.width = circle.style.height = d + 'px';
-    circle.style.left = e.clientX - btn.getBoundingClientRect().left - d / 2 + 'px';
-    circle.style.top = e.clientY - btn.getBoundingClientRect().top - d / 2 + 'px';
+    circle.style.width  = circle.style.height = d + 'px';
+    circle.style.left   = e.clientX - btn.getBoundingClientRect().left - d / 2 + 'px';
+    circle.style.top    = e.clientY - btn.getBoundingClientRect().top  - d / 2 + 'px';
     circle.classList.add('ripple-animate');
     circle.addEventListener('animationend', () => circle.remove());
   });
@@ -354,7 +315,7 @@ if ('serviceWorker' in navigator) {
 document.querySelectorAll('.collapsible').forEach(header => {
   header.addEventListener('click', () => {
     const content = document.getElementById(header.dataset.target);
-    const isOpen = content.classList.contains('open');
+    const isOpen  = content.classList.contains('open');
 
     if (isOpen) {
       content.style.height = content.scrollHeight + 'px';
@@ -389,7 +350,7 @@ document.getElementById('openSetupBtn').addEventListener('click', () => {
   document.querySelector('.nav-item[data-page="settings"]').classList.add('active');
 
   const collapsible = document.querySelector('.settings-item.collapsible[data-target="apiConfig"]');
-  const content = document.getElementById(collapsible.dataset.target);
+  const content     = document.getElementById(collapsible.dataset.target);
 
   setTimeout(() => {
     const targetSection = document.getElementById('configSection');
@@ -412,3 +373,6 @@ document.getElementById('openSetupBtn').addEventListener('click', () => {
     }
   }, 1000);
 });
+
+setInterval(fetchServerData, 5000);
+fetchServerData();
