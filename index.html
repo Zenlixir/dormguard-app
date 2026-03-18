@@ -13,7 +13,8 @@
       <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
       <link rel="preload" href="https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf" as="font" type="font/ttf" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="ui.css">
+      <script defer src="setup.js"></script>
       <script defer src="app.js"></script>
       <script type="importmap">
          {
@@ -73,7 +74,7 @@
          <h1>
             Logs
             <button id="viewdat" class="sheets-btn" title="View on Sheets">
-            <span class="material-symbols-outlined">table_view</span>
+            <span class="material-symbols-outlined">note</span>
             </button>
          </h1>
          <div class="logs-wrapper">
@@ -182,15 +183,103 @@
                   <div class="user-input">
                      <div class="sheets-input-container">
                         <span class="material-symbols-outlined sheets-icon">assignment</span>
-                        <span>Web app API</span>
-                        <input class="md-input" type="text"
-                           placeholder='OwO “Paste your web app URL here now"'>
-                        <span>Sheets link</span>
-                        <input class="md-input2" type="text"
-                           placeholder="And your sheets link (Optional but recomended)">
-                        <span>Controls API</span>
-                        <input id="ctrlsApiInput" class="md-input" type="text"
-                           placeholder="Needed to enable/disable stuffs on DormGuard device">
+                     </div>
+                  </div>
+                  <div class="stp-wrap">
+                     <div class="stp-pages">
+                        <div class="stp-page">
+                           <div class="stp-alone">
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">door_front</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Door Logs API</span>
+                                       <span class="stp-sts">API for door open/close logs</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <br/>
+                           <div class="stp-grid">
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">note</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Sheets</span>
+                                       <span class="stp-sts">Your Sheets link</span>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">nearby</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Controls API</span>
+                                       <span class="stp-sts">Device controls</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="stp-page">
+                           <div class="stp-alone">
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">door_front</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Door Logs API</span>
+                                       <span class="stp-sts">API for door open/close logs</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <br/>
+                           <div class="stp-alone">
+                              <textarea id="doorApiInput" class="md-input" placeholder='Paste your Door Logs API here (Most important for this thing work)'></textarea>
+                           </div>
+                        </div>
+                        <div class="stp-page">
+                           <div class="stp-alone">
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">note</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Sheets</span>
+                                       <span class="stp-sts">Your Sheets link</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <br/>
+                           <div class="stp-alone">
+                              <textarea class="md-input2" type="text"
+                                 placeholder="And your sheets link (Optional but recomended)"></textarea>
+                           </div>
+                        </div>
+                        <div class="stp-page">
+                           <div class="stp-alone">
+                              <div class="stp-card">
+                                 <div class="stp-cnt">
+                                    <span class="material-symbols-outlined">nearby</span>
+                                    <div class="stp-info">
+                                       <span class="stp-lbl">Controls API</span>
+                                       <span class="stp-sts">Device Controls</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <br/>
+                           <div class="stp-alone">
+                              <textarea id="ctrlsApiInput" class="md-input" type="text"
+                                 placeholder="Needed to enable/disable stuffs on DormGuard device"></textarea>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="stp-dots">
+                        <span class="stp-dot active"></span>
+                        <span class="stp-dot"></span>
+                        <span class="stp-dot"></span>
+                        <span class="stp-dot"></span>
                      </div>
                   </div>
                   <div class="user-input">
@@ -208,7 +297,7 @@
             </div>
             <div class="collapsible-content" id="apiTutorial">
                <div class="tutorial">
-                  <h3><span class="step-number">Step 2</span> Prepare the Script</h3>
+                  <h3><span class="step-number">Step 1</span> Prepare the Script</h3>
                   <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
                   <div class="code-container" id="apiCodeContainer">
                      <div class="tools">
@@ -224,20 +313,33 @@
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
   const data = sheet.getDataRange().getValues();
-  return ContentService.createTextOutput(JSON.stringify(data))
-                       .setMimeType(ContentService.MimeType.JSON);
+
+  const rows = data.map(row => ({
+    time: row[0],
+    date: row[1],
+    door: row[2]
+  }));
+
+  return ContentService
+    .createTextOutput(JSON.stringify(rows))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
   const params = JSON.parse(e.postData.contents);
-  const row = [];
-  Object.keys(params).forEach(key => row.push(params[key]));
-  sheet.appendRow(row);
-  return ContentService.createTextOutput(JSON.stringify({status: "ok"}))
-                       .setMimeType(ContentService.MimeType.JSON);
+
+  sheet.appendRow([
+    params.time || new Date().toISOString(),
+    params.date || new Date().toLocaleDateString(),
+    params.door || "UNKNOWN"
+  ]);
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
-    </pre>
+                        </pre>
                      </div>
                   </div>
                </div>
@@ -259,7 +361,7 @@ function doPost(e) {
                   });
                </script>
                <div class="tutorial">
-                  <h3><span class="step-number">Step 3</span> Deploy as Web App</h3>
+                  <h3><span class="step-number">Step 2</span> Deploy as Web App</h3>
                   <ol>
                      <li>Click <strong>Deploy → New deployment</strong>.</li>
                      <li>Select <strong>Web app</strong> as the type.</li>
@@ -269,12 +371,12 @@ function doPost(e) {
                   </ol>
                </div>
                <div class="tutorial">
-                  <h3><span class="step-number">Step 4</span> Get the Web App URL</h3>
-                  <p>After deployment, copy the <strong>Web app URL</strong>. This is your API endpoint for GET and POST requests. Make sure dont lose it.</p>
+                  <h3><span class="step-number">Step 3</span> Get the Web App URL</h3>
+                  <p>After deployment, copy the <strong>Web app URL</strong> then paste it on this app setup thingy. This is your API endpoint for GET and POST requests. Make sure dont lose it, or just redo these if you lose it, its not that hard.</p>
                </div>
                <div class="tutorial">
-                  <h3><span class="step-number">Step 5</span> Test API</h3>
-                  <p>Yes, just test. Not working? skill issue.</p>
+                  <h3><span class="step-number">Step 4</span> Test API</h3>
+                  <p>Yes, just test. Working? Congratulations. Not working? skill issue.</p>
                </div>
             </div>
          </div>
