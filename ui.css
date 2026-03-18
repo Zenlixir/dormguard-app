@@ -17,7 +17,7 @@ body {
   margin: 0;
   background: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
-  font-size: 16px;
+  font-size: 1em;
 }
 
 @font-face {
@@ -106,7 +106,7 @@ body {
 
 h1 {
   position: relative;
-  font-size: 24px;
+  font-size: 1.4em;
   margin-bottom: 16px;
 }
 
@@ -125,8 +125,8 @@ h1 {
 
 .tutorial { margin-bottom: 12px; }
 
-.label { font-size: 14px; opacity: 0.7; }
-.value { font-size: 24px; font-weight: 600; }
+.label { font-size: 0.8em; opacity: 0.7; }
+.value { font-size: 1.4em; font-weight: 600; }
 
 .value-row {
   display: flex;
@@ -134,7 +134,7 @@ h1 {
   align-items: center;
 }
 
-.card-icon { font-size: 40px; opacity: 0.6; }
+.card-icon { font-size: 2.2em; opacity: 0.6; }
 
 .page .card { opacity: 0; }
 
@@ -165,12 +165,12 @@ h1 {
 
 .database .label {
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin-bottom: 8px;
 }
 
-.database .md-btn { font-size: 12px; }
-.settings-section .label { margin-bottom: 8px; }
+.database .md-btn         { font-size: 0.7em; }
+.settings-section .label  { margin-bottom: 8px; }
 
 .db-actions {
   display: flex;
@@ -186,7 +186,7 @@ h1 {
   border: none;
   cursor: pointer;
   color: var(--md-sys-color-primary);
-  font-size: 24px;
+  font-size: 1.4em;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -202,7 +202,7 @@ button { position: relative; }
   border: none;
   border-radius: 32px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 0.7em;
   background: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-on-primary-container);
   position: relative;
@@ -212,7 +212,7 @@ button { position: relative; }
   transition: background 0.2s ease, border-radius 0.35s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.md-btn:active, .md-dialog-btn:active{
+.md-btn:active, .md-dialog-btn:active {
   transform: translateY(2px) scale(0.98);
   box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
@@ -251,7 +251,7 @@ button md-circular-progress {
   min-height: 80px;
   max-height: 180px;
   padding: 18px;
-  font-size: 16px;
+  font-size: 0.7em;
   font-weight: 500;
   border-radius: 28px;
   border: 2px solid var(--md-sys-color-surface-container);
@@ -295,14 +295,14 @@ button md-circular-progress {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  font-size: 12px;
+  font-size: 0.7em;
   color: var(--md-sys-color-on-surface);
   border-radius: 24px;
   position: relative;
   transition: all 0.35s ease;
 }
 
-.nav-item span.material-symbols-outlined { font-size: 24px; }
+.nav-item span.material-symbols-outlined { font-size: 2em; }
 .nav-item .nav-label                     { transition: opacity 0.2s; }
 
 .nav-item.active {
@@ -332,11 +332,11 @@ button md-circular-progress {
   width: 100%;
 }
 
-.settings-item.collapsible { margin-bottom: -12px; }
-.settings-item .material-symbols-outlined { font-size: 22px; opacity: 0.7; }
+.settings-item.collapsible                  { margin-bottom: -12px; }
+.settings-item .material-symbols-outlined   { font-size: 1.4em; opacity: 0.7; }
 
 .settings-header {
-  font-size: 14px;
+  font-size: 0.8em;
   opacity: 0.6;
   margin: 12px 4px 4px;
 }
@@ -375,9 +375,9 @@ button md-circular-progress {
   transition: transform 0.2s;
 }
 
-.md-switch input:checked          { background: var(--md-sys-color-primary); }
-.md-switch input:checked::before  { transform: translateX(15px); }
-.md-slider                        { width: 50%; }
+.md-switch input:checked         { background: var(--md-sys-color-primary); }
+.md-switch input:checked::before { transform: translateX(15px); }
+.md-slider                       { width: 50%; }
 
 .collapsible { cursor: pointer; }
 
@@ -387,10 +387,10 @@ button md-circular-progress {
   transition: height 0.8s cubic-bezier(.4,0,.2,1), margin-top 0.8s cubic-bezier(.4,0,.2,1);
 }
 
-.collapsible-content.open               { margin-top: 10px; }
-.expand-icon                            { margin-left: auto; transition: transform 0.3s ease; }
-.collapsible.open .expand-icon          { transform: rotate(180deg); }
-.expand-icon span.material-symbols-outlined { font-size: 30px; }
+.collapsible-content.open              { margin-top: 10px; }
+.expand-icon                           { margin-left: auto; transition: transform 0.3s ease; }
+.collapsible.open .expand-icon         { transform: rotate(180deg); }
+.expand-icon span.material-symbols-outlined { font-size: 1.8em; }
 
 .ripple {
   position: absolute;
@@ -406,7 +406,7 @@ button md-circular-progress {
   vertical-align: middle;
   margin-right: 8px;
   margin-bottom: 3.8px;
-  font-size: 22px;
+  font-size: 1.4em;
 }
 
 #logs { position: relative; }
@@ -475,8 +475,8 @@ button md-circular-progress {
   display: block;
 }
 
-.info-text div      { font-size: 16px; color: var(--md-sys-color-on-surface); }
-.info-text .creator { font-size: 12px; opacity: 0.6; }
+.info-text div      { font-size: 1em; color: var(--md-sys-color-on-surface); }
+.info-text .creator { font-size: 0.7em; opacity: 0.6; }
 
 .credits-list {
   list-style: none;
@@ -491,15 +491,15 @@ button md-circular-progress {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 14px;
+  font-size: 0.8em;
   color: var(--md-sys-color-on-surface);
   margin-bottom: 8px;
 }
 
-.credits-list li .material-symbols-outlined { font-size: 32px; opacity: 0.7; }
+.credits-list li .material-symbols-outlined { font-size: 2em; opacity: 0.7; }
 
 .credits-text { display: flex; flex-direction: column; }
-.credits-desc { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+.credits-desc { font-size: 0.7em; opacity: 0.6; margin-top: 2px; }
 
 .icon-link {
   color: var(--md-sys-color-on-surface);
@@ -518,7 +518,7 @@ button md-circular-progress {
   text-align: center;
   margin: 16px 0;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.8em;
   color: var(--md-sys-color-on-background);
 }
 
@@ -550,7 +550,7 @@ button md-circular-progress {
 }
 
 .sheets-icon {
-  font-size: 150px;
+  font-size: 8em;
   color: var(--md-sys-color-primary-container);
 }
 
@@ -582,7 +582,7 @@ button md-circular-progress {
 .code-container .card__content pre {
   font-family: 'Monocraft', monospace;
   padding: 10px;
-  font-size: 0.8rem;
+  font-size: 0.7em;
   overflow-x: hidden;
   white-space: pre-wrap;
   word-break: break-word;
@@ -597,7 +597,7 @@ button md-circular-progress {
   border: none;
   cursor: pointer;
   color: var(--md-sys-color-on-primary-container);
-  font-size: 1.2rem;
+  font-size: 1.1em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -614,7 +614,7 @@ button md-circular-progress {
   border-radius: 8px;
   font-weight: bold;
   margin-right: 6px;
-  font-size: 0.85em;
+  font-size: 0.8em;
 }
 
 .tutorial h3,
@@ -630,7 +630,7 @@ button md-circular-progress {
   opacity: 0;
 }
 
-.setup-btn .material-symbols-outlined { font-size: 18px; }
+.setup-btn .material-symbols-outlined { font-size: 1.1em; }
 
 .no-animation * {
   animation-duration: 0s !important;
@@ -671,9 +671,7 @@ button md-circular-progress {
   color: var(--md-sys-color-on-surface);
 }
 
-.stp-card:active {
-  transform: scale(0.97);
-}
+.stp-card:active { transform: scale(0.97); }
 
 .stp-card.stp-on {
   background-color: var(--md-sys-color-primary-container);
@@ -694,12 +692,12 @@ button md-circular-progress {
 }
 
 .stp-lbl {
-  font-size: 16px;
+  font-size: 1em;
   font-weight: 500;
 }
 
 .stp-sts {
-  font-size: 13px;
+  font-size: 0.8em;
   opacity: 0.7;
 }
 
@@ -715,9 +713,7 @@ button md-circular-progress {
   scroll-behavior: smooth;
 }
 
-.stp-pages::-webkit-scrollbar {
-  display: none;
-}
+.stp-pages::-webkit-scrollbar { display: none; }
 
 .stp-page {
   min-width: 100%;
@@ -755,7 +751,7 @@ button md-circular-progress {
   color: var(--md-sys-color-on-primary-container);
   padding: 12px 20px;
   border-radius: 50px;
-  font-size: 14px;
+  font-size: 0.8em;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -768,7 +764,7 @@ button md-circular-progress {
 }
 
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast .material-symbols-outlined { font-size: 18px; }
+.toast .material-symbols-outlined { font-size: 1.1em; }
 
 .md-dialog-overlay {
   position: fixed;
@@ -808,19 +804,19 @@ button md-circular-progress {
 }
 
 .md-dialog-icon {
-  font-size: 32px;
+  font-size: 2em;
   color: var(--md-sys-color-error, #B3261E);
   margin-bottom: 4px;
 }
 
 .md-dialog-title {
-  font-size: 18px;
+  font-size: 1.1em;
   font-weight: 600;
   text-align: center;
 }
 
 .md-dialog-body {
-  font-size: 14px;
+  font-size: 0.8em;
   text-align: center;
   opacity: 0.7;
   line-height: 1.5;
