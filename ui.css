@@ -755,6 +755,21 @@ button md-circular-progress {
   background: var(--md-sys-color-on-surface);
 }
 
+.stp-input {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.stp-input .md-input { flex: 8; }
+.stp-input .stp-next { flex: 2; }
+
+.stp-next .stp-card {
+  height: 100%;
+  justify-content: center;
+}
+
 .toast {
   position: fixed;
   bottom: 90px;
