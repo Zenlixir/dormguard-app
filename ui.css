@@ -777,7 +777,7 @@ button md-circular-progress {
 }
 
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast .material-symbols-outlined { font-size: 1.2em; }
+.toast .material-symbols-outlined { font-size: 1.3em; }
 
 .md-dialog-overlay {
   position: fixed;
