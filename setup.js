@@ -1,10 +1,11 @@
-
 document.addEventListener("DOMContentLoaded", () => {
 
   const stpPages = document.querySelector(".stp-pages");
   const dots = document.querySelectorAll(".stp-dot");
 
   if (stpPages && dots.length) {
+    const totalPages = dots.length;
+
     const updateDots = () => {
       const index = Math.round(stpPages.scrollLeft / stpPages.clientWidth);
       dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
@@ -17,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
       stpPages.scrollTo({ left: stpPages.clientWidth * index, behavior: "smooth" });
     };
 
+    const nextPage = () => {
+      const current = Math.round(stpPages.scrollLeft / stpPages.clientWidth);
+      scrollToPage((current + 1) % totalPages);
+    };
+
     const firstPage = document.querySelector(".stp-page");
     if (firstPage) {
       const mainCard = firstPage.querySelector(".stp-alone .stp-card");
@@ -26,6 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (gridCards[0]) gridCards[0].addEventListener("click", () => scrollToPage(2));
       if (gridCards[1]) gridCards[1].addEventListener("click", () => scrollToPage(3));
     }
+
+    document.querySelectorAll(".stp-next").forEach(btn => {
+      btn.addEventListener("click", nextPage);
+    });
   }
 
   const doorApiInput  = document.getElementById("doorApiInput");
@@ -43,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (url) localStorage.setItem("sheets_url", url);
   });
 
-  // toast
   function showToast(icon, message) {
     const existing = document.querySelector(".toast");
     if (existing) existing.remove();
