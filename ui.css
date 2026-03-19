@@ -106,7 +106,7 @@ body {
 
 h1 {
   position: relative;
-  font-size: 1.4em;
+  font-size: 1.6em;
   margin-bottom: 16px;
 }
 
@@ -125,8 +125,8 @@ h1 {
 
 .tutorial { margin-bottom: 12px; }
 
-.label { font-size: 0.8em; opacity: 0.7; }
-.value { font-size: 1.4em; font-weight: 600; }
+.label { font-size: 1em; opacity: 0.7; }
+.value { font-size: 1.6em; font-weight: 600; }
 
 .value-row {
   display: flex;
@@ -165,11 +165,11 @@ h1 {
 
 .database .label {
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1.2em;
   margin-bottom: 8px;
 }
 
-.database .md-btn         { font-size: 0.7em; }
+.database .md-btn         { font-size: 0.8em; }
 .settings-section .label  { margin-bottom: 8px; }
 
 .db-actions {
@@ -202,7 +202,7 @@ button { position: relative; }
   border: none;
   border-radius: 32px;
   font-weight: 600;
-  font-size: 0.7em;
+  font-size: 0.8em;
   background: var(--md-sys-color-primary-container);
   color: var(--md-sys-color-on-primary-container);
   position: relative;
@@ -251,7 +251,7 @@ button md-circular-progress {
   min-height: 80px;
   max-height: 180px;
   padding: 18px;
-  font-size: 0.7em;
+  font-size: 0.8em;
   font-weight: 500;
   border-radius: 28px;
   border: 2px solid var(--md-sys-color-surface-container);
@@ -295,7 +295,7 @@ button md-circular-progress {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: var(--md-sys-color-on-surface);
   border-radius: 24px;
   position: relative;
@@ -476,7 +476,7 @@ button md-circular-progress {
 }
 
 .info-text div      { font-size: 1em; color: var(--md-sys-color-on-surface); }
-.info-text .creator { font-size: 0.7em; opacity: 0.6; }
+.info-text .creator { font-size: 0.8em; opacity: 0.6; }
 
 .credits-list {
   list-style: none;
@@ -491,7 +491,7 @@ button md-circular-progress {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 0.8em;
+  font-size: 1em;
   color: var(--md-sys-color-on-surface);
   margin-bottom: 8px;
 }
@@ -499,7 +499,7 @@ button md-circular-progress {
 .credits-list li .material-symbols-outlined { font-size: 2em; opacity: 0.7; }
 
 .credits-text { display: flex; flex-direction: column; }
-.credits-desc { font-size: 0.7em; opacity: 0.6; margin-top: 2px; }
+.credits-desc { font-size: 0.8em; opacity: 0.6; margin-top: 2px; }
 
 .icon-link {
   color: var(--md-sys-color-on-surface);
@@ -582,7 +582,7 @@ button md-circular-progress {
 .code-container .card__content pre {
   font-family: 'Monocraft', monospace;
   padding: 10px;
-  font-size: 0.7em;
+  font-size: 0.8em;
   overflow-x: hidden;
   white-space: pre-wrap;
   word-break: break-word;
