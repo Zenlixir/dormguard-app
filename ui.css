@@ -17,13 +17,13 @@ body {
   margin: 0;
   background: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 18px);
 
-  --fs-xl   : 1.5em;
-  --fs-l    : 1em;
-  --fs-md   : 0.88em;
-  --fs-sm   : 0.77em;
-  --fs-icon : 1.4rem;
+  --fs-xl   : 1.6rem;
+  --fs-l    : 1rem;
+  --fs-md   : 0.9rem;
+  --fs-sm   : 0.8rem;
+  --fs-icon : 1.5rem;
 }
 
 @font-face {
@@ -163,7 +163,7 @@ h1 {
 
 .database, .settings-section {
   position: fixed;
-  bottom: 80px;
+  bottom: calc(80px + env(safe-area-inset-bottom));
   left: 16px;
   right: 16px;
   border-radius: 24px;
@@ -942,7 +942,7 @@ button md-circular-progress {
 }
 
 .toast.show { transform: translateX(-50%) translateY(0); }
-.toast .material-symbols-outlined { font-size: 1.3em; }
+.toast .material-symbols-outlined { font-size: 1.3rem; }
 
 .md-dialog-overlay {
   position: fixed;
