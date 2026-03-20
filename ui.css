@@ -845,11 +845,11 @@ button md-circular-progress {
 
 .stp-has-value:not(.stp-textarea-active)::placeholder {
   color: var(--md-sys-color-on-surface);
-  font-weight: 700;
-  font-size: var(--fs-xl);
+  font-weight: 500;
+  font-size: var(--fs-l);
   opacity: 1;
   text-align: center;
-  line-height: 48px;
+  line-height: 45px;
 }
 
 .stp-textarea-active {
