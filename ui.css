@@ -19,7 +19,7 @@ body {
   color: var(--md-sys-color-on-surface);
   font-size: clamp(14px, 4vw, 18px);
 
-  --fs-xl   : 2rem;
+  --fs-xl   : 1.8rem;
   --fs-l    : 1.2rem;
   --fs-md   : 1rem;
   --fs-sm   : 0.8rem;
@@ -145,7 +145,7 @@ h1 {
   align-items: center;
 }
 
-.card-icon { font-size: 2.4em; opacity: 0.6; }
+.card-icon { font-size: 3rem; opacity: 0.6; }
 
 .page .card { opacity: 0; }
 
