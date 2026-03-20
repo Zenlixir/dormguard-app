@@ -1,4 +1,5 @@
 // DOM elements
+const { StatusBar } = window.Capacitor?.Plugins || {};
 const vibrationSwitch     = document.getElementById('vibrationSwitch');
 const pages               = document.querySelectorAll('.page');
 const buttons             = document.querySelectorAll('.nav-item');
@@ -242,6 +243,9 @@ function updateThemeColor() {
     .getPropertyValue('--md-sys-color-surface')
     .trim();
   themeMeta?.setAttribute('content', bg || defaultMetaColor);
+
+  const isDark = document.body.classList.contains('dark');
+  StatusBar?.setStyle({ style: isDark ? 'DARK' : 'LIGHT' });
 }
 
 // theme again
