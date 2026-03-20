@@ -15,7 +15,20 @@ if (notifSwitch) {
   });
 }
 
-// api
+const isCapacitor = !!(window.Capacitor?.isNativePlatform?.());
+const { LocalNotifications } = window.Capacitor?.Plugins || {};
+
+// request permissions
+async function requestPermissions() {
+  if (isCapacitor && LocalNotifications) {
+    await LocalNotifications.requestPermissions();
+  } else if ('Notification' in window && Notification.permission === 'default') {
+    await Notification.requestPermission();
+  }
+}
+requestPermissions();
+
+// api stuff
 async function checkDoorNotif() {
   if (!notifEnabled) return;
 
@@ -28,7 +41,6 @@ async function checkDoorNotif() {
     const rows = raw.values || raw || [];
     if (!rows.length) return;
 
-    // find last open
     const lastOpen = [...rows].reverse().find(r => {
       const door = r.door || r[2];
       return door === 'OPEN';
@@ -41,7 +53,6 @@ async function checkDoorNotif() {
     const date = new Date(rawDate);
     const time = new Date(rawTime);
 
-    // build timestamp
     const lastOpened = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -54,9 +65,8 @@ async function checkDoorNotif() {
 
     const diff = Date.now() - lastOpened;
 
-    // trigger notif
     if (diff >= LIMIT && !notifSent) {
-      notify();
+      await notify();
       notifSent = true;
     } else if (diff < LIMIT) {
       notifSent = false;
@@ -65,14 +75,34 @@ async function checkDoorNotif() {
   } catch {}
 }
 
-// show notif
-function notify() {
-  if (Notification.permission !== 'granted') return;
+async function notify() {
+  navigator.vibrate?.([200, 100, 200]);
 
+  // Native notifs
+  if (isCapacitor && LocalNotifications) {
+    try {
+      await LocalNotifications.schedule({
+        notifications: [{
+          title: 'DormGuard Alert',
+          body: 'Door has been open for more than 3 minutes!',
+          id: 1,
+          channelId: 'door_alerts',
+          smallIcon: 'ic_launcher_foreground',
+          actionTypeId: '',
+          extra: null
+        }]
+      });
+    } catch (e) {
+      console.error('LocalNotifications failed', e);
+    }
+    return;
+  }
+
+  if (Notification.permission !== 'granted') return;
   navigator.serviceWorker.getRegistration().then(reg => {
     if (!reg) return;
     reg.showNotification('DormGuard Alert', {
-      body: 'Door open > 3 minutes',
+      body: 'Door has been open for more than 3 minutes!',
       icon: 'empty.png',
       badge: 'badge.png',
       vibrate: [200, 100, 200],
@@ -80,11 +110,6 @@ function notify() {
       renotify: true
     });
   });
-}
-
-// request permission
-if ('Notification' in window && Notification.permission === 'default') {
-  Notification.requestPermission();
 }
 
 setInterval(checkDoorNotif, CHECK_INTERVAL);
