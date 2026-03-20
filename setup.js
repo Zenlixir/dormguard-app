@@ -38,15 +38,108 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const doorApiInput  = document.getElementById("doorApiInput");
-  const sheetsInput   = document.querySelector(".md-input2");
-  const ctrlsApiInput = document.getElementById("ctrlsApiInput");
+  document.querySelectorAll(".md-input, .md-input2").forEach(textarea => {
+    const page = textarea.closest(".stp-page");
+    if (!page) return;
+
+    textarea.dataset.origPlaceholder = textarea.getAttribute("placeholder") || "";
+
+    const updateMask = (ta) => {
+      const hasVal = (ta.dataset.realValue || ta.value).trim().length > 0;
+      ta.classList.toggle("stp-has-value", hasVal);
+    };
+
+    const doneBtn = document.createElement("button");
+    doneBtn.className = "stp-done-btn md-btn";
+    doneBtn.innerHTML = `<span class="material-symbols-outlined">check</span>`;
+    doneBtn.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      textarea.blur();
+    });
+
+    let expandTimer   = null;
+    let collapseTimer = null;
+
+    const expand = () => {
+      clearTimeout(collapseTimer);
+      if (textarea.dataset.realValue !== undefined) {
+        textarea.value = textarea.dataset.realValue;
+        delete textarea.dataset.realValue;
+      }
+      textarea.setAttribute("placeholder", textarea.dataset.origPlaceholder);
+      textarea.classList.remove("stp-has-value");
+      page.appendChild(doneBtn);
+      expandTimer = setTimeout(() => {
+       page.classList.add("stp-expanded");
+       textarea.classList.add("stp-textarea-active");
+       if (stpPages) stpPages.style.overflowX = "hidden";
+         requestAnimationFrame(() => doneBtn.classList.add("show"));
+      }, 300);
+    };
+
+    const collapse = () => {
+      clearTimeout(expandTimer);
+      doneBtn.classList.remove("show");
+      doneBtn.addEventListener("transitionend", () => {
+        if (doneBtn.parentNode) doneBtn.remove();
+      }, { once: true });
+      collapseTimer = setTimeout(() => {
+        page.classList.remove("stp-expanded");
+        textarea.classList.remove("stp-textarea-active");
+        if (stpPages) stpPages.style.overflowX = "auto";
+        if (textarea.value.trim().length > 0) {
+          textarea.dataset.realValue = textarea.value;
+          textarea.value = "";
+          textarea.setAttribute("placeholder", "Edit?");
+          textarea.classList.add("stp-has-value");
+        }
+      }, 300);
+    };
+
+    textarea.addEventListener("focus", expand);
+    textarea.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); textarea.blur(); }
+    });
+    textarea.addEventListener("blur", collapse);
+    textarea.addEventListener("input", () => updateMask(textarea));
+    updateMask(textarea);
+  });
+
+  const doorApiInput   = document.getElementById("doorApiInput");
+  const sheetsInput    = document.querySelector(".md-input2");
+  const ctrlsApiInput  = document.getElementById("ctrlsApiInput");
   const saveConfigBtn  = document.getElementById("saveConfig");
   const resetConfigBtn = document.getElementById("resetConfig");
 
-  if (doorApiInput)  doorApiInput.value  = localStorage.getItem("api_url")    || "";
-  if (sheetsInput)   sheetsInput.value   = localStorage.getItem("sheets_url") || "";
-  if (ctrlsApiInput) ctrlsApiInput.value = localStorage.getItem("ctrls_url")  || "";
+  if (doorApiInput) {
+    const saved = localStorage.getItem("api_url") || "";
+    if (saved) {
+      doorApiInput.dataset.realValue = saved;
+      doorApiInput.value = "";
+      doorApiInput.setAttribute("placeholder", "Edit?");
+      doorApiInput.classList.add("stp-has-value");
+    }
+  }
+
+  if (sheetsInput) {
+    const saved = localStorage.getItem("sheets_url") || "";
+    if (saved) {
+      sheetsInput.dataset.realValue = saved;
+      sheetsInput.value = "";
+      sheetsInput.setAttribute("placeholder", "Edit?");
+      sheetsInput.classList.add("stp-has-value");
+    }
+  }
+
+  if (ctrlsApiInput) {
+    const saved = localStorage.getItem("ctrls_url") || "";
+    if (saved) {
+      ctrlsApiInput.dataset.realValue = saved;
+      ctrlsApiInput.value = "";
+      ctrlsApiInput.setAttribute("placeholder", "Edit?");
+      ctrlsApiInput.classList.add("stp-has-value");
+    }
+  }
 
   sheetsInput?.addEventListener("input", () => {
     const url = sheetsInput.value.trim();
@@ -111,19 +204,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   saveConfigBtn?.addEventListener("click", () => {
-    const doorUrl = doorApiInput?.value.trim();
-    if (doorUrl?.startsWith("http")) {
+    const doorUrl = (doorApiInput?.dataset.realValue || doorApiInput?.value || "").trim();
+    if (doorUrl.startsWith("http")) {
       window.API_KEY = doorUrl.replace(/\/$/, "");
       localStorage.setItem("api_url", window.API_KEY);
     }
 
-    const sheetsUrl = sheetsInput?.value.trim();
-    if (sheetsUrl?.startsWith("http")) {
+    const sheetsUrl = (sheetsInput?.dataset.realValue || sheetsInput?.value || "").trim();
+    if (sheetsUrl.startsWith("http")) {
       localStorage.setItem("sheets_url", sheetsUrl);
     }
 
-    const ctrlsUrl = ctrlsApiInput?.value.trim();
-    if (ctrlsUrl?.startsWith("http")) {
+    const ctrlsUrl = (ctrlsApiInput?.dataset.realValue || ctrlsApiInput?.value || "").trim();
+    if (ctrlsUrl.startsWith("http")) {
       localStorage.setItem("ctrls_url", ctrlsUrl);
     }
 
@@ -133,9 +226,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   resetConfigBtn?.addEventListener("click", () => {
     showResetConfirm(() => {
-      if (doorApiInput)  doorApiInput.value  = "";
-      if (sheetsInput)   sheetsInput.value   = "";
-      if (ctrlsApiInput) ctrlsApiInput.value = "";
+      [doorApiInput, sheetsInput, ctrlsApiInput].forEach(ta => {
+        if (!ta) return;
+        ta.value = "";
+        delete ta.dataset.realValue;
+        ta.classList.remove("stp-has-value");
+        ta.setAttribute("placeholder", ta.dataset.origPlaceholder || "");
+      });
 
       localStorage.removeItem("api_url");
       localStorage.removeItem("sheets_url");
