@@ -237,21 +237,11 @@ function applyContrastForCurrentTheme() {
 }
 
 // theme color meta
-const defaultMetaColor = 'rgb(235, 231, 231)';
-
 function updateThemeColor() {
-  const isPWA =
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true;
-
-  if (isPWA || document.body.classList.contains('dark')) {
-    const bg = getComputedStyle(document.body)
-      .getPropertyValue('--md-sys-color-background')
-      .trim();
-    themeMeta?.setAttribute('content', bg);
-  } else {
-    themeMeta?.setAttribute('content', defaultMetaColor);
-  }
+  const bg = getComputedStyle(document.body)
+    .getPropertyValue('--md-sys-color-surface')
+    .trim();
+  themeMeta?.setAttribute('content', bg || defaultMetaColor);
 }
 
 // theme again
