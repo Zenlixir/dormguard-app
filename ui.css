@@ -849,7 +849,7 @@ button md-circular-progress {
   font-size: var(--fs-l);
   opacity: 1;
   text-align: center;
-  line-height: 45px;
+  line-height: 44px;
 }
 
 .stp-textarea-active {
