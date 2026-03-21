@@ -58,7 +58,7 @@ async function notify() {
           title: 'DormGuard Alert',
           body: 'Door has been open for more than 3 minutes!',
           id: 1,
-          smallIcon: 'ic_launcher_foreground',
+          smallIcon: 'ic_notif',
           actionTypeId: '',
           extra: null
         }]
