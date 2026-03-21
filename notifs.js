@@ -17,6 +17,9 @@ if (!isCapacitor && 'Notification' in window && Notification.permission === 'def
   Notification.requestPermission();
 }
 
+console.log('isCapacitor:', isCapacitor);
+console.log('Capacitor plugins:', JSON.stringify(Object.keys(window.Capacitor?.Plugins || {})));
+
 async function checkDoorNotif() {
   if (!notifEnabled) return;
   const CTRLS_URL = localStorage.getItem('ctrls_url') || '';
@@ -26,32 +29,44 @@ async function checkDoorNotif() {
     const res = await fetch(CTRLS_URL);
     const data = await res.json();
 
+    console.log('ctrls data:', JSON.stringify(data));
+
     if (data.alert === 1 && !notifSent) {
       await notify();
       notifSent = true;
     } else if (data.alert === 0) {
       notifSent = false;
     }
-  } catch {}
+  } catch(e) {
+    console.log('checkDoorNotif error:', e);
+  }
 }
 
 async function notify() {
   navigator.vibrate?.([200, 100, 200]);
+  console.log('notify() called, isCapacitor:', isCapacitor);
 
   if (isCapacitor) {
     const { LocalNotifications } = window.Capacitor?.Plugins || {};
+    console.log('LocalNotifications:', LocalNotifications);
     if (!LocalNotifications) return;
-    await LocalNotifications.requestPermissions();
-    await LocalNotifications.schedule({
-      notifications: [{
-        title: 'DormGuard Alert',
-        body: 'Door has been open for more than 3 minutes!',
-        id: 1,
-        smallIcon: 'ic_launcher_foreground',
-        actionTypeId: '',
-        extra: null
-      }]
-    });
+    try {
+      const perm = await LocalNotifications.requestPermissions();
+      console.log('permission:', JSON.stringify(perm));
+      await LocalNotifications.schedule({
+        notifications: [{
+          title: 'DormGuard Alert',
+          body: 'Door has been open for more than 3 minutes!',
+          id: 1,
+          smallIcon: 'ic_launcher_foreground',
+          actionTypeId: '',
+          extra: null
+        }]
+      });
+      console.log('notification scheduled');
+    } catch(e) {
+      console.log('LocalNotifications error:', e);
+    }
     return;
   }
 
