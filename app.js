@@ -1,5 +1,8 @@
 // DOM elements
 const { StatusBar } = window.Capacitor?.Plugins || {};
+const { Filesystem, Share } = window.Capacitor?.Plugins || {};
+const isCapacitor = !!(window.Capacitor?.isNativePlatform?.());
+
 const vibrationSwitch     = document.getElementById('vibrationSwitch');
 const pages               = document.querySelectorAll('.page');
 const buttons             = document.querySelectorAll('.nav-item');
@@ -17,6 +20,7 @@ const darkModeSwitch      = document.getElementById('darkModeSwitch');
 const contrastSwitch      = document.getElementById('contrastSwitch');
 const reduceMotionSwitch  = document.getElementById('reduceMotionSwitch');
 const themeMeta           = document.querySelector('meta[name="theme-color"]');
+const defaultMetaColor    = 'rgb(252, 248, 248)';
 
 window.API_KEY = localStorage.getItem('api_url') || '';
 
@@ -178,11 +182,29 @@ async function downloadCSV(filename, limit = null) {
       .concat(rows.map(e => `${e.time},${e.date},${e.door}`))
       .join('\n');
 
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href     = URL.createObjectURL(blob);
-    link.download = filename;
-    link.click();
+    if (isCapacitor && Filesystem) {
+      await Filesystem.writeFile({
+        path: filename,
+        data: btoa(unescape(encodeURIComponent(csv))),
+        directory: 'CACHE',
+        encoding: 'BASE64'
+      });
+      const fileResult = await Filesystem.getUri({
+        path: filename,
+        directory: 'CACHE'
+      });
+      await Share?.share({
+        title: filename,
+        url: fileResult.uri,
+        dialogTitle: 'Save CSV'
+      });
+    } else {
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href     = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+    }
   } finally {
     spinner.remove();
     btn.textContent   = origText;
