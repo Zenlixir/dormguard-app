@@ -52,7 +52,7 @@ async function checkDoorNotif() {
     const diff = Date.now() - lastOpened;
 
     if (diff >= LIMIT && !notifSent) {
-      notify();
+      await notify();
       notifSent = true;
     } else if (diff < LIMIT) {
       notifSent = false;
@@ -60,16 +60,34 @@ async function checkDoorNotif() {
   } catch {}
 }
 
-function notify() {
+async function notify() {
   navigator.vibrate?.([200, 100, 200]);
   if (Notification.permission !== 'granted') return;
-  new Notification('DormGuard Alert', {
-    body: 'Door has been open for more than 3 minutes!',
-    icon: 'icon.png',
-    badge: 'badge.png',
-    tag: 'door-alert',
-    renotify: true
-  });
+
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (reg) {
+      reg.showNotification('DormGuard Alert', {
+        body: 'Door has been open for more than 3 minutes!',
+        icon: 'icon.png',
+        badge: 'badge.png',
+        vibrate: [200, 100, 200],
+        tag: 'door-alert',
+        renotify: true
+      });
+    } else {
+      new Notification('DormGuard Alert', {
+        body: 'Door has been open for more than 3 minutes!',
+        icon: 'icon.png',
+        badge: 'badge.png'
+      });
+    }
+  } catch {
+    new Notification('DormGuard Alert', {
+      body: 'Door has been open for more than 3 minutes!',
+      icon: 'icon.png'
+    });
+  }
 }
 
 setInterval(checkDoorNotif, CHECK_INTERVAL);
