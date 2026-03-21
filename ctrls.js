@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const ctrlsApiInput = document.getElementById('ctrlsApiInput');
 
-  let sheetAPI = localStorage.getItem('ctrls_api') || "";
+  let sheetAPI = localStorage.getItem('ctrls_url') || '';
   if (ctrlsApiInput) {
     ctrlsApiInput.value = sheetAPI;
     ctrlsApiInput.addEventListener('change', () => {
       sheetAPI = ctrlsApiInput.value.trim();
-      localStorage.setItem('ctrls_api', sheetAPI);
+      localStorage.setItem('ctrls_url', sheetAPI);
     });
   }
 
@@ -23,9 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (vibrationSwitch) vibrationSwitch.checked = localStorage.getItem('vibrationState') === '1';
   if (lampSwitch)      lampSwitch.checked      = localStorage.getItem('lampState')      === '1';
 
-  async function updateSheet(led = 0, buzzer = 0, stop = 0, lamp = 0) {
+  async function updateSheet(led = 0, buzzer = 0, stop = 0, lamp = 0, alert = null) {
     if (!sheetAPI) return;
-    const url = `${sheetAPI}?led=${led}&buzzer=${buzzer}&stop=${stop}&lamp=${lamp}`;
+    let url = `${sheetAPI}?led=${led}&buzzer=${buzzer}&stop=${stop}&lamp=${lamp}`;
+    if (alert !== null) url += `&alert=${alert}`;
     try {
       await fetch(url);
     } catch (err) {}
@@ -124,5 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(syncEspAlert, 2000);
   syncEspAlert();
 
-  updateSheet(ledVal(), buzzerVal(), 0, lampVal());
+  updateSheet(ledVal(), buzzerVal(), 0, lampVal(), 0);
 });
