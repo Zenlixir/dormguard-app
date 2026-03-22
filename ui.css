@@ -96,6 +96,16 @@ body {
   --md-sys-color-surface-container-high: rgb(36 36 36);
 }
 
+::selection {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+::-moz-selection {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
 @keyframes cardFadeUp    { from { opacity: 0; transform: translateY(14px);  } to { opacity: 1; transform: translateY(0); } }
 @keyframes cardFadeDown  { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes cardFadeRight { from { opacity: 0; transform: translateX(14px);  } to { opacity: 1; transform: translateX(0); } }
