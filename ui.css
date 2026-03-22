@@ -179,7 +179,7 @@ h1 {
   border-radius: 24px;
   padding: 16px;
   background: var(--md-sys-color-surface-container);
-  z-index: 1000;
+  z-index: 999;
 }
 
 .database { opacity: 1 !important; }
@@ -355,7 +355,7 @@ button md-circular-progress {
   justify-content: space-around;
   align-items: center;
   background: var(--md-sys-color-surface-container-high);
-  z-index: 999;
+  z-index: 1001;
 }
 
 .nav-item {
@@ -932,7 +932,7 @@ button md-circular-progress {
 
 .toast {
   position: fixed;
-  bottom: 90px;
+  bottom: calc(90px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%) translateY(80px);
   background: var(--md-sys-color-primary-container);
@@ -946,7 +946,7 @@ button md-circular-progress {
   gap: 8px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
   transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  z-index: 99;
+  z-index: 1000;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -1026,4 +1026,10 @@ button md-circular-progress {
 .md-dialog-btn.confirm {
   color: var(--md-sys-color-error, #B3261E);
   background: #F9C1BD;
+}
+
+.md-input.decoding, .md-input2.decoding {
+  opacity: 1;
+  color: var(--md-sys-color-on-surface);
+  transition: none;
 }
