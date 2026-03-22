@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let sheetAPI = localStorage.getItem('ctrls_url') || '';
   if (ctrlsApiInput) {
-    ctrlsApiInput.value = sheetAPI;
     ctrlsApiInput.addEventListener('change', () => {
       sheetAPI = ctrlsApiInput.value.trim();
       localStorage.setItem('ctrls_url', sheetAPI);
