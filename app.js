@@ -1,7 +1,7 @@
-// DOM elements
 const { StatusBar } = window.Capacitor?.Plugins || {};
 const { Filesystem, Share } = window.Capacitor?.Plugins || {};
 const isCapacitor = !!(window.Capacitor?.isNativePlatform?.());
+const getUrl = (key) => { const v = localStorage.getItem(key); if (!v) return ''; try { atob(v); return decodeURIComponent(escape(atob(v))); } catch { return v; } };
 
 const vibrationSwitch     = document.getElementById('vibrationSwitch');
 const pages               = document.querySelectorAll('.page');
@@ -22,9 +22,8 @@ const reduceMotionSwitch  = document.getElementById('reduceMotionSwitch');
 const themeMeta           = document.querySelector('meta[name="theme-color"]');
 const defaultMetaColor    = 'rgb(252, 248, 248)';
 
-window.API_KEY = localStorage.getItem('api_url') || '';
+window.API_KEY = getUrl('api_url');
 
-// vibration
 let vibrationEnabled = localStorage.getItem('vibration') !== 'off';
 if (vibrationSwitch) vibrationSwitch.checked = !vibrationEnabled;
 
@@ -41,14 +40,12 @@ if (vibrationSwitch) {
   });
 }
 
-// state
 let doorOpenTimer    = null;
 let doorOpenInterval = null;
 let alertDisabled    = false;
 let alertEnabled     = true;
 let isDownloading    = false;
 
-// clock
 function updateClock() {
   const now = new Date();
   const h = now.getHours().toString().padStart(2, '0');
@@ -59,7 +56,6 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// alert switch
 if (alertSwitch) {
   alertEnabled = localStorage.getItem('alert') === 'on';
   alertSwitch.checked = alertEnabled;
@@ -78,14 +74,12 @@ if (alertSwitch) {
   });
 }
 
-// add logs row
 function addEvent(text, time = null) {
   const li = document.createElement('li');
   li.textContent = `${time || new Date().toLocaleTimeString()} — ${text}`;
   eventListEl.prepend(li);
 }
 
-// format
 function formatAMPM(date) {
   if (!(date instanceof Date) || isNaN(date)) return '-';
   let h = date.getHours();
@@ -100,7 +94,6 @@ function formatDate(date) {
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-// fetch sheet
 async function fetchSheetData() {
   try {
     const res = await fetch(window.API_KEY);
@@ -149,14 +142,12 @@ async function fetchServerData() {
   }
 }
 
-// sheets url
 viewDatBtn?.addEventListener('click', () => {
-  const url = localStorage.getItem('sheets_url');
+  const url = getUrl('sheets_url');
   if (!url) return;
   window.open(url, '_blank');
 });
 
-// download
 async function downloadCSV(filename, limit = null) {
   if (isDownloading) return;
   isDownloading = true;
@@ -217,7 +208,6 @@ async function downloadCSV(filename, limit = null) {
 fullDatBtn.addEventListener('click',   () => downloadCSV('full_records.csv'));
 latestDatBtn.addEventListener('click', () => downloadCSV('latest_records.csv', 50));
 
-// navigation
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
     if (navigator.vibrate) navigator.vibrate(32);
@@ -228,7 +218,6 @@ buttons.forEach(btn => {
   });
 });
 
-// ripple effect
 mdButtons.forEach(btn => {
   btn.addEventListener('click', e => {
     const circle = document.createElement('span');
@@ -243,7 +232,6 @@ mdButtons.forEach(btn => {
   });
 });
 
-// theme
 function getCurrentTheme() {
   return document.body.classList.contains('dark') ? 'dark' : 'light';
 }
@@ -259,7 +247,6 @@ function applyContrastForCurrentTheme() {
   document.body.classList.add(getCurrentTheme() === 'dark' ? 'contrast-dark' : 'contrast-light');
 }
 
-// theme color meta
 function updateThemeColor() {
   const bg = getComputedStyle(document.body)
     .getPropertyValue('--md-sys-color-surface')
@@ -267,10 +254,14 @@ function updateThemeColor() {
   themeMeta?.setAttribute('content', bg || defaultMetaColor);
 
   const isDark = document.body.classList.contains('dark');
-  StatusBar?.setStyle({ style: isDark ? 'DARK' : 'LIGHT' });
+  if (StatusBar) {
+    try {
+      StatusBar.setBackgroundColor({ color: isDark ? '#121212' : '#fcf8f8' });
+      StatusBar.setStyle({ style: isDark ? 'DARK' : 'LIGHT' });
+    } catch(e) {}
+  }
 }
 
-// theme again
 darkModeSwitch.addEventListener('change', () => {
   const theme = darkModeSwitch.checked ? 'dark' : 'light';
   applyTheme(theme);
@@ -285,7 +276,6 @@ contrastSwitch.addEventListener('change', () => {
   updateThemeColor();
 });
 
-// restore settings
 (function restoreSettings() {
   const savedTheme = localStorage.getItem('theme') || 'light';
   applyTheme(savedTheme);
@@ -297,9 +287,13 @@ contrastSwitch.addEventListener('change', () => {
   }
 })();
 
-updateThemeColor();
+if (window.Capacitor) {
+  document.addEventListener('deviceready', updateThemeColor);
+  setTimeout(updateThemeColor, 500);
+} else {
+  updateThemeColor();
+}
 
-// reduce motion
 reduceMotionSwitch.addEventListener('change', () => {
   document.body.classList.toggle('no-animation', reduceMotionSwitch.checked);
   localStorage.setItem('reduceMotion', reduceMotionSwitch.checked ? 'on' : 'off');
@@ -310,7 +304,6 @@ if (localStorage.getItem('reduceMotion') === 'on') {
   reduceMotionSwitch.checked = true;
 }
 
-// prevent zoom/select
 document.addEventListener('contextmenu', e => e.preventDefault());
 const configArea = document.querySelector('.user-config');
 
@@ -322,12 +315,10 @@ document.addEventListener('pointerdown', e => {
 
 document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
 
-// register SW
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/dormguard-app/sw.js');
 }
 
-// collapsible
 document.querySelectorAll('.collapsible').forEach(header => {
   header.addEventListener('click', () => {
     const content = document.getElementById(header.dataset.target);
@@ -356,7 +347,6 @@ document.querySelectorAll('.collapsible').forEach(header => {
   });
 });
 
-// open setup shortcut
 document.getElementById('openSetupBtn').addEventListener('click', () => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const settingsPage = document.getElementById('settings');
