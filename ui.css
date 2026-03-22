@@ -23,7 +23,7 @@ body {
   --fs-l    : 1.2rem;
   --fs-md   : 1rem;
   --fs-sm   : 0.8rem;
-  --fs-icon : 1.5rem;
+  --fs-icon : 1.6rem;
 }
 
 @font-face {
@@ -690,12 +690,13 @@ button md-circular-progress {
   border-radius: 8px;
   font-weight: bold;
   margin-right: 6px;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
+  vertical-align: 1px; 
 }
 
 .tutorial h3,
 .tutorial strong {
-  font-variation-settings: "slnt" 0, "wdth" 70, "GRAD" 0, "ROND" 200;
+  font-variation-settings: "slnt" 0, "wdth" 85, "GRAD" 0, "ROND" 50;
 }
 
 .setup-btn {
@@ -963,7 +964,7 @@ button md-circular-progress {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1002;
   opacity: 0;
   transition: opacity 0.25s ease;
 }
@@ -1032,4 +1033,116 @@ button md-circular-progress {
   opacity: 1;
   color: var(--md-sys-color-on-surface);
   transition: none;
+}
+
+.tut-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tut-pages {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  align-items: stretch;
+}
+
+.tut-pages::-webkit-scrollbar { display: none; }
+
+.tut-page {
+  min-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  padding: 12px 12px 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tut-page .tutorial {
+  flex: 1;
+}
+
+.tut-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 4px 4px;
+}
+
+.tut-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tut-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--md-sys-color-outline);
+  opacity: 0.4;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.tut-dot.active {
+  opacity: 1;
+  background: var(--md-sys-color-on-surface);
+}
+
+.tut-btns {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.tut-btn {
+  flex: 1;
+  height: 48px;
+  padding: 0;
+  border-radius: 16px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.15s ease, border-radius 0.2s ease, background 0.2s ease !important;
+}
+
+.tut-btn:active {
+  transform: scale(0.96) translateY(1px) !important;
+  border-radius: 10px !important;
+}
+
+.tut-btn.tut-restart {
+  background: var(--md-sys-color-primary-container) !important;
+  color: var(--md-sys-color-on-primary-container) !important;
+}
+
+.tut-btn.tut-prev {
+  background: var(--md-sys-color-primary-container) !important;
+  color: var(--md-sys-color-on-primary-container) !important;
+}
+
+.tut-btn.tut-next {
+  background: var(--md-sys-color-primary) !important;
+  color: var(--md-sys-color-on-primary) !important;
+}
+
+.tut-code-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0;
+  border-radius: 16px !important;
+}
+
+.tut-pages {
+  align-items: stretch;
 }
