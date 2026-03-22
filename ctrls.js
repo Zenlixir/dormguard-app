@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const ctrlsApiInput = document.getElementById('ctrlsApiInput');
+  const getUrl = (key) => { const v = localStorage.getItem(key); if (!v) return ''; try { atob(v); return decodeURIComponent(escape(atob(v))); } catch { return v; } };
 
-  let sheetAPI = localStorage.getItem('ctrls_url') || '';
+  let sheetAPI = getUrl('ctrls_url');
   if (ctrlsApiInput) {
     ctrlsApiInput.addEventListener('change', () => {
       sheetAPI = ctrlsApiInput.value.trim();
-      localStorage.setItem('ctrls_url', sheetAPI);
     });
   }
 
