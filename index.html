@@ -27,7 +27,6 @@
       <script type="module">
          import '@material/web/all.js';
          import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-         
          document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
       </script>
    </head>
@@ -58,8 +57,8 @@
          </div>
          <div class="controls">
             <button class="md-btn setup-btn" id="openSetupBtn">
-            <span class="material-symbols-outlined">dashboard_customize</span>
-            Setup DormGuard
+               <span class="material-symbols-outlined">dashboard_customize</span>
+               Setup DormGuard
             </button>
             <div class="settings-section">
                <div class="label">
@@ -75,7 +74,7 @@
          <h1>
             Logs
             <button id="viewdat" class="sheets-btn" title="View on Sheets">
-            <span class="material-symbols-outlined">note</span>
+               <span class="material-symbols-outlined">note</span>
             </button>
          </h1>
          <div class="logs-wrapper">
@@ -101,24 +100,24 @@
                <span class="material-symbols-outlined">lightbulb</span>
                <span class="setting-text">LED Blink</span>
                <label class="md-switch">
-               <input type="checkbox" id="ledSwitch">
-               <span></span>
+                  <input type="checkbox" id="ledSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">volume_up</span>
                <span class="setting-text">Buzzer</span>
                <label class="md-switch">
-               <input type="checkbox" id="buzzerSwitch">
-               <span></span>
+                  <input type="checkbox" id="buzzerSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">wb_incandescent</span>
                <span class="setting-text">Lamp</span>
                <label class="md-switch">
-               <input type="checkbox" id="lampSwitch">
-               <span></span>
+                  <input type="checkbox" id="lampSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-header">App</div>
@@ -126,24 +125,24 @@
                <span class="material-symbols-outlined">dark_mode</span>
                <span class="setting-text">Dark Mode</span>
                <label class="md-switch">
-               <input type="checkbox" id="darkModeSwitch">
-               <span></span>
+                  <input type="checkbox" id="darkModeSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">notifications</span>
                <span class="setting-text">Notification</span>
                <label class="md-switch">
-               <input type="checkbox" id="notificationsSwitch">
-               <span></span>
+                  <input type="checkbox" id="notificationsSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">warning</span>
                <span class="setting-text">Alert</span>
                <label class="md-switch">
-               <input type="checkbox" id="alertSwitch">
-               <span></span>
+                  <input type="checkbox" id="alertSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-header">Accessibility</div>
@@ -151,24 +150,24 @@
                <span class="material-symbols-outlined">motion_photos_off</span>
                <span class="setting-text">Disable Animation</span>
                <label class="md-switch">
-               <input type="checkbox" id="reduceMotionSwitch">
-               <span></span>
+                  <input type="checkbox" id="reduceMotionSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">contrast</span>
                <span class="setting-text">High Contrast</span>
                <label class="md-switch">
-               <input type="checkbox" id="contrastSwitch">
-               <span></span>
+                  <input type="checkbox" id="contrastSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-item">
                <span class="material-symbols-outlined">vibration</span>
                <span class="setting-text">Disable Haptic</span>
                <label class="md-switch">
-               <input type="checkbox" id="vibrationSwitch">
-               <span></span>
+                  <input type="checkbox" id="vibrationSwitch">
+                  <span></span>
                </label>
             </div>
             <div class="settings-header" id="configSection">DormGuard Config</div>
@@ -260,8 +259,7 @@
                            </div>
                            <br/>
                            <div class="stp-input">
-                              <textarea class="md-input2" type="text"
-                                 placeholder="And your sheets link (Optional but recommended)"></textarea>
+                              <textarea class="md-input2" type="text" placeholder="And your sheets link (Optional but recommended)"></textarea>
                               <div class="stp-next">
                                  <div class="stp-card">
                                     <div class="stp-cnt">
@@ -285,8 +283,7 @@
                            </div>
                            <br/>
                            <div class="stp-input">
-                              <textarea id="ctrlsApiInput" class="md-input" type="text"
-                                 placeholder="Needed to enable/disable stuffs on DormGuard device"></textarea>
+                              <textarea id="ctrlsApiInput" class="md-input" type="text" placeholder="Needed to enable/disable stuffs on DormGuard device"></textarea>
                               <div class="stp-next">
                                  <div class="stp-card">
                                     <div class="stp-cnt">
@@ -318,20 +315,27 @@
                </div>
             </div>
             <div class="collapsible-content" id="apiTutorial">
-               <div class="tutorial">
-                  <h3><span class="step-number">Step 1</span> Prepare the Script</h3>
-                  <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
-                  <div class="code-container" id="apiCodeContainer">
-                     <div class="tools">
-                        <div class="circle"><span class="red box"></span></div>
-                        <div class="circle"><span class="yellow box"></span></div>
-                        <div class="circle"><span class="green box"></span></div>
-                     </div>
-                     <button id="copyApiCode" class="copy-btn" title="Copy Code">
-                     <span class="material-symbols-outlined">content_copy</span>
-                     </button>
-                     <div class="card__content">
-                        <pre>
+               <div class="tut-wrap">
+                  <div class="tut-pages">
+                     <div class="tut-page">
+                        <div class="tutorial">
+                           <h3><span class="step-number">Step 1</span> Prepare the Script</h3>
+                           <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
+                           <button class="tut-code-toggle md-btn" id="toggleApiCode">
+                              <span class="material-symbols-outlined">code</span>
+                              Show Code
+                           </button>
+                           <div class="code-container" id="apiCodeContainer" style="display:none;">
+                              <div class="tools">
+                                 <div class="circle"><span class="red box"></span></div>
+                                 <div class="circle"><span class="yellow box"></span></div>
+                                 <div class="circle"><span class="green box"></span></div>
+                              </div>
+                              <button id="copyApiCode" class="copy-btn" title="Copy Code">
+                                 <span class="material-symbols-outlined">content_copy</span>
+                              </button>
+                              <div class="card__content">
+                                 <pre>
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
   const data = sheet.getDataRange().getValues();
@@ -361,55 +365,185 @@ function doPost(e) {
     .createTextOutput(JSON.stringify({ status: "ok" }))
     .setMimeType(ContentService.MimeType.JSON);
 }
-                        </pre>
+                                 </pre>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="tut-page">
+                        <div class="tutorial">
+                           <h3><span class="step-number">Step 2</span> Deploy as Web App</h3>
+                           <ol>
+                              <li>Click <strong>Deploy → New deployment</strong>.</li>
+                              <li>Select <strong>Web app</strong> as the type.</li>
+                              <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
+                              <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
+                              <li>Click <strong>Deploy</strong> and authorize the script.</li>
+                           </ol>
+                        </div>
+                     </div>
+                     <div class="tut-page">
+                        <div class="tutorial">
+                           <h3><span class="step-number">Step 3</span> Get the Web App URL</h3>
+                           <p>After deployment, copy the <strong>Web app URL</strong> then paste it on this app setup thingy. This is your API endpoint for GET and POST requests. Make sure dont lose it, or just redo these if you lose it, its not that hard.</p>
+                        </div>
+                     </div>
+                     <div class="tut-page">
+                        <div class="tutorial">
+                           <h3><span class="step-number">Step 4</span> Test API</h3>
+                           <p>Yes, just test. Working? Congratulations. Not working? skill issue.</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tut-nav">
+                     <div class="tut-dots">
+                        <span class="tut-dot active"></span>
+                        <span class="tut-dot"></span>
+                        <span class="tut-dot"></span>
+                        <span class="tut-dot"></span>
+                     </div>
+                     <div class="tut-btns">
+                        <button class="tut-btn tut-restart md-btn" id="tutRestart">
+                           <span class="material-symbols-outlined">restart_alt</span>
+                        </button>
+                        <button class="tut-btn tut-prev md-btn" id="tutPrev">
+                           <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button class="tut-btn tut-next md-btn" id="tutNext">
+                           <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
                      </div>
                   </div>
                </div>
-               <script>
-                  const copyBtn = document.getElementById('copyApiCode');
-                  const codeContainer = document.getElementById('apiCodeContainer');
-                  
-                  copyBtn.addEventListener('click', () => {
-                    if (navigator.vibrate) navigator.vibrate(64);
-                  
-                    const code = codeContainer.querySelector('pre').innerText;
-                  
-                    navigator.clipboard.writeText(code).then(() => {
-                      copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
-                      setTimeout(() => {
-                        copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
-                      }, 1500);
-                    }).catch(err => console.error('Copy failed', err));
-                  });
-               </script>
-               <div class="tutorial">
-                  <h3><span class="step-number">Step 2</span> Deploy as Web App</h3>
-                  <ol>
-                     <li>Click <strong>Deploy → New deployment</strong>.</li>
-                     <li>Select <strong>Web app</strong> as the type.</li>
-                     <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
-                     <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
-                     <li>Click <strong>Deploy</strong> and authorize the script.</li>
-                  </ol>
-               </div>
-               <div class="tutorial">
-                  <h3><span class="step-number">Step 3</span> Get the Web App URL</h3>
-                  <p>After deployment, copy the <strong>Web app URL</strong> then paste it on this app setup thingy. This is your API endpoint for GET and POST requests. Make sure dont lose it, or just redo these if you lose it, its not that hard.</p>
-               </div>
-               <div class="tutorial">
-                  <h3><span class="step-number">Step 4</span> Test API</h3>
-                  <p>Yes, just test. Working? Congratulations. Not working? skill issue.</p>
-               </div>
+<script>
+  const copyBtn = document.getElementById('copyApiCode');
+  const codeContainer = document.getElementById('apiCodeContainer');
+  const toggleCodeBtn = document.getElementById('toggleApiCode');
+  let codeVisible = false;
+
+  toggleCodeBtn.addEventListener('click', () => {
+    if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+    codeVisible = !codeVisible;
+    if (codeVisible) {
+      const overlay = document.createElement('div');
+      overlay.className = 'md-dialog-overlay';
+      overlay.innerHTML = `
+        <div class="md-dialog" style="width:min(500px,92vw);max-height:80vh;overflow-y:auto;padding:16px;">
+          <div style="width:100%;margin-bottom:12px;">
+            <span style="font-weight:600;font-size:var(--fs-l);">Apps Script Code</span>
+          </div>
+          <div class="code-container" style="margin:0;">
+            <div class="tools">
+              <div class="circle"><span class="red box"></span></div>
+              <div class="circle"><span class="yellow box"></span></div>
+              <div class="circle"><span class="green box"></span></div>
+            </div>
+            <button id="copyApiCodeDialog" class="copy-btn" title="Copy Code">
+              <span class="material-symbols-outlined">content_copy</span>
+            </button>
+            <div class="card__content">
+              <pre>${codeContainer.querySelector('pre').innerText}</pre>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;margin-top:16px;">
+            <button id="closeCodeDialog" class="md-btn" style="padding:12px 32px;border-radius:50px !important;display:flex;align-items:center;justify-content:center;gap:8px;font-size:var(--fs-md);font-weight:600;">
+              <span class="material-symbols-outlined" style="font-size:1.1rem;font-variation-settings:'wght' 700;">close</span>
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => overlay.classList.add('show'));
+      });
+
+      const closeDialog = () => {
+        overlay.classList.remove('show');
+        overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+        codeVisible = false;
+        toggleCodeBtn.innerHTML = '<span class="material-symbols-outlined">code</span> Show Code';
+        if (navigator.vibrate) navigator.vibrate(30);
+      };
+
+      overlay.querySelector('#closeCodeDialog').addEventListener('click', closeDialog);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeDialog(); });
+
+      overlay.querySelector('#copyApiCodeDialog').addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(64);
+        const code = codeContainer.querySelector('pre').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          overlay.querySelector('#copyApiCodeDialog').innerHTML = '<span class="material-symbols-outlined">check</span>';
+          setTimeout(() => {
+            overlay.querySelector('#copyApiCodeDialog').innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
+          }, 1500);
+        }).catch(err => console.error('Copy failed', err));
+      });
+
+      toggleCodeBtn.innerHTML = '<span class="material-symbols-outlined">code_off</span> Hide Code';
+    } else {
+      toggleCodeBtn.innerHTML = '<span class="material-symbols-outlined">code</span> Show Code';
+      codeVisible = false;
+    }
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (navigator.vibrate) navigator.vibrate(64);
+    const code = codeContainer.querySelector('pre').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      copyBtn.innerHTML = '<span class="material-symbols-outlined">check</span>';
+      setTimeout(() => {
+        copyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>';
+      }, 1500);
+    }).catch(err => console.error('Copy failed', err));
+  });
+
+  const tutPages = document.querySelector('.tut-pages');
+  const tutDots = document.querySelectorAll('.tut-dot');
+  const tutPrev = document.getElementById('tutPrev');
+  const tutNext = document.getElementById('tutNext');
+  const tutRestart = document.getElementById('tutRestart');
+  let tutIndex = 0;
+  const tutTotal = tutDots.length;
+
+  function tutGoTo(index) {
+    tutIndex = Math.max(0, Math.min(index, tutTotal - 1));
+    tutPages.scrollTo({ left: tutPages.clientWidth * tutIndex, behavior: 'smooth' });
+    tutDots.forEach((d, i) => d.classList.toggle('active', i === tutIndex));
+    tutPrev.style.opacity = tutIndex === 0 ? '0.3' : '1';
+    tutNext.style.opacity = tutIndex === tutTotal - 1 ? '0.3' : '1';
+    tutRestart.style.opacity = tutIndex === 0 ? '0.3' : '1';
+    if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+  }
+
+  tutPrev.addEventListener('click', () => { if (tutIndex > 0) tutGoTo(tutIndex - 1); });
+  tutNext.addEventListener('click', () => { if (tutIndex < tutTotal - 1) tutGoTo(tutIndex + 1); });
+  tutRestart.addEventListener('click', () => { tutGoTo(0); });
+
+  tutPages.addEventListener('scroll', () => {
+    const index = Math.round(tutPages.scrollLeft / tutPages.clientWidth);
+    if (index !== tutIndex) {
+      tutIndex = index;
+      tutDots.forEach((d, i) => d.classList.toggle('active', i === tutIndex));
+      tutPrev.style.opacity = tutIndex === 0 ? '0.3' : '1';
+      tutNext.style.opacity = tutIndex === tutTotal - 1 ? '0.3' : '1';
+      tutRestart.style.opacity = tutIndex === 0 ? '0.3' : '1';
+    }
+  });
+
+  tutGoTo(0);
+</script>
             </div>
          </div>
       </main>
+      <!-- ABOUT PAGE -->
       <main class="page" id="about">
          <h1>
             About
             <button class="dev-btn">
-            <a href="https://github.com/zenlixir" target="_blank" class="icon-link">
-            <span class="material-symbols-outlined">code</span>
-            </a>
+               <a href="https://github.com/zenlixir" target="_blank" class="icon-link">
+                  <span class="material-symbols-outlined">code</span>
+               </a>
             </button>
          </h1>
          <div class="info">
@@ -478,27 +612,27 @@ function doPost(e) {
       <!-- BOTTOM NAV -->
       <nav class="bottom-nav">
          <button class="nav-item active" data-page="home">
-         <span class="material-symbols-outlined">home</span>
-         <span class="nav-label">Home</span>
+            <span class="material-symbols-outlined">home</span>
+            <span class="nav-label">Home</span>
          </button>
          <button class="nav-item" data-page="logs">
-         <span class="material-symbols-outlined">list</span>
-         <span class="nav-label">Logs</span>
+            <span class="material-symbols-outlined">list</span>
+            <span class="nav-label">Logs</span>
          </button>
          <button class="nav-item" data-page="settings">
-         <span class="material-symbols-outlined">settings</span>
-         <span class="nav-label">Settings</span>
+            <span class="material-symbols-outlined">settings</span>
+            <span class="nav-label">Settings</span>
          </button>
          <button class="nav-item" data-page="about">
-         <span class="material-symbols-outlined">info</span>
-         <span class="nav-label">About</span>
+            <span class="material-symbols-outlined">info</span>
+            <span class="nav-label">About</span>
          </button>
       </nav>
       <script>
          document.addEventListener('DOMContentLoaded', () => {
            document.querySelectorAll('.md-btn').forEach(btn => {
              btn.addEventListener('click', (e) => {
-               e.stopPropagation(); 
+               e.stopPropagation();
                if (navigator.vibrate) {
                  navigator.vibrate(64);
                }
