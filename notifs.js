@@ -1,5 +1,4 @@
 const CHECK_INTERVAL = 5000;
-const getUrl = (key) => { const v = localStorage.getItem(key); if (!v) return ''; try { atob(v); return decodeURIComponent(escape(atob(v))); } catch { return v; } };
 
 let notifSent = false;
 
