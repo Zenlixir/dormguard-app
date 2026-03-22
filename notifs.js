@@ -1,4 +1,5 @@
 const CHECK_INTERVAL = 5000;
+const getUrl = (key) => { const v = localStorage.getItem(key); if (!v) return ''; try { atob(v); return decodeURIComponent(escape(atob(v))); } catch { return v; } };
 
 let notifSent = false;
 
@@ -22,7 +23,7 @@ console.log('Capacitor plugins:', JSON.stringify(Object.keys(window.Capacitor?.P
 
 async function checkDoorNotif() {
   if (!notifEnabled) return;
-  const CTRLS_URL = localStorage.getItem('ctrls_url') || '';
+  const CTRLS_URL = getUrl('ctrls_url');
   if (!CTRLS_URL) return;
 
   try {
