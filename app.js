@@ -336,12 +336,11 @@ document.querySelectorAll('.collapsible').forEach(header => {
       header.classList.add('open');
       content.style.height = content.scrollHeight + 'px';
 
-      setTimeout(() => {
-        content.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
-
       content.addEventListener('transitionend', () => {
-        if (content.classList.contains('open')) content.style.height = 'auto';
+        if (content.classList.contains('open')) {
+          content.style.height = 'auto';
+          content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }, { once: true });
     }
   });
@@ -372,10 +371,12 @@ document.getElementById('openSetupBtn').addEventListener('click', () => {
           content.addEventListener('transitionend', () => {
             content.style.height = 'auto';
             content.classList.remove('animating');
-            content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => {
+              content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
           }, { once: true });
         }
-      }, 350);
+      }, 600);
     }
   }, 1000);
 });
