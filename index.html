@@ -34,38 +34,40 @@
       <!-- HOME PAGE -->
       <main class="page active" id="home">
          <h1>DormGuard</h1>
-         <div class="card">
-            <div class="label">Door Status</div>
-            <div class="value-row">
-               <div id="doorStatus" class="value">-</div>
-               <span class="material-symbols-outlined card-icon">door_front</span>
-            </div>
-         </div>
-         <div class="card">
-            <div class="label">Last Opened At</div>
-            <div class="value-row">
-               <div id="LastOpened" class="value">-</div>
-               <span class="material-symbols-outlined card-icon">history</span>
-            </div>
-         </div>
-         <div class="card">
-            <div class="label">Time</div>
-            <div class="value-row">
-               <div id="currentTime" class="value">--:--:--</div>
-               <span class="material-symbols-outlined card-icon">schedule</span>
-            </div>
-         </div>
-         <div class="controls">
-            <button class="md-btn setup-btn" id="openSetupBtn">
-               <span class="material-symbols-outlined">dashboard_customize</span>
-               Setup DormGuard
-            </button>
-            <div class="settings-section">
-               <div class="label">
-                  <span class="material-symbols-outlined">alarm</span>
-                  Alert Control
+         <div class="page-content">
+            <div class="card">
+               <div class="label">Door Status</div>
+               <div class="value-row">
+                  <div id="doorStatus" class="value">-</div>
+                  <span class="material-symbols-outlined card-icon">door_front</span>
                </div>
-               <button id="alertToggle" class="md-btn">No Alert</button>
+            </div>
+            <div class="card">
+               <div class="label">Last Opened At</div>
+               <div class="value-row">
+                  <div id="LastOpened" class="value">-</div>
+                  <span class="material-symbols-outlined card-icon">history</span>
+               </div>
+            </div>
+            <div class="card">
+               <div class="label">Time</div>
+               <div class="value-row">
+                  <div id="currentTime" class="value">--:--:--</div>
+                  <span class="material-symbols-outlined card-icon">schedule</span>
+               </div>
+            </div>
+            <div class="controls">
+               <button class="md-btn setup-btn" id="openSetupBtn">
+                  <span class="material-symbols-outlined">dashboard_customize</span>
+                  Setup DormGuard
+               </button>
+               <div class="settings-section">
+                  <div class="label">
+                     <span class="material-symbols-outlined">alarm</span>
+                     Alert Control
+                  </div>
+                  <button id="alertToggle" class="md-btn">No Alert</button>
+               </div>
             </div>
          </div>
       </main>
@@ -77,265 +79,268 @@
                <span class="material-symbols-outlined">note</span>
             </button>
          </h1>
-         <div class="logs-wrapper">
-            <ul id="eventList" class="md-list"></ul>
-         </div>
-         <div class="database">
-            <div class="label">
-               <span class="material-symbols-outlined">download</span>
-               Download Database
+         <div class="page-content">
+            <div class="logs-wrapper">
+               <ul id="eventList" class="md-list"></ul>
             </div>
-            <div class="db-actions">
-               <button class="md-btn" id="fulldat">Full Records</button>
-               <button class="md-btn" id="latestdat">Latest</button>
+            <div class="database">
+               <div class="label">
+                  <span class="material-symbols-outlined">download</span>
+                  Download Database
+               </div>
+               <div class="db-actions">
+                  <button class="md-btn" id="fulldat">Full Records</button>
+                  <button class="md-btn" id="latestdat">Latest</button>
+               </div>
             </div>
          </div>
       </main>
       <!-- SETTINGS PAGE -->
       <main class="page" id="settings">
          <h1>Settings</h1>
-         <div class="settings-list">
-            <div class="settings-header">DormGuard Device</div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">lightbulb</span>
-               <span class="setting-text">LED Blink</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="ledSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">volume_up</span>
-               <span class="setting-text">Buzzer</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="buzzerSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">wb_incandescent</span>
-               <span class="setting-text">Lamp</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="lampSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-header">App</div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">dark_mode</span>
-               <span class="setting-text">Dark Mode</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="darkModeSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">notifications</span>
-               <span class="setting-text">Notification</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="notificationsSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">warning</span>
-               <span class="setting-text">Alert</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="alertSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-header">Accessibility</div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">motion_photos_off</span>
-               <span class="setting-text">Disable Animation</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="reduceMotionSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">contrast</span>
-               <span class="setting-text">High Contrast</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="contrastSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-item">
-               <span class="material-symbols-outlined">vibration</span>
-               <span class="setting-text">Disable Haptic</span>
-               <label class="md-switch">
-                  <input type="checkbox" id="vibrationSwitch">
-                  <span></span>
-               </label>
-            </div>
-            <div class="settings-header" id="configSection">DormGuard Config</div>
-            <div class="settings-item collapsible" data-target="apiConfig">
-               <span class="material-symbols-outlined">terminal</span>
-               <span class="setting-text">Google Sheet API</span>
-               <div class="expand-icon">
-                  <span class="material-symbols-outlined">expand_more</span>
+         <div class="page-content">
+            <div class="settings-list">
+               <div class="settings-header">DormGuard Device</div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">lightbulb</span>
+                  <span class="setting-text">LED Blink</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="ledSwitch">
+                     <span></span>
+                  </label>
                </div>
-            </div>
-            <div class="collapsible-content" id="apiConfig" data-target="userConfig">
-               <div class="user-config">
-                  <div class="user-input">
-                     <div class="sheets-input-container">
-                        <span class="material-symbols-outlined sheets-icon">assignment</span>
-                     </div>
-                  </div>
-                  <div class="stp-wrap">
-                     <div class="stp-pages">
-                        <div class="stp-page">
-                           <div class="stp-alone">
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">door_front</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Door Logs API</span>
-                                       <span class="stp-sts">API for door open/close logs</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <br/>
-                           <div class="stp-grid">
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">note</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Sheets</span>
-                                       <span class="stp-sts">Your Sheets link</span>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">nearby</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Ctrls API</span>
-                                       <span class="stp-sts">Device controls</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="stp-page">
-                           <div class="stp-alone">
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">door_front</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Door Logs API</span>
-                                       <span class="stp-sts">API for door open/close logs</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <br/>
-                           <div class="stp-input">
-                              <textarea id="doorApiInput" class="md-input" placeholder='Paste your Door Logs API here (Most important for this thing work)'></textarea>
-                              <div class="stp-next">
-                                 <div class="stp-card">
-                                    <div class="stp-cnt">
-                                       <span class="material-symbols-outlined">arrow_forward</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="stp-page">
-                           <div class="stp-alone">
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">note</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Sheets</span>
-                                       <span class="stp-sts">Your Sheets link</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <br/>
-                           <div class="stp-input">
-                              <textarea class="md-input2" type="text" placeholder="And your sheets link (Optional but recommended)"></textarea>
-                              <div class="stp-next">
-                                 <div class="stp-card">
-                                    <div class="stp-cnt">
-                                       <span class="material-symbols-outlined">arrow_forward</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="stp-page">
-                           <div class="stp-alone">
-                              <div class="stp-card">
-                                 <div class="stp-cnt">
-                                    <span class="material-symbols-outlined">nearby</span>
-                                    <div class="stp-info">
-                                       <span class="stp-lbl">Controls API</span>
-                                       <span class="stp-sts">Device Controls</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <br/>
-                           <div class="stp-input">
-                              <textarea id="ctrlsApiInput" class="md-input" type="text" placeholder="Needed to enable/disable stuffs on DormGuard device"></textarea>
-                              <div class="stp-next">
-                                 <div class="stp-card">
-                                    <div class="stp-cnt">
-                                       <span class="material-symbols-outlined">restart_alt</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="stp-dots">
-                        <span class="stp-dot active"></span>
-                        <span class="stp-dot"></span>
-                        <span class="stp-dot"></span>
-                        <span class="stp-dot"></span>
-                     </div>
-                  </div>
-                  <div class="user-input">
-                     <button id="saveConfig" class="md-btn">Save</button>
-                     <button id="resetConfig" class="md-btn">Reset</button>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">volume_up</span>
+                  <span class="setting-text">Buzzer</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="buzzerSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">wb_incandescent</span>
+                  <span class="setting-text">Lamp</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="lampSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-header">App</div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">dark_mode</span>
+                  <span class="setting-text">Dark Mode</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="darkModeSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">notifications</span>
+                  <span class="setting-text">Notification</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="notificationsSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">warning</span>
+                  <span class="setting-text">Alert</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="alertSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-header">Accessibility</div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">motion_photos_off</span>
+                  <span class="setting-text">Disable Animation</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="reduceMotionSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">contrast</span>
+                  <span class="setting-text">High Contrast</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="contrastSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-item">
+                  <span class="material-symbols-outlined">vibration</span>
+                  <span class="setting-text">Disable Haptic</span>
+                  <label class="md-switch">
+                     <input type="checkbox" id="vibrationSwitch">
+                     <span></span>
+                  </label>
+               </div>
+               <div class="settings-header" id="configSection">DormGuard Config</div>
+               <div class="settings-item collapsible" data-target="apiConfig">
+                  <span class="material-symbols-outlined">terminal</span>
+                  <span class="setting-text">Google Sheet API</span>
+                  <div class="expand-icon">
+                     <span class="material-symbols-outlined">expand_more</span>
                   </div>
                </div>
-            </div>
-            <div class="settings-item collapsible" data-target="apiTutorial">
-               <span class="material-symbols-outlined">info</span>
-               <span class="setting-text">How to get web app API?</span>
-               <div class="expand-icon">
-                  <span class="material-symbols-outlined">expand_more</span>
-               </div>
-            </div>
-            <div class="collapsible-content" id="apiTutorial">
-               <div class="tut-wrap">
-                  <div class="tut-pages">
-                     <div class="tut-page">
-                        <div class="tutorial">
-                           <h3><span class="step-number">Step 1</span> Prepare the Script</h3>
-                           <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
-                           <button class="tut-code-toggle md-btn" id="toggleApiCode">
-                              <span class="material-symbols-outlined">code</span>
-                              Show Code
-                           </button>
-                           <div class="code-container" id="apiCodeContainer" style="display:none;">
-                              <div class="tools">
-                                 <div class="circle"><span class="red box"></span></div>
-                                 <div class="circle"><span class="yellow box"></span></div>
-                                 <div class="circle"><span class="green box"></span></div>
+               <div class="collapsible-content" id="apiConfig" data-target="userConfig">
+                  <div class="user-config">
+                     <div class="user-input">
+                        <div class="sheets-input-container">
+                           <span class="material-symbols-outlined sheets-icon">assignment</span>
+                        </div>
+                     </div>
+                     <div class="stp-wrap">
+                        <div class="stp-pages">
+                           <div class="stp-page">
+                              <div class="stp-alone">
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">door_front</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Door Logs API</span>
+                                          <span class="stp-sts">API for door open/close logs</span>
+                                       </div>
+                                    </div>
+                                 </div>
                               </div>
-                              <button id="copyApiCode" class="copy-btn" title="Copy Code">
-                                 <span class="material-symbols-outlined">content_copy</span>
+                              <br/>
+                              <div class="stp-grid">
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">note</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Sheets</span>
+                                          <span class="stp-sts">Your Sheets link</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">nearby</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Ctrls API</span>
+                                          <span class="stp-sts">Device controls</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="stp-page">
+                              <div class="stp-alone">
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">door_front</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Door Logs API</span>
+                                          <span class="stp-sts">API for door open/close logs</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <br/>
+                              <div class="stp-input">
+                                 <textarea id="doorApiInput" class="md-input" placeholder='Paste your Door Logs API here (Most important for this thing work)'></textarea>
+                                 <div class="stp-next">
+                                    <div class="stp-card">
+                                       <div class="stp-cnt">
+                                          <span class="material-symbols-outlined">arrow_forward</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="stp-page">
+                              <div class="stp-alone">
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">note</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Sheets</span>
+                                          <span class="stp-sts">Your Sheets link</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <br/>
+                              <div class="stp-input">
+                                 <textarea class="md-input2" type="text" placeholder="And your sheets link (Optional but recommended)"></textarea>
+                                 <div class="stp-next">
+                                    <div class="stp-card">
+                                       <div class="stp-cnt">
+                                          <span class="material-symbols-outlined">arrow_forward</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="stp-page">
+                              <div class="stp-alone">
+                                 <div class="stp-card">
+                                    <div class="stp-cnt">
+                                       <span class="material-symbols-outlined">nearby</span>
+                                       <div class="stp-info">
+                                          <span class="stp-lbl">Controls API</span>
+                                          <span class="stp-sts">Device Controls</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <br/>
+                              <div class="stp-input">
+                                 <textarea id="ctrlsApiInput" class="md-input" type="text" placeholder="Needed to enable/disable stuffs on DormGuard device"></textarea>
+                                 <div class="stp-next">
+                                    <div class="stp-card">
+                                       <div class="stp-cnt">
+                                          <span class="material-symbols-outlined">restart_alt</span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="stp-dots">
+                           <span class="stp-dot active"></span>
+                           <span class="stp-dot"></span>
+                           <span class="stp-dot"></span>
+                           <span class="stp-dot"></span>
+                        </div>
+                     </div>
+                     <div class="user-input">
+                        <button id="saveConfig" class="md-btn">Save</button>
+                        <button id="resetConfig" class="md-btn">Reset</button>
+                     </div>
+                  </div>
+               </div>
+               <div class="settings-item collapsible" data-target="apiTutorial">
+                  <span class="material-symbols-outlined">info</span>
+                  <span class="setting-text">How to get web app API?</span>
+                  <div class="expand-icon">
+                     <span class="material-symbols-outlined">expand_more</span>
+                  </div>
+               </div>
+               <div class="collapsible-content" id="apiTutorial">
+                  <div class="tut-wrap">
+                     <div class="tut-pages">
+                        <div class="tut-page">
+                           <div class="tutorial">
+                              <h3><span class="step-number">Step 1</span> Prepare the Script</h3>
+                              <p>In the menu, go to <strong>Extensions → Apps Script</strong>. Delete any existing code, then paste this:</p>
+                              <button class="tut-code-toggle md-btn" id="toggleApiCode">
+                                 <span class="material-symbols-outlined">code</span>
+                                 Show Code
                               </button>
-                              <div class="card__content">
-                                 <pre>
+                              <div class="code-container" id="apiCodeContainer" style="display:none;">
+                                 <div class="tools">
+                                    <div class="circle"><span class="red box"></span></div>
+                                    <div class="circle"><span class="yellow box"></span></div>
+                                    <div class="circle"><span class="green box"></span></div>
+                                 </div>
+                                 <button id="copyApiCode" class="copy-btn" title="Copy Code">
+                                    <span class="material-symbols-outlined">content_copy</span>
+                                 </button>
+                                 <div class="card__content">
+                                    <pre>
 function doGet(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
   const data = sheet.getDataRange().getValues();
@@ -365,57 +370,57 @@ function doPost(e) {
     .createTextOutput(JSON.stringify({ status: "ok" }))
     .setMimeType(ContentService.MimeType.JSON);
 }
-                                 </pre>
+                                    </pre>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="tut-page">
-                        <div class="tutorial">
-                           <h3><span class="step-number">Step 2</span> Deploy as Web App</h3>
-                           <ol>
-                              <li>Click <strong>Deploy → New deployment</strong>.</li>
-                              <li>Select <strong>Web app</strong> as the type.</li>
-                              <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
-                              <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
-                              <li>Click <strong>Deploy</strong> and authorize the script.</li>
-                           </ol>
+                        <div class="tut-page">
+                           <div class="tutorial">
+                              <h3><span class="step-number">Step 2</span> Deploy as Web App</h3>
+                              <ol>
+                                 <li>Click <strong>Deploy → New deployment</strong>.</li>
+                                 <li>Select <strong>Web app</strong> as the type.</li>
+                                 <li>Under <strong>Execute as</strong>, choose <em>Me</em>.</li>
+                                 <li>Under <strong>Who has access</strong>, select <em>Anyone</em>.</li>
+                                 <li>Click <strong>Deploy</strong> and authorize the script.</li>
+                              </ol>
+                           </div>
+                        </div>
+                        <div class="tut-page">
+                           <div class="tutorial">
+                              <h3><span class="step-number">Step 3</span> Get the Web App URL</h3>
+                              <p>After deployment, copy the <strong>Web app URL</strong> then paste it on this app setup thingy. This is your API endpoint for GET and POST requests. Make sure dont lose it, or just redo these if you lose it, its not that hard.</p>
+                           </div>
+                        </div>
+                        <div class="tut-page">
+                           <div class="tutorial">
+                              <h3><span class="step-number">Step 4</span> Test API</h3>
+                              <p>Yes, just test. Working? Congratulations. Not working? skill issue.</p>
+                           </div>
                         </div>
                      </div>
-                     <div class="tut-page">
-                        <div class="tutorial">
-                           <h3><span class="step-number">Step 3</span> Get the Web App URL</h3>
-                           <p>After deployment, copy the <strong>Web app URL</strong> then paste it on this app setup thingy. This is your API endpoint for GET and POST requests. Make sure dont lose it, or just redo these if you lose it, its not that hard.</p>
+                     <div class="tut-nav">
+                        <div class="tut-dots">
+                           <span class="tut-dot active"></span>
+                           <span class="tut-dot"></span>
+                           <span class="tut-dot"></span>
+                           <span class="tut-dot"></span>
                         </div>
-                     </div>
-                     <div class="tut-page">
-                        <div class="tutorial">
-                           <h3><span class="step-number">Step 4</span> Test API</h3>
-                           <p>Yes, just test. Working? Congratulations. Not working? skill issue.</p>
+                        <div class="tut-btns">
+                           <button class="tut-btn tut-restart md-btn" id="tutRestart">
+                              <span class="material-symbols-outlined">restart_alt</span>
+                           </button>
+                           <button class="tut-btn tut-prev md-btn" id="tutPrev">
+                              <span class="material-symbols-outlined">arrow_back</span>
+                           </button>
+                           <button class="tut-btn tut-next md-btn" id="tutNext">
+                              <span class="material-symbols-outlined">arrow_forward</span>
+                           </button>
                         </div>
                      </div>
                   </div>
-                  <div class="tut-nav">
-                     <div class="tut-dots">
-                        <span class="tut-dot active"></span>
-                        <span class="tut-dot"></span>
-                        <span class="tut-dot"></span>
-                        <span class="tut-dot"></span>
-                     </div>
-                     <div class="tut-btns">
-                        <button class="tut-btn tut-restart md-btn" id="tutRestart">
-                           <span class="material-symbols-outlined">restart_alt</span>
-                        </button>
-                        <button class="tut-btn tut-prev md-btn" id="tutPrev">
-                           <span class="material-symbols-outlined">arrow_back</span>
-                        </button>
-                        <button class="tut-btn tut-next md-btn" id="tutNext">
-                           <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-<script>
+                  <script>
   const copyBtn = document.getElementById('copyApiCode');
   const codeContainer = document.getElementById('apiCodeContainer');
   const toggleCodeBtn = document.getElementById('toggleApiCode');
@@ -532,7 +537,8 @@ function doPost(e) {
   });
 
   tutGoTo(0);
-</script>
+                  </script>
+               </div>
             </div>
          </div>
       </main>
@@ -546,68 +552,70 @@ function doPost(e) {
                </a>
             </button>
          </h1>
-         <div class="info">
-            <img src="icon.png" alt="Icon" />
-            <div class="info-text">
-               <div>Dorm Guard</div>
-               <div class="creator">by Zenlixir</div>
+         <div class="page-content">
+            <div class="info">
+               <img src="icon.png" alt="Icon" />
+               <div class="info-text">
+                  <div>Dorm Guard</div>
+                  <div class="creator">by Zenlixir</div>
+               </div>
             </div>
+            <div class="another-info">
+               <h2>Credits</h2>
+               <ul class="credits-list">
+                  <li>
+                     <span class="material-symbols-outlined">code</span>
+                     <div class="credits-text">
+                        Google Sheets API
+                        <div class="credits-desc">by Google</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">palette</span>
+                     <div class="credits-text">
+                        Material Design Icons
+                        <div class="credits-desc">by Google</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">font_download</span>
+                     <div class="credits-text">
+                        Google Fonts (Google Sans Flex)
+                        <div class="credits-desc">by Google</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">sports_esports</span>
+                     <div class="credits-text">
+                        Monocraft font (based on Mojangles)
+                        <div class="credits-desc">by IdreesInc | Original inspiration: Mojang Studios</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">cloud</span>
+                     <div class="credits-text">
+                        Material You
+                        <div class="credits-desc">by Google</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">ac_unit</span>
+                     <div class="credits-text">
+                        About screen inspired from Hail app <br>(and mbloader)
+                        <div class="credits-desc">by aistra0528</div>
+                     </div>
+                  </li>
+                  <li>
+                     <span class="material-symbols-outlined">terminal</span>
+                     <div class="credits-text">
+                        Node.js
+                        <div class="credits-desc">by OpenJS Foundation</div>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+            <div class="app-version">v1.0.1-beta.2</div>
          </div>
-         <div class="another-info">
-            <h2>Credits</h2>
-            <ul class="credits-list">
-               <li>
-                  <span class="material-symbols-outlined">code</span>
-                  <div class="credits-text">
-                     Google Sheets API
-                     <div class="credits-desc">by Google</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">palette</span>
-                  <div class="credits-text">
-                     Material Design Icons
-                     <div class="credits-desc">by Google</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">font_download</span>
-                  <div class="credits-text">
-                     Google Fonts (Google Sans Flex)
-                     <div class="credits-desc">by Google</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">sports_esports</span>
-                  <div class="credits-text">
-                     Monocraft font (based on Mojangles)
-                     <div class="credits-desc">by IdreesInc | Original inspiration: Mojang Studios</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">cloud</span>
-                  <div class="credits-text">
-                     Material You
-                     <div class="credits-desc">by Google</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">ac_unit</span>
-                  <div class="credits-text">
-                     About screen inspired from Hail app <br>(and mbloader)
-                     <div class="credits-desc">by aistra0528</div>
-                  </div>
-               </li>
-               <li>
-                  <span class="material-symbols-outlined">terminal</span>
-                  <div class="credits-text">
-                     Node.js
-                     <div class="credits-desc">by OpenJS Foundation</div>
-                  </div>
-               </li>
-            </ul>
-         </div>
-         <div class="app-version">v1.0.1-beta.2</div>
       </main>
       <!-- BOTTOM NAV -->
       <nav class="bottom-nav">
