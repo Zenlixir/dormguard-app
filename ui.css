@@ -131,7 +131,7 @@ body {
 .page {
   display: none;
   flex-direction: column;
-  height: calc(100vh - calc(72px + env(safe-area-inset-bottom)));
+  height: calc(100dvh - calc(72px + env(safe-area-inset-bottom)));
   padding-top: env(safe-area-inset-top);
   overflow: hidden;
   overscroll-behavior-y: none;
